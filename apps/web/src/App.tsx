@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
@@ -27,20 +28,29 @@ const steps = [
 ];
 
 export function App() {
+  const [page, setPage] = useState<'home' | 'demo'>('home');
+
   return (
     <main className="page">
-      <Header />
+      <Header onStart={() => setPage('home')} onShowDemo={() => setPage('demo')} />
 
-      <section className="section">
-        <h2>처리 단계</h2>
-        <div className="grid">
-          {steps.map((step, idx) => (
-            <StepCard key={step.title} index={idx + 1} title={step.title} description={step.description} />
-          ))}
-        </div>
-      </section>
-
-      <PolicyPanel />
+      {page === 'demo' ? (
+        <section className="section demo-page" aria-labelledby="demo-flow-title">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">DEMO FLOW</p>
+              <h2 id="demo-flow-title">처리 단계</h2>
+            </div>
+          </div>
+          <div className="grid">
+            {steps.map((step, idx) => (
+              <StepCard key={step.title} index={idx + 1} title={step.title} description={step.description} />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <PolicyPanel />
+      )}
     </main>
   );
 }

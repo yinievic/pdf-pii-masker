@@ -95,6 +95,22 @@ body {
   margin: 0 0 12px;
 }
 
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.section-header h2 {
+  margin-bottom: 0;
+}
+
+.demo-page {
+  min-height: 340px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -122,7 +138,6 @@ body {
 
 .policy-panel {
   margin-top: 18px;
-  border-color: var(--brand-green-border);
 }
 
 .policy-panel ul {
