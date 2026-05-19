@@ -1,0 +1,133 @@
+:root {
+  --bg-page: #171717;
+  --bg-elevated: #1d1d1d;
+  --bg-deep: #0f0f0f;
+  --text-primary: #fafafa;
+  --text-secondary: #b4b4b4;
+  --text-muted: #898989;
+  --border-subtle: #242424;
+  --border-default: #2e2e2e;
+  --border-strong: #363636;
+  --brand-green: #3ecf8e;
+  --brand-green-border: rgba(62, 207, 142, 0.3);
+
+  font-family: Inter, 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.page {
+  max-width: 1160px;
+  margin: 36px auto 80px;
+  padding: 0 24px;
+}
+
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.hero h1 {
+  font-size: 56px;
+  line-height: 1.05;
+  font-weight: 400;
+  margin: 8px 0 14px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  letter-spacing: 1.1px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.55;
+  max-width: 760px;
+}
+
+.hero-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary,
+.btn-secondary {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  border: 1px solid var(--text-primary);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border-strong);
+  background: var(--bg-page);
+  color: var(--text-secondary);
+}
+
+.section {
+  margin-top: 18px;
+}
+
+.section h2,
+.policy-panel h2 {
+  font-weight: 400;
+  margin: 0 0 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.step-card h3 {
+  margin: 8px 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.step-index {
+  margin: 0;
+  color: var(--brand-green);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.muted {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.policy-panel {
+  margin-top: 18px;
+  border-color: var(--brand-green-border);
+}
+
+.policy-panel ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
