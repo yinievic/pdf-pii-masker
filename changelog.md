@@ -1,5 +1,43 @@
 # Changelog
 
+## 2026-05-20 - Step 4 common mask workflow state
+
+### Summary
+
+Step 4 기준으로 수동 마스킹과 자동 OCR/정규식 후보를 같은 `MaskBox` 구조에서 다룰 수 있도록 상태 모델을 확장했다. 아직 UI 드래그나 OCR 실행은 구현하지 않고, 후속 단계에서 사용할 공통 상태·전환·산정 함수를 준비했다.
+
+### Step 3 보강
+
+- `PageRenderState`가 `canvasDataUrl`과 페이지별 `masks` 배열을 보유하도록 정리했다.
+- `MaskBox`를 페이지별 canvas 좌표 기준으로 관리한다.
+- 화면 표시 좌표와 canvas 좌표를 변환하는 함수를 분리했다.
+- 특정 페이지에 mask를 추가하는 `addMask`와 특정 mask를 삭제하는 `removeMask`를 준비했다.
+
+### Step 4 구현
+
+- `MaskStatus`를 추가해 `candidate`, `accepted`, `rejected` 상태를 표현한다.
+- `MaskingMode`와 `WorkingBase`를 추가해 현재 작업 모드와 작업 기준을 표현한다.
+- `MaskBox`에 필수 `source`, `status`와 선택 `label`, `confidence`, `text`를 포함했다.
+- `MaskingWorkflowState`를 추가해 모드, 작업 기준, 최종 후보 masks를 함께 관리한다.
+- 수동 mask는 기본적으로 `source: "manual"`, `status: "accepted"`로 저장되도록 했다.
+- 자동 계열 mask는 기본적으로 `candidate` 상태로 들어갈 수 있도록 했다.
+- `getFinalMasks`로 다운로드 대상인 `accepted` mask만 산정할 수 있게 했다.
+- `discardAutoMasks`로 OCR/regex 계열 결과를 폐기하고 원본 기준 수동 모드로 전환할 수 있는 상태 구조를 준비했다.
+- `rejectMask`, `acceptCandidateMasks`로 자동 후보 거절·승인 흐름을 상태 레벨에서 준비했다.
+
+### Verification
+
+- `npm run build` 통과를 확인했다.
+- Vite 개발 서버 `http://127.0.0.1:5173`에서 Step 4 변경 소스가 제공되는 것을 확인했다.
+- mock 데이터로 `accepted` mask만 최종 대상에 포함되는지 확인했다.
+- mock 데이터로 OCR/regex 결과 폐기 시 수동 mask만 남고 `manualFromOriginal` / `original` 상태가 되는지 확인했다.
+
+### Notes
+
+- `plan.md` ver.2.0 기준에 맞춰 `MaskSource`는 `manual | ocr | regex | llm`을 유지한다.
+- 수동 드래그 UI, OCR API, PDF 재생성 및 다운로드 엔진은 아직 구현하지 않았다.
+
+
 ## 2026-05-20 - Step 2 PDF page preview flow
 
 ### Summary
