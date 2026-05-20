@@ -1,9 +1,12 @@
-import { type ChangeEvent, type DragEvent, useState } from 'react';
+import { type CSSProperties, type ChangeEvent, type DragEvent, useState } from 'react';
+import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
 import './styles.css';
 
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 const steps = [
   {
     title: 'PDF 업로드',
@@ -27,10 +30,38 @@ const steps = [
   }
 ];
 
+type PdfPagePreview = {
+  pageNumber: number;
+  width: number;
+  height: number;
+  scale: number;
+  dataUrl: string;
+};
+
+type UploadedPdfPreview = {
+  id: string;
+  file: File;
+  arrayBuffer: ArrayBuffer | null;
+  isReading: boolean;
+  error: string;
+  pageCount: number;
+  pages: PdfPagePreview[];
+};
+
+const PDF_RENDER_SCALE = 2;
+
 function PdfUploadPanel() {
   const [files, setFiles] = useState<File[]>([]);
+  const [uploadedPdfs, setUploadedPdfs] = useState<UploadedPdfPreview[]>([]);
+  const [currentPages, setCurrentPages] = useState<Record<string, number>>({});
+  const [showPreviews, setShowPreviews] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
+
+  const isReadingPdf = uploadedPdfs.some((pdf) => pdf.isReading);
+  const pdfReadError = uploadedPdfs.find((pdf) => pdf.error)?.error ?? '';
+  const hasRenderablePdf = uploadedPdfs.some((pdf) => pdf.arrayBuffer);
+  const hasVisiblePreviewPage = showPreviews && uploadedPdfs.some((pdf) => pdf.pages.length > 0);
 
   const isPdfFile = (file: File) => file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
@@ -47,12 +78,118 @@ function PdfUploadPanel() {
     })}MB`;
   };
 
+  const getErrorMessage = (error: unknown) => {
+    if (error instanceof Error && error.message) {
+      return error.message;
+    }
+
+    return 'PDF 파일을 읽거나 렌더링하는 중 오류가 발생했습니다.';
+  };
+
+  const createUploadId = (file: File) => {
+    const randomId = typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now()}`;
+    return `${file.name}-${file.lastModified}-${file.size}-${randomId}`;
+  };
+
+  const updateUploadedPdf = (id: string, updates: Partial<UploadedPdfPreview>) => {
+    setUploadedPdfs((currentPdfs) => currentPdfs.map((pdf) => (pdf.id === id ? { ...pdf, ...updates } : pdf)));
+  };
+
+  const getCurrentPageNumber = (pdf: UploadedPdfPreview) => {
+    const currentPage = currentPages[pdf.id] ?? 1;
+    return Math.min(Math.max(currentPage, 1), Math.max(pdf.pageCount, 1));
+  };
+
+  const setPdfCurrentPage = (pdf: UploadedPdfPreview, pageNumber: number) => {
+    const maxPage = Math.max(pdf.pageCount, 1);
+    const nextPageNumber = Math.min(Math.max(pageNumber, 1), maxPage);
+    setCurrentPages((current) => ({ ...current, [pdf.id]: nextPageNumber }));
+  };
+
+  const handlePreviewButtonClick = () => {
+    setShowPreviews(true);
+  };
+
+  const renderPdfPages = async (arrayBuffer: ArrayBuffer) => {
+    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer.slice(0)) }).promise;
+    const pages: PdfPagePreview[] = [];
+
+    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+      const page = await pdf.getPage(pageNumber);
+      const viewport = page.getViewport({ scale: PDF_RENDER_SCALE });
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      if (!context) {
+        throw new Error('PDF 페이지를 렌더링할 canvas context를 만들 수 없습니다.');
+      }
+
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+
+      await page.render({ canvasContext: context, viewport }).promise;
+
+      pages.push({
+        pageNumber,
+        width: canvas.width,
+        height: canvas.height,
+        scale: PDF_RENDER_SCALE,
+        dataUrl: canvas.toDataURL('image/png')
+      });
+    }
+
+    return {
+      pageCount: pdf.numPages,
+      pages
+    };
+  };
+
+  const readAndRenderPdf = async (id: string, file: File) => {
+    updateUploadedPdf(id, { isReading: true, error: '', arrayBuffer: null, pageCount: 0, pages: [] });
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      updateUploadedPdf(id, { arrayBuffer });
+
+      const renderedPdf = await renderPdfPages(arrayBuffer);
+      updateUploadedPdf(id, { ...renderedPdf, isReading: false });
+    } catch (error) {
+      updateUploadedPdf(id, {
+        arrayBuffer: null,
+        isReading: false,
+        error: getErrorMessage(error),
+        pageCount: 0,
+        pages: []
+      });
+    }
+  };
+
   const appendFiles = (nextFiles: File[]) => {
     const pdfFiles = nextFiles.filter(isPdfFile);
 
     if (pdfFiles.length) {
       setUploadMessage('');
       setFiles((currentFiles) => [...currentFiles, ...pdfFiles]);
+
+      const nextUploadedPdfs = pdfFiles.map((file) => ({
+        id: createUploadId(file),
+        file,
+        arrayBuffer: null,
+        isReading: true,
+        error: '',
+        pageCount: 0,
+        pages: []
+      }));
+
+      setShowPreviews(false);
+      setUploadedPdfs((currentPdfs) => [...currentPdfs, ...nextUploadedPdfs]);
+      setCurrentPages((currentPagesById) => ({
+        ...currentPagesById,
+        ...Object.fromEntries(nextUploadedPdfs.map((pdf) => [pdf.id, 1]))
+      }));
+      nextUploadedPdfs.forEach((pdf) => {
+        void readAndRenderPdf(pdf.id, pdf.file);
+      });
     }
   };
 
@@ -79,7 +216,17 @@ function PdfUploadPanel() {
   };
 
   const removeFile = (fileIndex: number) => {
+    const removedPdf = uploadedPdfs[fileIndex];
+
     setFiles((currentFiles) => currentFiles.filter((_, index) => index !== fileIndex));
+    setUploadedPdfs((currentPdfs) => currentPdfs.filter((_, index) => index !== fileIndex));
+
+    if (removedPdf) {
+      setCurrentPages((currentPagesById) => {
+        const { [removedPdf.id]: _removedPage, ...remainingPages } = currentPagesById;
+        return remainingPages;
+      });
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +272,8 @@ function PdfUploadPanel() {
         </label>
       </div>
       {uploadMessage ? <p className="upload-message">{uploadMessage}</p> : null}
+      {isReadingPdf ? <p className="upload-message">PDF 파일을 읽고 미리보기를 생성하는 중입니다.</p> : null}
+      {pdfReadError ? <p className="upload-message">PDF 파일을 처리할 수 없습니다. {pdfReadError}</p> : null}
       {files.length ? (
         <ul className="upload-files" aria-label="선택된 PDF 파일 목록">
           {files.map((file, index) => (
@@ -138,9 +287,90 @@ function PdfUploadPanel() {
           ))}
         </ul>
       ) : null}
-      <button className="masking-button" type="button">
-        마스킹하기
-      </button>
+      <div className={`masking-actions${hasVisiblePreviewPage ? ' has-preview-actions' : ''}`}>
+        <button className="masking-button" type="button" data-pdf-ready={hasRenderablePdf} onClick={handlePreviewButtonClick}>
+          PDF 파일 페이지 확인
+        </button>
+        {hasVisiblePreviewPage ? (
+          <button className="masking-button" type="button" data-pdf-ready={hasRenderablePdf}>
+            PDF 파일 마스킹
+          </button>
+        ) : null}
+      </div>
+      {showPreviews && uploadedPdfs.length ? (
+        <div className="pdf-preview-list" aria-label="PDF 미리보기 목록">
+          {uploadedPdfs.map((pdf) => {
+            const currentPageNumber = getCurrentPageNumber(pdf);
+            const currentPage = pdf.pages[currentPageNumber - 1];
+
+            return (
+              <section className="pdf-preview-frame" key={pdf.id} aria-labelledby={`${pdf.id}-title`}>
+                <div className="pdf-preview-header">
+                  <div className="pdf-preview-title-row">
+                    <h2 id={`${pdf.id}-title`}>{pdf.file.name}</h2>
+                    <p className="muted">
+                      {pdf.pageCount ? `총 ${pdf.pageCount.toLocaleString()}페이지` : '페이지 정보를 준비 중입니다.'}
+                    </p>
+                  </div>
+                  {pdf.isReading ? <span className="pdf-preview-status">렌더링 중</span> : null}
+                </div>
+                {pdf.error ? <p className="upload-message">이 파일의 미리보기를 생성할 수 없습니다. {pdf.error}</p> : null}
+                {currentPage ? (
+                  <div className="pdf-page-viewer">
+                    <div className="pdf-page-toolbar" aria-label={`${pdf.file.name} 페이지 이동`}>
+                      <label className="pdf-page-input-label">
+                        <span>현재 페이지</span>
+                        <input
+                          type="number"
+                          min={1}
+                          max={pdf.pageCount}
+                          value={currentPageNumber}
+                          onChange={(event) => {
+                            const nextPageNumber = Number(event.target.value);
+                            if (Number.isFinite(nextPageNumber)) {
+                              setPdfCurrentPage(pdf, nextPageNumber);
+                            }
+                          }}
+                        />
+                      </label>
+                      <span className="pdf-page-total">/ {pdf.pageCount.toLocaleString()}</span>
+                    </div>
+                    <div
+                      className="pdf-page-wrapper"
+                      style={{ '--page-aspect-ratio': `${currentPage.width} / ${currentPage.height}` } as CSSProperties}
+                    >
+                      <button
+                        className="pdf-page-nav pdf-page-nav-prev"
+                        type="button"
+                        aria-label={`${pdf.file.name} 이전 페이지`}
+                        disabled={currentPageNumber <= 1}
+                        onClick={() => setPdfCurrentPage(pdf, currentPageNumber - 1)}
+                      >
+                        ‹
+                      </button>
+                      <img
+                        src={currentPage.dataUrl}
+                        width={currentPage.width}
+                        height={currentPage.height}
+                        alt={`${pdf.file.name} ${currentPage.pageNumber}페이지 미리보기`}
+                      />
+                      <button
+                        className="pdf-page-nav pdf-page-nav-next"
+                        type="button"
+                        aria-label={`${pdf.file.name} 다음 페이지`}
+                        disabled={currentPageNumber >= pdf.pageCount}
+                        onClick={() => setPdfCurrentPage(pdf, currentPageNumber + 1)}
+                      >
+                        ›
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+            );
+          })}
+        </div>
+      ) : null}
     </section>
   );
 }
