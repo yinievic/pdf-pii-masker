@@ -32,6 +32,12 @@ const steps = [
 
 type MaskSource = 'manual' | 'ocr' | 'regex' | 'llm';
 
+type MaskStatus = 'candidate' | 'accepted' | 'rejected';
+
+type MaskingMode = 'idle' | 'manual' | 'autoProcessing' | 'autoReview' | 'autoEdit' | 'manualFromOriginal';
+
+type WorkingBase = 'original' | 'autoResult';
+
 type MaskBox = {
   id: string;
   pageNumber: number;
@@ -39,8 +45,11 @@ type MaskBox = {
   y: number;
   width: number;
   height: number;
-  source?: MaskSource;
+  source: MaskSource;
+  status: MaskStatus;
   label?: string;
+  confidence?: number;
+  text?: string;
 };
 
 type PageRenderState = {
@@ -74,11 +83,24 @@ type UploadedPdfPreview = {
   pages: PageRenderState[];
 };
 
+type MaskingWorkflowState = {
+  mode: MaskingMode;
+  workingBase: WorkingBase;
+  masks: MaskBox[];
+};
+
 const PDF_RENDER_SCALE = 2;
+
+const initialMaskingWorkflow: MaskingWorkflowState = {
+  mode: 'idle',
+  workingBase: 'original',
+  masks: []
+};
 
 function PdfUploadPanel() {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadedPdfs, setUploadedPdfs] = useState<UploadedPdfPreview[]>([]);
+  const [maskingWorkflow, setMaskingWorkflow] = useState<MaskingWorkflowState>(initialMaskingWorkflow);
   const [currentPages, setCurrentPages] = useState<Record<string, number>>({});
   const [showPreviews, setShowPreviews] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -88,6 +110,7 @@ function PdfUploadPanel() {
   const pdfReadError = uploadedPdfs.find((pdf) => pdf.error)?.error ?? '';
   const hasRenderablePdf = uploadedPdfs.some((pdf) => pdf.arrayBuffer);
   const hasVisiblePreviewPage = showPreviews && uploadedPdfs.some((pdf) => pdf.pages.length > 0);
+  const finalMasks = maskingWorkflow.masks.filter((mask) => mask.status === 'accepted');
 
   const isPdfFile = (file: File) => file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
@@ -125,6 +148,36 @@ function PdfUploadPanel() {
     return typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `mask-${Date.now()}`;
   };
 
+  const syncWorkflowMasksFromPages = (pdfs: UploadedPdfPreview[]) => {
+    return pdfs.flatMap((pdf) => pdf.pages.flatMap((page) => page.masks));
+  };
+
+  const getFinalMasks = (workflow: MaskingWorkflowState) => {
+    return workflow.masks.filter((mask) => mask.status === 'accepted');
+  };
+
+  const setMaskingMode = (mode: MaskingMode, workingBase: WorkingBase = maskingWorkflow.workingBase) => {
+    setMaskingWorkflow((currentWorkflow) => ({ ...currentWorkflow, mode, workingBase }));
+  };
+
+  const discardAutoMasks = () => {
+    setUploadedPdfs((currentPdfs) =>
+      currentPdfs.map((pdf) => ({
+        ...pdf,
+        pages: pdf.pages.map((page) => ({
+          ...page,
+          masks: page.masks.filter((mask) => mask.source === 'manual')
+        }))
+      }))
+    );
+
+    setMaskingWorkflow((currentWorkflow) => ({
+      mode: 'manualFromOriginal',
+      workingBase: 'original',
+      masks: currentWorkflow.masks.filter((mask) => mask.source === 'manual')
+    }));
+  };
+
   const getDisplayToCanvasScale = (page: PageRenderState, displayWidth: number, displayHeight: number): DisplayToCanvasScale => {
     return {
       scaleX: displayWidth > 0 ? page.width / displayWidth : 1,
@@ -160,15 +213,18 @@ function PdfUploadPanel() {
     };
   };
 
-  const addMask = (pdfId: string, pageNumber: number, mask: Omit<MaskBox, 'id' | 'pageNumber'> & Partial<Pick<MaskBox, 'id'>>) => {
+  const addMask = (pdfId: string, pageNumber: number, mask: Omit<MaskBox, 'id' | 'pageNumber'> & Partial<Pick<MaskBox, 'id' | 'source' | 'status'>>) => {
+    const source = mask.source ?? 'manual';
     const nextMask: MaskBox = {
       ...mask,
       id: mask.id ?? createMaskId(),
-      pageNumber
+      pageNumber,
+      source,
+      status: mask.status ?? (source === 'manual' ? 'accepted' : 'candidate')
     };
 
-    setUploadedPdfs((currentPdfs) =>
-      currentPdfs.map((pdf) =>
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.map((pdf) =>
         pdf.id === pdfId
           ? {
               ...pdf,
@@ -177,13 +233,21 @@ function PdfUploadPanel() {
               )
             }
           : pdf
-      )
-    );
+      );
+
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        mode: source === 'manual' && currentWorkflow.mode === 'idle' ? 'manual' : currentWorkflow.mode,
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+
+      return nextPdfs;
+    });
   };
 
   const removeMask = (pdfId: string, pageNumber: number, maskId: string) => {
-    setUploadedPdfs((currentPdfs) =>
-      currentPdfs.map((pdf) =>
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.map((pdf) =>
         pdf.id === pdfId
           ? {
               ...pdf,
@@ -194,8 +258,54 @@ function PdfUploadPanel() {
               )
             }
           : pdf
-      )
-    );
+      );
+
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+
+      return nextPdfs;
+    });
+  };
+
+  const rejectMask = (maskId: string) => {
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.map((pdf) => ({
+        ...pdf,
+        pages: pdf.pages.map((page) => ({
+          ...page,
+          masks: page.masks.map((mask) => (mask.id === maskId ? { ...mask, status: 'rejected' as MaskStatus } : mask))
+        }))
+      }));
+
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+
+      return nextPdfs;
+    });
+  };
+
+  const acceptCandidateMasks = () => {
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.map((pdf) => ({
+        ...pdf,
+        pages: pdf.pages.map((page) => ({
+          ...page,
+          masks: page.masks.map((mask) => (mask.status === 'candidate' ? { ...mask, status: 'accepted' as MaskStatus } : mask))
+        }))
+      }));
+
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        mode: currentWorkflow.mode === 'autoReview' ? 'autoEdit' : currentWorkflow.mode,
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+
+      return nextPdfs;
+    });
   };
 
   const getCurrentPageNumber = (pdf: UploadedPdfPreview) => {
@@ -286,6 +396,7 @@ function PdfUploadPanel() {
       }));
 
       setShowPreviews(false);
+      setMaskingWorkflow(initialMaskingWorkflow);
       setUploadedPdfs((currentPdfs) => [...currentPdfs, ...nextUploadedPdfs]);
       setCurrentPages((currentPagesById) => ({
         ...currentPagesById,
@@ -323,7 +434,14 @@ function PdfUploadPanel() {
     const removedPdf = uploadedPdfs[fileIndex];
 
     setFiles((currentFiles) => currentFiles.filter((_, index) => index !== fileIndex));
-    setUploadedPdfs((currentPdfs) => currentPdfs.filter((_, index) => index !== fileIndex));
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.filter((_, index) => index !== fileIndex);
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+      return nextPdfs;
+    });
 
     if (removedPdf) {
       setCurrentPages((currentPagesById) => {
