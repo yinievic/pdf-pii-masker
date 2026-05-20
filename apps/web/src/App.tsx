@@ -30,12 +30,38 @@ const steps = [
   }
 ];
 
-type PdfPagePreview = {
+type MaskSource = 'manual' | 'ocr' | 'regex' | 'llm';
+
+type MaskBox = {
+  id: string;
+  pageNumber: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  source?: MaskSource;
+  label?: string;
+};
+
+type PageRenderState = {
   pageNumber: number;
   width: number;
   height: number;
   scale: number;
-  dataUrl: string;
+  canvasDataUrl: string;
+  masks: MaskBox[];
+};
+
+type DisplayRect = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+type DisplayToCanvasScale = {
+  scaleX: number;
+  scaleY: number;
 };
 
 type UploadedPdfPreview = {
@@ -45,7 +71,7 @@ type UploadedPdfPreview = {
   isReading: boolean;
   error: string;
   pageCount: number;
-  pages: PdfPagePreview[];
+  pages: PageRenderState[];
 };
 
 const PDF_RENDER_SCALE = 2;
@@ -95,6 +121,83 @@ function PdfUploadPanel() {
     setUploadedPdfs((currentPdfs) => currentPdfs.map((pdf) => (pdf.id === id ? { ...pdf, ...updates } : pdf)));
   };
 
+  const createMaskId = () => {
+    return typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `mask-${Date.now()}`;
+  };
+
+  const getDisplayToCanvasScale = (page: PageRenderState, displayWidth: number, displayHeight: number): DisplayToCanvasScale => {
+    return {
+      scaleX: displayWidth > 0 ? page.width / displayWidth : 1,
+      scaleY: displayHeight > 0 ? page.height / displayHeight : 1
+    };
+  };
+
+  const displayRectToCanvasRect = (displayRect: DisplayRect, page: PageRenderState, displayWidth: number, displayHeight: number): DisplayRect => {
+    const { scaleX, scaleY } = getDisplayToCanvasScale(page, displayWidth, displayHeight);
+    const rawX = displayRect.x * scaleX;
+    const rawY = displayRect.y * scaleY;
+    const rawWidth = displayRect.width * scaleX;
+    const rawHeight = displayRect.height * scaleY;
+    const x = Math.min(Math.max(rawX, 0), page.width);
+    const y = Math.min(Math.max(rawY, 0), page.height);
+
+    return {
+      x,
+      y,
+      width: Math.min(Math.max(rawWidth, 0), page.width - x),
+      height: Math.min(Math.max(rawHeight, 0), page.height - y)
+    };
+  };
+
+  const canvasRectToDisplayRect = (canvasRect: DisplayRect, page: PageRenderState, displayWidth: number, displayHeight: number): DisplayRect => {
+    const { scaleX, scaleY } = getDisplayToCanvasScale(page, displayWidth, displayHeight);
+
+    return {
+      x: canvasRect.x / scaleX,
+      y: canvasRect.y / scaleY,
+      width: canvasRect.width / scaleX,
+      height: canvasRect.height / scaleY
+    };
+  };
+
+  const addMask = (pdfId: string, pageNumber: number, mask: Omit<MaskBox, 'id' | 'pageNumber'> & Partial<Pick<MaskBox, 'id'>>) => {
+    const nextMask: MaskBox = {
+      ...mask,
+      id: mask.id ?? createMaskId(),
+      pageNumber
+    };
+
+    setUploadedPdfs((currentPdfs) =>
+      currentPdfs.map((pdf) =>
+        pdf.id === pdfId
+          ? {
+              ...pdf,
+              pages: pdf.pages.map((page) =>
+                page.pageNumber === pageNumber ? { ...page, masks: [...page.masks, nextMask] } : page
+              )
+            }
+          : pdf
+      )
+    );
+  };
+
+  const removeMask = (pdfId: string, pageNumber: number, maskId: string) => {
+    setUploadedPdfs((currentPdfs) =>
+      currentPdfs.map((pdf) =>
+        pdf.id === pdfId
+          ? {
+              ...pdf,
+              pages: pdf.pages.map((page) =>
+                page.pageNumber === pageNumber
+                  ? { ...page, masks: page.masks.filter((mask) => mask.id !== maskId) }
+                  : page
+              )
+            }
+          : pdf
+      )
+    );
+  };
+
   const getCurrentPageNumber = (pdf: UploadedPdfPreview) => {
     const currentPage = currentPages[pdf.id] ?? 1;
     return Math.min(Math.max(currentPage, 1), Math.max(pdf.pageCount, 1));
@@ -112,7 +215,7 @@ function PdfUploadPanel() {
 
   const renderPdfPages = async (arrayBuffer: ArrayBuffer) => {
     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer.slice(0)) }).promise;
-    const pages: PdfPagePreview[] = [];
+    const pages: PageRenderState[] = [];
 
     for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
       const page = await pdf.getPage(pageNumber);
@@ -134,7 +237,8 @@ function PdfUploadPanel() {
         width: canvas.width,
         height: canvas.height,
         scale: PDF_RENDER_SCALE,
-        dataUrl: canvas.toDataURL('image/png')
+        canvasDataUrl: canvas.toDataURL('image/png'),
+        masks: []
       });
     }
 
@@ -349,7 +453,7 @@ function PdfUploadPanel() {
                         ‹
                       </button>
                       <img
-                        src={currentPage.dataUrl}
+                        src={currentPage.canvasDataUrl}
                         width={currentPage.width}
                         height={currentPage.height}
                         alt={`${pdf.file.name} ${currentPage.pageNumber}페이지 미리보기`}
