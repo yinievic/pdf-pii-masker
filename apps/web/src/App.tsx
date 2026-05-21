@@ -5,6 +5,7 @@ import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
+import type { MaskBox, MaskFillColor, MaskingMode, MaskStatus, MaskingWorkflowState, PageRenderState, WorkingBase } from './maskingTypes';
 import './styles.css';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
@@ -30,39 +31,6 @@ const steps = [
     description: '짧은 만료시간의 1회성 링크로 내려받고, 완료 즉시 토큰을 폐기합니다.'
   }
 ];
-
-type MaskSource = 'manual' | 'ocr' | 'regex' | 'llm';
-
-type MaskStatus = 'candidate' | 'accepted' | 'rejected';
-
-type MaskFillColor = 'black' | 'white';
-
-type MaskingMode = 'idle' | 'manual' | 'autoProcessing' | 'autoReview' | 'autoEdit' | 'manualFromOriginal';
-
-type WorkingBase = 'original' | 'autoResult';
-
-type MaskBox = {
-  id: string;
-  pageNumber: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  source: MaskSource;
-  status: MaskStatus;
-  label?: string;
-  confidence?: number;
-  text?: string;
-};
-
-type PageRenderState = {
-  pageNumber: number;
-  width: number;
-  height: number;
-  scale: number;
-  canvasDataUrl: string;
-  masks: MaskBox[];
-};
 
 type DisplayRect = {
   x: number;
@@ -95,12 +63,6 @@ type UploadedPdfPreview = {
   error: string;
   pageCount: number;
   pages: PageRenderState[];
-};
-
-type MaskingWorkflowState = {
-  mode: MaskingMode;
-  workingBase: WorkingBase;
-  masks: MaskBox[];
 };
 
 const PDF_RENDER_SCALE = 2;

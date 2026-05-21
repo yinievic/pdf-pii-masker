@@ -488,6 +488,8 @@ PDF 수신
 - OCR 결과의 좌표는 이미지 좌표 기준이므로, 프론트엔드 canvas 좌표와 변환 관계를 명확히 한다.
 - 서버 임시파일은 처리 종료 후 삭제한다.
 - OCR 처리 실패 시 사용자에게 실패 사유를 일반화하여 표시한다.
+- OCR API 컨테이너에는 `tesseract-ocr`, `tesseract-ocr-kor`, `tesseract-ocr-eng`, `poppler-utils`를 설치한다.
+- OCR 실행 전 `tesseract --version`, `tesseract --list-langs`, `pdftoppm -h`로 도구 설치 상태를 검증한다.
 
 #### 완료 기준
 
@@ -960,6 +962,8 @@ Tesseract OCR 결과의 bounding box가 실제 민감정보 전체를 정확히 
 - 대용량 PDF 경고 메시지를 둔다.
 - OCR은 페이지별 순차 처리 또는 큐 방식으로 전환 가능하게 설계한다.
 - 처리 가능한 최대 페이지 수와 파일 크기 제한을 둔다.
+- Vite 빌드의 대형 chunk 경고는 현재 Step 8의 실패 사유가 아니며, 기능 및 타입 안정성을 우선한다.
+- PDF.js lazy loading 또는 `manualChunks` 기반 번들 최적화는 별도 후속 성능 최적화 단계로 분리한다.
 
 ---
 

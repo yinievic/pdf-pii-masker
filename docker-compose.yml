@@ -1,0 +1,16 @@
+services:
+  ocr-api:
+    build:
+      context: ./apps/ocr-api
+    image: p2-ocr-api:local
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      OCR_TEMP_DIR: /tmp/p2-ocr
+      TESSERACT_LANG: kor+eng
+      PDF_RENDER_DPI: "200"
+      MAX_UPLOAD_BYTES: "52428800"
+      CORS_ORIGIN: http://localhost:5173
+    tmpfs:
+      - /tmp

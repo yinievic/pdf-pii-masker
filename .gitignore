@@ -142,3 +142,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 .codex-session-backup/
+# OCR runtime verification artifacts
+/sample.pdf
+/ocr-result-sample.json
+
