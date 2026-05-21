@@ -25,6 +25,46 @@ export type OcrPageError = {
   message: string;
 };
 
+export type DetectionType = 'residentRegistrationNumber' | 'address';
+
+export type Detection = {
+  id: string;
+  type: DetectionType;
+  ruleId: string;
+  label: string;
+  pageNumber: number;
+  rawText: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  confidence?: number;
+  source: 'regex';
+  textRange: { start: number; end: number };
+  lineText: string;
+};
+
+export type MaskBoxCandidateStatus = 'review' | 'accepted' | 'rejected';
+
+export type MaskBoxCandidate = {
+  id: string;
+  detectionId: string;
+  type: DetectionType;
+  ruleId: string;
+  label: string;
+  pageNumber: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  status: MaskBoxCandidateStatus;
+  source: 'regex';
+  rawText: string;
+  maskText: string;
+  confidence?: number;
+  policy?: string;
+};
+
 export type OcrCoordinateSpace = 'pdf-page-image';
 
 export type OcrResponse = {
@@ -33,6 +73,8 @@ export type OcrResponse = {
   coordinateSpace?: OcrCoordinateSpace;
   dpi?: number;
   words: OcrWord[];
+  detections?: Detection[];
+  maskBoxCandidates?: MaskBoxCandidate[];
   errors?: OcrPageError[];
 };
 

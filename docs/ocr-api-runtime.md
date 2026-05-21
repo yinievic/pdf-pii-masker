@@ -79,11 +79,24 @@ pdftoppm -h
       "height": 36,
       "confidence": 91.4
     }
+  ],
+  "detections": [
+    {
+      "type": "residentRegistrationNumber",
+      "rawText": "900101-1234567"
+    }
+  ],
+  "maskBoxCandidates": [
+    {
+      "type": "residentRegistrationNumber",
+      "status": "review",
+      "maskText": "1234567"
+    }
   ]
 }
 ```
 
-좌표는 `pdftoppm`으로 생성한 페이지 이미지 기준이다. Step 10 이후 프론트엔드 `MaskBox` 후보로 변환할 때 canvas 좌표와의 scale 변환을 적용해야 한다.
+좌표는 `pdftoppm`으로 생성한 페이지 이미지 기준이다. Step 10은 OCR API 응답에서 `Detection[]`과 `MaskBoxCandidate[]`를 생성한다. Step 11 이후 프론트엔드 `MaskBox` 후보로 변환할 때 canvas 좌표와의 scale 변환을 적용해야 한다.
 
 ## 보안 정책
 

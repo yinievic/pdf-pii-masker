@@ -61,8 +61,12 @@ type OcrResponse = {
   coordinateSpace?: "pdf-page-image";
   dpi?: number;
   words: OcrWord[];
+  detections?: Detection[];
+  maskBoxCandidates?: MaskBoxCandidate[];
 };
 ```
+
+Step 10부터 OCR API는 탐지 결과와 마스킹 후보를 분리한다. `Detection`은 무엇을 찾았는지, `MaskBoxCandidate`는 실제로 어디를 가릴지 표현한다. 모든 후보는 자동 확정하지 않고 `review` 상태로 생성한다.
 
 프론트엔드 변환 규칙:
 

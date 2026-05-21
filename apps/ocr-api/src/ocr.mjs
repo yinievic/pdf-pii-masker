@@ -4,6 +4,7 @@ import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
+import { detectSensitiveInfo } from './detection/detectSensitiveInfo.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -78,6 +79,11 @@ export function parseTesseractTsv(tsv, pageNumber) {
       return [];
     }
 
+    const blockNumber = Number.parseInt(columns[columnIndex.block_num] || '0', 10);
+    const paragraphNumber = Number.parseInt(columns[columnIndex.par_num] || '0', 10);
+    const lineNumber = Number.parseInt(columns[columnIndex.line_num] || '0', 10);
+    const wordNumber = Number.parseInt(columns[columnIndex.word_num] || '0', 10);
+
     return [
       {
         pageNumber,
@@ -86,7 +92,11 @@ export function parseTesseractTsv(tsv, pageNumber) {
         y,
         width,
         height,
-        confidence
+        confidence,
+        blockNumber,
+        paragraphNumber,
+        lineNumber,
+        wordNumber
       }
     ];
   });
@@ -151,12 +161,16 @@ export async function recognizePdf(pdfBuffer, options = {}) {
       }
     }
 
+    const { detections, maskBoxCandidates } = detectSensitiveInfo(words);
+
     return {
       provider: DEFAULT_PROVIDER,
       pageCount,
       coordinateSpace: 'pdf-page-image',
       dpi: options.dpi || DEFAULT_DPI,
       words,
+      detections,
+      maskBoxCandidates,
       ...(errors.length > 0 ? { errors } : {})
     };
   } finally {

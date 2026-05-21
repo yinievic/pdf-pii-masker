@@ -1,0 +1,25 @@
+[
+  {
+    "id": "resident-registration-number",
+    "type": "residentRegistrationNumber",
+    "label": "주민등록번호",
+    "pattern": "\\b\\d{6}-\\d{7}\\b",
+    "maskPolicy": {
+      "type": "regex-group",
+      "groupPattern": "^(\\d{6}-)(\\d{7})$",
+      "groupIndex": 2,
+      "description": "전체 주민등록번호를 Detection으로 보존하고 뒤 7자리만 MaskBoxCandidate로 생성한다."
+    }
+  },
+  {
+    "id": "address-after-admin-district",
+    "type": "address",
+    "label": "주소",
+    "pattern": "(?:[가-힣]+\\s+)*(?:[가-힣]+(?:시|군|구))\\s+(.+)",
+    "maskPolicy": {
+      "type": "regex-group",
+      "groupIndex": 1,
+      "description": "주소 전체를 Detection으로 보존하고 시/군/구 이후 영역만 MaskBoxCandidate로 생성한다."
+    }
+  }
+]
