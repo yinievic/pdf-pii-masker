@@ -355,6 +355,9 @@ body {
   border: 1px solid var(--border-strong);
   background: var(--bg-deep);
   overflow: hidden;
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
 }
 
 .pdf-page-wrapper img {
@@ -365,10 +368,65 @@ body {
   background: #fff;
 }
 
+.pdf-mask-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pdf-mask-box {
+  position: absolute;
+  border: 1px solid rgba(250, 250, 250, 0.36);
+  background: rgba(0, 0, 0, 0.72);
+  pointer-events: auto;
+}
+
+.pdf-mask-box-manual {
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.pdf-mask-box-ocr,
+.pdf-mask-box-regex,
+.pdf-mask-box-llm {
+  border-color: rgba(62, 207, 142, 0.72);
+  background: rgba(0, 0, 0, 0.52);
+}
+
+.pdf-mask-box-draft {
+  border: 1px dashed rgba(250, 250, 250, 0.78);
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.pdf-mask-delete {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(250, 250, 250, 0.72);
+  border-radius: 9999px;
+  background: rgba(15, 15, 15, 0.86);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 0 1px;
+  cursor: pointer;
+}
+
+.pdf-mask-delete:hover {
+  border-color: rgba(62, 207, 142, 0.82);
+  background: rgba(15, 15, 15, 0.96);
+}
+
 .pdf-page-nav {
   position: absolute;
   top: 50%;
-  z-index: 1;
+  z-index: 2;
   display: inline-flex;
   width: 53px;
   height: 86px;
@@ -385,6 +443,7 @@ body {
   padding: 0 0 4px;
   cursor: pointer;
   transform: translateY(-50%);
+  touch-action: none;
   transition:
     background-color 160ms ease,
     opacity 160ms ease;
@@ -405,6 +464,58 @@ body {
 
 .pdf-page-nav-next {
   right: 14px;
+}
+
+.mask-color-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.mask-color-options {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 9999px;
+  background: var(--bg-deep);
+}
+
+.mask-color-option {
+  display: inline-flex;
+  min-width: 64px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-right: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.mask-color-option:last-child {
+  border-right: 0;
+}
+
+.mask-color-option[aria-pressed='true'] {
+  background: var(--text-primary);
+  color: var(--bg-deep);
+}
+
+.mask-color-option-black[aria-pressed='true'] {
+  background: #000;
+  color: #fff;
+}
+
+.mask-color-option-white[aria-pressed='true'] {
+  background: #fff;
+  color: #111;
 }
 
 .masking-actions {

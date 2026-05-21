@@ -1,5 +1,6 @@
-import { type CSSProperties, type ChangeEvent, type DragEvent, useState } from 'react';
+import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
+import { PDFDocument } from 'pdf-lib';
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
@@ -33,6 +34,8 @@ const steps = [
 type MaskSource = 'manual' | 'ocr' | 'regex' | 'llm';
 
 type MaskStatus = 'candidate' | 'accepted' | 'rejected';
+
+type MaskFillColor = 'black' | 'white';
 
 type MaskingMode = 'idle' | 'manual' | 'autoProcessing' | 'autoReview' | 'autoEdit' | 'manualFromOriginal';
 
@@ -73,6 +76,17 @@ type DisplayToCanvasScale = {
   scaleY: number;
 };
 
+type MaskDraft = {
+  pdfId: string;
+  pageNumber: number;
+  startX: number;
+  startY: number;
+  currentX: number;
+  currentY: number;
+  displayWidth: number;
+  displayHeight: number;
+};
+
 type UploadedPdfPreview = {
   id: string;
   file: File;
@@ -101,6 +115,10 @@ function PdfUploadPanel() {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadedPdfs, setUploadedPdfs] = useState<UploadedPdfPreview[]>([]);
   const [maskingWorkflow, setMaskingWorkflow] = useState<MaskingWorkflowState>(initialMaskingWorkflow);
+  const [maskDraft, setMaskDraft] = useState<MaskDraft | null>(null);
+  const [isGeneratingMaskedPdf, setIsGeneratingMaskedPdf] = useState(false);
+  const [maskDownloadError, setMaskDownloadError] = useState('');
+  const [maskFillColor, setMaskFillColor] = useState<MaskFillColor>('black');
   const [currentPages, setCurrentPages] = useState<Record<string, number>>({});
   const [showPreviews, setShowPreviews] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -213,7 +231,93 @@ function PdfUploadPanel() {
     };
   };
 
-  const addMask = (pdfId: string, pageNumber: number, mask: Omit<MaskBox, 'id' | 'pageNumber'> & Partial<Pick<MaskBox, 'id' | 'source' | 'status'>>) => {
+
+  const normalizeDisplayRect = (draft: Pick<MaskDraft, 'startX' | 'startY' | 'currentX' | 'currentY'>): DisplayRect => {
+    const x = Math.min(draft.startX, draft.currentX);
+    const y = Math.min(draft.startY, draft.currentY);
+
+    return {
+      x,
+      y,
+      width: Math.abs(draft.currentX - draft.startX),
+      height: Math.abs(draft.currentY - draft.startY)
+    };
+  };
+
+  const getPointerPositionInPage = (event: PointerEvent<HTMLDivElement>): DisplayRect => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max(event.clientX - rect.left, 0), rect.width);
+    const y = Math.min(Math.max(event.clientY - rect.top, 0), rect.height);
+
+    return {
+      x,
+      y,
+      width: rect.width,
+      height: rect.height
+    };
+  };
+
+  const isPageControlTarget = (target: EventTarget) => {
+    return target instanceof HTMLElement && Boolean(target.closest('button, input, label'));
+  };
+
+  const handleMaskPointerDown = (event: PointerEvent<HTMLDivElement>, pdfId: string, page: PageRenderState) => {
+    if (event.button !== 0 || isPageControlTarget(event.target)) return;
+
+    const pointerPosition = getPointerPositionInPage(event);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setMaskDraft({
+      pdfId,
+      pageNumber: page.pageNumber,
+      startX: pointerPosition.x,
+      startY: pointerPosition.y,
+      currentX: pointerPosition.x,
+      currentY: pointerPosition.y,
+      displayWidth: pointerPosition.width,
+      displayHeight: pointerPosition.height
+    });
+  };
+
+  const handleMaskPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!maskDraft) return;
+
+    const pointerPosition = getPointerPositionInPage(event);
+    setMaskDraft((currentDraft) =>
+      currentDraft
+        ? {
+            ...currentDraft,
+            currentX: pointerPosition.x,
+            currentY: pointerPosition.y,
+            displayWidth: pointerPosition.width,
+            displayHeight: pointerPosition.height
+          }
+        : currentDraft
+    );
+  };
+
+  const handleMaskPointerUp = (event: PointerEvent<HTMLDivElement>, pdfId: string, page: PageRenderState) => {
+    if (!maskDraft || maskDraft.pdfId !== pdfId || maskDraft.pageNumber !== page.pageNumber) return;
+
+    const displayRect = normalizeDisplayRect(maskDraft);
+    setMaskDraft(null);
+
+    if (displayRect.width < 6 || displayRect.height < 6) return;
+
+    const canvasRect = displayRectToCanvasRect(displayRect, page, maskDraft.displayWidth, maskDraft.displayHeight);
+    if (canvasRect.width <= 0 || canvasRect.height <= 0) return;
+
+    addMask(pdfId, page.pageNumber, {
+      ...canvasRect,
+      source: 'manual',
+      status: 'accepted'
+    });
+  };
+
+  const handleMaskPointerCancel = () => {
+    setMaskDraft(null);
+  };
+
+  const addMask = (pdfId: string, pageNumber: number, mask: Omit<MaskBox, 'id' | 'pageNumber' | 'source' | 'status'> & Partial<Pick<MaskBox, 'id' | 'source' | 'status'>>) => {
     const source = mask.source ?? 'manual';
     const nextMask: MaskBox = {
       ...mask,
@@ -269,15 +373,25 @@ function PdfUploadPanel() {
     });
   };
 
-  const rejectMask = (maskId: string) => {
+  const rejectMask = (pdfId: string, pageNumber: number, maskId: string) => {
     setUploadedPdfs((currentPdfs) => {
-      const nextPdfs = currentPdfs.map((pdf) => ({
-        ...pdf,
-        pages: pdf.pages.map((page) => ({
-          ...page,
-          masks: page.masks.map((mask) => (mask.id === maskId ? { ...mask, status: 'rejected' as MaskStatus } : mask))
-        }))
-      }));
+      const nextPdfs = currentPdfs.map((pdf) =>
+        pdf.id === pdfId
+          ? {
+              ...pdf,
+              pages: pdf.pages.map((page) =>
+                page.pageNumber === pageNumber
+                  ? {
+                      ...page,
+                      masks: page.masks.map((mask) =>
+                        mask.id === maskId ? { ...mask, status: 'rejected' as MaskStatus } : mask
+                      )
+                    }
+                  : page
+              )
+            }
+          : pdf
+      );
 
       setMaskingWorkflow((currentWorkflow) => ({
         ...currentWorkflow,
@@ -286,6 +400,15 @@ function PdfUploadPanel() {
 
       return nextPdfs;
     });
+  };
+
+  const deleteMask = (pdfId: string, pageNumber: number, mask: MaskBox) => {
+    if (mask.source === 'manual') {
+      removeMask(pdfId, pageNumber, mask.id);
+      return;
+    }
+
+    rejectMask(pdfId, pageNumber, mask.id);
   };
 
   const acceptCandidateMasks = () => {
@@ -306,6 +429,112 @@ function PdfUploadPanel() {
 
       return nextPdfs;
     });
+  };
+
+
+  const getAcceptedMasksForPage = (page: PageRenderState, masks: MaskBox[]) => {
+    return masks.filter((mask) => mask.pageNumber === page.pageNumber && mask.status === 'accepted');
+  };
+
+  const loadImage = (src: string) => {
+    return new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error('마스킹 PDF 생성을 위한 페이지 이미지를 불러올 수 없습니다.'));
+      image.src = src;
+    });
+  };
+
+  const getMaskFillStyle = (fillColor: MaskFillColor) => {
+    return fillColor === 'white' ? '#fff' : '#000';
+  };
+
+  const createMaskedPagePng = async (page: PageRenderState, masks: MaskBox[], fillColor: MaskFillColor) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = page.width;
+    canvas.height = page.height;
+
+    const context = canvas.getContext('2d');
+    if (!context) {
+      throw new Error('마스킹 PDF 생성을 위한 canvas context를 만들 수 없습니다.');
+    }
+
+    const image = await loadImage(page.canvasDataUrl);
+    context.drawImage(image, 0, 0, page.width, page.height);
+    context.fillStyle = getMaskFillStyle(fillColor);
+
+    getAcceptedMasksForPage(page, masks).forEach((mask) => {
+      const x = Math.min(Math.max(mask.x, 0), page.width);
+      const y = Math.min(Math.max(mask.y, 0), page.height);
+      const width = Math.min(Math.max(mask.width, 0), page.width - x);
+      const height = Math.min(Math.max(mask.height, 0), page.height - y);
+
+      if (width > 0 && height > 0) {
+        context.fillRect(x, y, width, height);
+      }
+    });
+
+    return canvas.toDataURL('image/png');
+  };
+
+  const createImageBasedMaskedPdfBytes = async (pdfs: UploadedPdfPreview[], fillColor: MaskFillColor) => {
+    const resultPdf = await PDFDocument.create();
+
+    for (const pdf of pdfs) {
+      for (const page of pdf.pages) {
+        const pngDataUrl = await createMaskedPagePng(page, page.masks, fillColor);
+        const pngImage = await resultPdf.embedPng(pngDataUrl);
+        const pdfPage = resultPdf.addPage([page.width, page.height]);
+        pdfPage.drawImage(pngImage, {
+          x: 0,
+          y: 0,
+          width: page.width,
+          height: page.height
+        });
+      }
+    }
+
+    return resultPdf.save();
+  };
+
+  const getMaskedPdfFileName = () => {
+    if (uploadedPdfs.length === 1) {
+      const originalName = uploadedPdfs[0].file.name.replace(/\.pdf$/i, '');
+      return `${originalName || 'masked'}_masked.pdf`;
+    }
+
+    return 'masked-pdfs.pdf';
+  };
+
+  const downloadPdfBytes = (bytes: Uint8Array, fileName: string) => {
+    const pdfBuffer = new ArrayBuffer(bytes.byteLength);
+    new Uint8Array(pdfBuffer).set(bytes);
+    const blob = new Blob([pdfBuffer], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleMaskedPdfDownload = async () => {
+    const renderablePdfs = uploadedPdfs.filter((pdf) => pdf.pages.length > 0);
+    if (!renderablePdfs.length || isGeneratingMaskedPdf) return;
+
+    setIsGeneratingMaskedPdf(true);
+    setMaskDownloadError('');
+
+    try {
+      const pdfBytes = await createImageBasedMaskedPdfBytes(renderablePdfs, maskFillColor);
+      downloadPdfBytes(pdfBytes, getMaskedPdfFileName());
+    } catch (error) {
+      setMaskDownloadError(getErrorMessage(error));
+    } finally {
+      setIsGeneratingMaskedPdf(false);
+    }
   };
 
   const getCurrentPageNumber = (pdf: UploadedPdfPreview) => {
@@ -496,6 +725,7 @@ function PdfUploadPanel() {
       {uploadMessage ? <p className="upload-message">{uploadMessage}</p> : null}
       {isReadingPdf ? <p className="upload-message">PDF 파일을 읽고 미리보기를 생성하는 중입니다.</p> : null}
       {pdfReadError ? <p className="upload-message">PDF 파일을 처리할 수 없습니다. {pdfReadError}</p> : null}
+      {maskDownloadError ? <p className="upload-message">마스킹 PDF를 생성할 수 없습니다. {maskDownloadError}</p> : null}
       {files.length ? (
         <ul className="upload-files" aria-label="선택된 PDF 파일 목록">
           {files.map((file, index) => (
@@ -514,10 +744,37 @@ function PdfUploadPanel() {
           PDF 파일 페이지 확인
         </button>
         {hasVisiblePreviewPage ? (
-          <button className="masking-button" type="button" data-pdf-ready={hasRenderablePdf}>
-            PDF 파일 마스킹
+          <button
+            className="masking-button"
+            type="button"
+            data-pdf-ready={hasRenderablePdf}
+            disabled={isGeneratingMaskedPdf || !hasVisiblePreviewPage}
+            onClick={handleMaskedPdfDownload}
+          >
+            {isGeneratingMaskedPdf ? 'PDF 생성 중' : `마스킹된 PDF 파일 다운로드${finalMasks.length ? ` (${finalMasks.length})` : ''}`}
           </button>
         ) : null}
+      </div>
+      <div className="mask-color-control" aria-label="마스킹 색상 선택">
+        <span>마스킹 색상</span>
+        <div className="mask-color-options">
+          <button
+            className="mask-color-option mask-color-option-black"
+            type="button"
+            aria-pressed={maskFillColor === 'black'}
+            onClick={() => setMaskFillColor('black')}
+          >
+            검정
+          </button>
+          <button
+            className="mask-color-option mask-color-option-white"
+            type="button"
+            aria-pressed={maskFillColor === 'white'}
+            onClick={() => setMaskFillColor('white')}
+          >
+            흰색
+          </button>
+        </div>
       </div>
       {showPreviews && uploadedPdfs.length ? (
         <div className="pdf-preview-list" aria-label="PDF 미리보기 목록">
@@ -560,12 +817,17 @@ function PdfUploadPanel() {
                     <div
                       className="pdf-page-wrapper"
                       style={{ '--page-aspect-ratio': `${currentPage.width} / ${currentPage.height}` } as CSSProperties}
+                      onPointerDown={(event) => handleMaskPointerDown(event, pdf.id, currentPage)}
+                      onPointerMove={handleMaskPointerMove}
+                      onPointerUp={(event) => handleMaskPointerUp(event, pdf.id, currentPage)}
+                      onPointerCancel={handleMaskPointerCancel}
                     >
                       <button
                         className="pdf-page-nav pdf-page-nav-prev"
                         type="button"
                         aria-label={`${pdf.file.name} 이전 페이지`}
                         disabled={currentPageNumber <= 1}
+                        onPointerDown={(event) => event.stopPropagation()}
                         onClick={() => setPdfCurrentPage(pdf, currentPageNumber - 1)}
                       >
                         ‹
@@ -575,12 +837,58 @@ function PdfUploadPanel() {
                         width={currentPage.width}
                         height={currentPage.height}
                         alt={`${pdf.file.name} ${currentPage.pageNumber}페이지 미리보기`}
+                        draggable={false}
                       />
+                      <div className="pdf-mask-layer">
+                        {currentPage.masks
+                          .filter((mask) => mask.status !== 'rejected')
+                          .map((mask) => {
+                            const maskRect = canvasRectToDisplayRect(mask, currentPage, 100, 100);
+
+                            return (
+                              <div
+                                className={`pdf-mask-box pdf-mask-box-${mask.source}`}
+                                key={mask.id}
+                                style={{
+                                  left: `${maskRect.x}%`,
+                                  top: `${maskRect.y}%`,
+                                  width: `${maskRect.width}%`,
+                                  height: `${maskRect.height}%`
+                                }}
+                              >
+                                <button
+                                  className="pdf-mask-delete"
+                                  type="button"
+                                  aria-label={`${pdf.file.name} ${mask.pageNumber}페이지 마스킹 박스 삭제`}
+                                  onPointerDown={(event) => event.stopPropagation()}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    deleteMask(pdf.id, currentPage.pageNumber, mask);
+                                  }}
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            );
+                          })}
+                        {maskDraft && maskDraft.pdfId === pdf.id && maskDraft.pageNumber === currentPage.pageNumber ? (
+                          <div
+                            className="pdf-mask-box pdf-mask-box-draft"
+                            style={{
+                              left: `${normalizeDisplayRect(maskDraft).x}px`,
+                              top: `${normalizeDisplayRect(maskDraft).y}px`,
+                              width: `${normalizeDisplayRect(maskDraft).width}px`,
+                              height: `${normalizeDisplayRect(maskDraft).height}px`
+                            }}
+                          />
+                        ) : null}
+                      </div>
                       <button
                         className="pdf-page-nav pdf-page-nav-next"
                         type="button"
                         aria-label={`${pdf.file.name} 다음 페이지`}
                         disabled={currentPageNumber >= pdf.pageCount}
+                        onPointerDown={(event) => event.stopPropagation()}
                         onClick={() => setPdfCurrentPage(pdf, currentPageNumber + 1)}
                       >
                         ›
