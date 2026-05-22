@@ -1,16 +1,12 @@
-import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useRef, useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
-import PdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?worker';
+import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useEffect, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
 import type { MaskBox, MaskFillColor, MaskingMode, MaskStatus, MaskingWorkflowState, PageRenderState, WorkingBase } from './maskingTypes';
 import type { Detection, MaskBoxCandidate, OcrPageImage, OcrResponse } from './ocr/apiContract';
 import { getFinalMasks } from './maskingWorkflow';
-import { generateMaskedPdf } from './maskedPdfEngine';
 import './styles.css';
 
-pdfjsLib.GlobalWorkerOptions.workerPort = new PdfWorker();
 const steps = [
   {
     title: 'PDF 업로드',
@@ -74,6 +70,11 @@ type UploadedPdfPreview = {
   pages: PageRenderState[];
 };
 
+type DownloadLinkState = {
+  url: string;
+  fileName: string;
+};
+
 const PDF_RENDER_SCALE = 2;
 const OCR_API_URL = import.meta.env.VITE_OCR_API_URL ?? '/ocr-api';
 
@@ -93,6 +94,12 @@ function PdfUploadPanel() {
   const [autoMaskProgress, setAutoMaskProgress] = useState<{ current: number; total: number } | null>(null);
   const autoMaskRunIdRef = useRef(0);
   const autoMaskAbortControllerRef = useRef<AbortController | null>(null);
+  const pdfJsLibRef = useRef<typeof import('pdfjs-dist') | null>(null);
+  const downloadUrlRef = useRef<string | null>(null);
+  const [maskedPdfDownloadLink, setMaskedPdfDownloadLink] = useState<DownloadLinkState | null>(null);
+  const [isLoadingPdfRenderer, setIsLoadingPdfRenderer] = useState(false);
+  const [pdfRendererError, setPdfRendererError] = useState('');
+  const [isLoadingPdfGenerator, setIsLoadingPdfGenerator] = useState(false);
   const [maskDownloadError, setMaskDownloadError] = useState('');
   const [autoMaskError, setAutoMaskError] = useState('');
   const [ocrReviewSummaries, setOcrReviewSummaries] = useState<OcrReviewSummary[]>([]);
@@ -114,6 +121,23 @@ function PdfUploadPanel() {
   const autoReviewMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && (mask.status === 'review' || mask.status === 'candidate'));
   const autoAcceptedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status === 'accepted');
   const hasAutoReviewItems = ocrReviewSummaries.some((summary) => summary.detections.length > 0 || summary.candidates.length > 0);
+
+  const clearMaskedPdfDownloadLink = () => {
+    if (downloadUrlRef.current) {
+      URL.revokeObjectURL(downloadUrlRef.current);
+      downloadUrlRef.current = null;
+    }
+
+    setMaskedPdfDownloadLink(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (downloadUrlRef.current) {
+        URL.revokeObjectURL(downloadUrlRef.current);
+      }
+    };
+  }, []);
 
   const isPdfFile = (file: File) => file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
@@ -589,6 +613,31 @@ function PdfUploadPanel() {
     }
   };
 
+  const loadPdfRenderer = async () => {
+    if (pdfJsLibRef.current) {
+      return pdfJsLibRef.current;
+    }
+
+    setIsLoadingPdfRenderer(true);
+    setPdfRendererError('');
+
+    try {
+      const [pdfjsLib, workerModule] = await Promise.all([
+        import('pdfjs-dist'),
+        import('pdfjs-dist/build/pdf.worker.mjs?worker')
+      ]);
+      pdfjsLib.GlobalWorkerOptions.workerPort = new workerModule.default();
+      pdfJsLibRef.current = pdfjsLib;
+      return pdfjsLib;
+    } catch (error) {
+      const message = `PDF.js 렌더러를 불러올 수 없습니다. ${getErrorMessage(error)}`;
+      setPdfRendererError(message);
+      throw new Error(message);
+    } finally {
+      setIsLoadingPdfRenderer(false);
+    }
+  };
+
   const getMaskedPdfFileName = () => {
     if (uploadedPdfs.length === 1) {
       const originalName = uploadedPdfs[0].file.name.replace(/\.pdf$/i, '');
@@ -598,18 +647,24 @@ function PdfUploadPanel() {
     return 'masked-pdfs.pdf';
   };
 
-  const downloadPdfBytes = (bytes: Uint8Array, fileName: string) => {
+  const createMaskedPdfDownloadLink = (bytes: Uint8Array, fileName: string) => {
+    if (downloadUrlRef.current) {
+      URL.revokeObjectURL(downloadUrlRef.current);
+    }
+
     const pdfBuffer = new ArrayBuffer(bytes.byteLength);
     new Uint8Array(pdfBuffer).set(bytes);
     const blob = new Blob([pdfBuffer], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
+    downloadUrlRef.current = url;
+    setMaskedPdfDownloadLink({ url, fileName });
+
     const link = document.createElement('a');
     link.href = url;
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
     link.remove();
-    URL.revokeObjectURL(url);
   };
 
   const handleMaskedPdfDownload = async () => {
@@ -622,15 +677,18 @@ function PdfUploadPanel() {
     setMaskDownloadError('');
 
     try {
+      setIsLoadingPdfGenerator(true);
+      const { generateMaskedPdf } = await import('./maskedPdfEngine');
       const pdfBytes = await generateMaskedPdf({
         documents: renderablePdfs,
         masks: masksToApply,
         fillColor: maskFillColor
       });
-      downloadPdfBytes(pdfBytes, getMaskedPdfFileName());
+      createMaskedPdfDownloadLink(pdfBytes, getMaskedPdfFileName());
     } catch (error) {
       setMaskDownloadError(getErrorMessage(error));
     } finally {
+      setIsLoadingPdfGenerator(false);
       setIsGeneratingMaskedPdf(false);
     }
   };
@@ -653,6 +711,7 @@ function PdfUploadPanel() {
   };
 
   const renderPdfPages = async (arrayBuffer: ArrayBuffer) => {
+    const pdfjsLib = await loadPdfRenderer();
     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer.slice(0)) }).promise;
     const pages: PageRenderState[] = [];
 
@@ -711,6 +770,7 @@ function PdfUploadPanel() {
     const pdfFiles = nextFiles.filter(isPdfFile);
 
     if (pdfFiles.length) {
+      clearMaskedPdfDownloadLink();
       setUploadMessage('');
       setFiles((currentFiles) => [...currentFiles, ...pdfFiles]);
 
@@ -763,6 +823,7 @@ function PdfUploadPanel() {
   };
 
   const removeFile = (fileIndex: number) => {
+    clearMaskedPdfDownloadLink();
     const removedPdf = uploadedPdfs[fileIndex];
 
     setFiles((currentFiles) => currentFiles.filter((_, index) => index !== fileIndex));
@@ -828,7 +889,9 @@ function PdfUploadPanel() {
         </label>
       </div>
       {uploadMessage ? <p className="upload-message">{uploadMessage}</p> : null}
-      {isReadingPdf ? <p className="upload-message">PDF 파일을 읽고 미리보기를 생성하는 중입니다.</p> : null}
+      {isReadingPdf || isLoadingPdfRenderer ? <p className="upload-message">PDF 파일을 읽고 미리보기를 생성하는 중입니다.</p> : null}
+      {isLoadingPdfGenerator ? <p className="upload-message">PDF 생성 모듈을 불러오는 중입니다.</p> : null}
+      {pdfRendererError ? <p className="upload-message">PDF 렌더러를 준비할 수 없습니다. {pdfRendererError}</p> : null}
       {pdfReadError ? <p className="upload-message">PDF 파일을 처리할 수 없습니다. {pdfReadError}</p> : null}
       {maskDownloadError ? <p className="upload-message">마스킹 PDF를 생성할 수 없습니다. {maskDownloadError}</p> : null}
       {autoMaskError ? <p className="upload-message">자동 탐지를 완료할 수 없습니다. {autoMaskError}</p> : null}
@@ -880,6 +943,17 @@ function PdfUploadPanel() {
           </>
         ) : null}
       </div>
+      {maskedPdfDownloadLink ? (
+        <div className="masked-download-link" role="status">
+          <span>다운로드 링크가 준비되었습니다.</span>
+          <a href={maskedPdfDownloadLink.url} download={maskedPdfDownloadLink.fileName}>
+            {maskedPdfDownloadLink.fileName}
+          </a>
+          <button type="button" onClick={clearMaskedPdfDownloadLink}>
+            링크 정리
+          </button>
+        </div>
+      ) : null}
       <div className="mask-color-control" aria-label="마스킹 색상 선택">
         <span>마스킹 색상</span>
         <div className="mask-color-options">

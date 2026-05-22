@@ -8,7 +8,7 @@
 
 ## 0. 현재 진행상태
 
-현재까지 Codex를 통해 Step 1부터 Step 13까지 제작 및 검증을 진행했다. Step 8 이후 OCR 관련 구현은 `feature/ocr-steps` 브랜치에서 관리한다.
+현재까지 Codex를 통해 Step 1부터 Step 14A까지 제작 및 검증을 진행했다. Step 8 이후 OCR 관련 구현은 `feature/ocr-steps` 브랜치에서 관리한다.
 
 | 완료 단계 | 상태 | 비고 |
 |---|---:|---|
@@ -26,6 +26,8 @@
 | Step 11A. OCR 탐지 품질 최소 개선 및 검증 | 완료 | 주민등록번호 normalization, 인접 word 결합, 주소 줄바꿈 후보, 품질 비교 스크립트 구현 |
 | Step 12. 자동 후보 취사선택 및 최종 적용 대상 산정 | 완료 | 유지된 자동 후보와 수동 박스를 단일 finalMasks로 산정하고 다운로드 입력값으로 연결 |
 | Step 13. 최종 다운로드 엔진 통합 | 완료 | finalMasks만 입력으로 받는 공통 이미지 기반 PDF 생성 엔진 분리 및 페이지 수 검증 구현 |
+| Step 14. 다운로드 링크 제공 및 메모리·임시파일 정리 | 완료 | Object URL 기반 세션성 다운로드 링크 제공, 새 작업·언마운트·새 다운로드 시 URL 해제 구현 |
+| Step 14A. PDF 라이브러리 지연 로딩 최적화 | 완료 | PDF.js는 렌더링 시점, maskedPdfEngine/pdf-lib는 다운로드 시점에 dynamic import로 로드 |
 
 ver.3.0은 기존 plan.md(ver.3.0 이전안)의 형식과 Step 1~11A의 완료 상태를 유지하되, 최근 정리한 최종 선택 경로를 반영하여 Step 12와 Step 13의 의미를 다음과 같이 명확히 한다.
 
@@ -794,6 +796,38 @@ pdfBytes 생성
 - 브라우저 메모리 URL이 적절히 해제된다.
 - OCR 임시파일이 서버에 남지 않는다.
 
+#### 현재 상태
+
+완료. 생성된 PDF bytes를 Blob과 Object URL로 변환하고, 자동 클릭 다운로드와 세션성 다운로드 링크를 함께 제공한다. 새 다운로드 생성, 새 파일 업로드, 파일 제거, 컴포넌트 언마운트 시 기존 Object URL을 `URL.revokeObjectURL()`로 해제한다. OCR API는 요청별 임시 디렉터리를 사용하고 `recognizePdf`의 `finally` 블록에서 성공·실패와 무관하게 `rm(workDir, { recursive: true, force: true })`를 호출한다.
+
+---
+
+### Step 14A. PDF 라이브러리 지연 로딩 최적화
+
+#### 작업 내용
+
+Vite large chunk 경고를 줄이기 위해 PDF 관련 대형 라이브러리를 실제 사용 시점에만 로드한다.
+
+#### 구현 원칙
+
+- PDF.js와 PDF.js worker는 PDF 렌더링 함수 실행 시점에 `dynamic import`로 로드한다.
+- `maskedPdfEngine`과 그 내부의 `pdf-lib`는 다운로드 버튼 클릭 시점에 `dynamic import`로 로드한다.
+- 기존 Step 12의 `finalMasks` 산정 방식과 Step 13의 다운로드 입력 구조는 변경하지 않는다.
+- PDF.js worker 초기화 실패는 사용자에게 보이는 오류 상태로 표시한다.
+- 각 로딩 단계는 별도 loading 상태로 표시한다.
+
+#### 완료 기준
+
+- 앱 초기 번들에 `pdfjs-dist`와 `pdf-lib`가 직접 포함되지 않는다.
+- PDF 업로드 후 렌더링 시점에 PDF.js가 로드된다.
+- 다운로드 버튼 클릭 시점에 `maskedPdfEngine`과 `pdf-lib`가 로드된다.
+- `npm run build`에서 large chunk 경고가 사라지거나 초기 chunk 크기가 유의미하게 감소한다.
+- 주요 수동 검증 체크리스트가 문서화된다.
+
+#### 현재 상태
+
+완료. `App.tsx`의 PDF.js 및 worker 정적 import를 제거하고 `renderPdfPages` 실행 시점에 로드하도록 변경했다. `maskedPdfEngine` 정적 import도 제거하고 다운로드 버튼 클릭 시점에 로드하도록 변경했다. 빌드 결과 초기 `index` chunk는 약 958KB에서 약 163KB로 감소했고, PDF 관련 코드는 별도 chunk로 분리됐다.
+
 ---
 
 ### Step 15. 사용자 확인 및 안전장치 구현
@@ -1106,9 +1140,8 @@ Tesseract OCR 결과의 bounding box가 실제 민감정보 전체를 정확히 
 - 대용량 PDF 경고 메시지를 둔다.
 - OCR은 페이지별 순차 처리 또는 큐 방식으로 전환 가능하게 설계한다.
 - 처리 가능한 최대 페이지 수와 파일 크기 제한을 둔다.
-- Vite 빌드의 대형 chunk 경고는 현재 빌드 실패 사유가 아니며, Step 14까지 핵심 워크플로우 안정화를 우선한다.
-- PDF.js와 `pdf-lib`의 `dynamic import` 적용 여부는 Step 14 이후 별도 성능 최적화 항목으로 검토한다.
-- `manualChunks` 또는 `build.chunkSizeWarningLimit` 조정은 실제 초기 로딩 개선이 필요한지 확인한 뒤 후속 단계에서 결정한다.
+- Vite 빌드의 대형 chunk 경고는 Step 14A에서 PDF.js와 `pdf-lib`의 `dynamic import`를 적용해 초기 chunk 크기를 줄였다.
+- 추가적인 `manualChunks` 또는 `build.chunkSizeWarningLimit` 조정은 실제 초기 로딩 개선이 더 필요한지 확인한 뒤 후속 단계에서 결정한다.
 
 ---
 

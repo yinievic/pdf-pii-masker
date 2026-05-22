@@ -466,6 +466,45 @@ body {
   right: 14px;
 }
 
+
+.masked-download-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.masked-download-link a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.masked-download-link button {
+  margin-left: auto;
+  min-height: 30px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9999px;
+  background: var(--bg-deep);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.masked-download-link button:hover {
+  border-color: rgba(62, 207, 142, 0.72);
+  color: var(--text-primary);
+}
+
 .mask-color-control {
   display: flex;
   align-items: center;
