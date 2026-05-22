@@ -103,7 +103,7 @@ function PdfUploadPanel() {
   const [maskDownloadError, setMaskDownloadError] = useState('');
   const [autoMaskError, setAutoMaskError] = useState('');
   const [ocrReviewSummaries, setOcrReviewSummaries] = useState<OcrReviewSummary[]>([]);
-  const [maskFillColor, setMaskFillColor] = useState<MaskFillColor>('black');
+  const [maskFillColor, setMaskFillColor] = useState<MaskFillColor>('white');
   const [currentPages, setCurrentPages] = useState<Record<string, number>>({});
   const [showPreviews, setShowPreviews] = useState(false);
   const [fileListVersion, setFileListVersion] = useState(0);
@@ -118,8 +118,8 @@ function PdfUploadPanel() {
   const isPreviewCurrent = hasVisiblePreviewPage && previewVersion === fileListVersion;
   const canConfirmPdfPages = hasRenderablePdf && !isReadingPdf && !isPreviewCurrent;
   const finalMasks = getFinalMasks(maskingWorkflow.masks);
-  const autoReviewMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && (mask.status === 'review' || mask.status === 'candidate'));
-  const autoAcceptedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status === 'accepted');
+  const autoSelectedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status !== 'rejected');
+  const autoRejectedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status === 'rejected');
   const hasAutoReviewItems = ocrReviewSummaries.some((summary) => summary.detections.length > 0 || summary.candidates.length > 0);
 
   const clearMaskedPdfDownloadLink = () => {
@@ -548,6 +548,54 @@ function PdfUploadPanel() {
     deleteMask(pdfId, candidate.pageNumber, mask);
   };
 
+  const getAutoMasksForSummary = (summary: OcrReviewSummary) => {
+    return summary.candidates.flatMap((candidate) => {
+      const mask = getMaskForCandidate(summary.pdfId, candidate);
+      return mask ? [mask] : [];
+    });
+  };
+
+  const getManualMasksForPdf = (pdfId: string) => {
+    return uploadedPdfs
+      .find((pdf) => pdf.id === pdfId)
+      ?.pages.flatMap((page) => page.masks.filter((mask) => mask.source === 'manual')) ?? [];
+  };
+
+  const setFileAutoCandidateStatus = (summary: OcrReviewSummary, status: MaskStatus) => {
+    const candidateIds = new Set(summary.candidates.map((candidate) => candidate.id));
+    if (!candidateIds.size) return;
+
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.map((pdf) =>
+        pdf.id === summary.pdfId
+          ? {
+              ...pdf,
+              pages: pdf.pages.map((page) => ({
+                ...page,
+                masks: page.masks.map((mask) =>
+                  candidateIds.has(mask.id) ? { ...mask, status } : mask
+                )
+              }))
+            }
+          : pdf
+      );
+
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        mode: currentWorkflow.mode === 'autoReview' && status === 'accepted' ? 'autoEdit' : currentWorkflow.mode,
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+
+      return nextPdfs;
+    });
+  };
+
+  const toggleFileAutoCandidates = (summary: OcrReviewSummary) => {
+    const masks = getAutoMasksForSummary(summary);
+    const shouldRejectAll = masks.length > 0 && masks.every((mask) => mask.status !== 'rejected');
+    setFileAutoCandidateStatus(summary, shouldRejectAll ? 'rejected' : 'review');
+  };
+
   const handleAutoMaskReview = async () => {
     const renderablePdfs = uploadedPdfs.filter((pdf) => pdf.pages.length > 0 && pdf.file);
     if (!renderablePdfs.length) return;
@@ -938,7 +986,7 @@ function PdfUploadPanel() {
               disabled={isGeneratingMaskedPdf || !hasVisiblePreviewPage}
               onClick={handleMaskedPdfDownload}
             >
-              {isGeneratingMaskedPdf ? 'PDF 생성 중' : `마스킹된 PDF 파일 다운로드${finalMasks.length ? ` (${finalMasks.length})` : ''}`}
+              {isGeneratingMaskedPdf ? 'PDF 생성 중' : '마스킹된 PDF 파일 다운로드'}
             </button>
           </>
         ) : null}
@@ -958,15 +1006,6 @@ function PdfUploadPanel() {
         <span>마스킹 색상</span>
         <div className="mask-color-options">
           <button
-            className="mask-color-option mask-color-option-black"
-            type="button"
-            aria-pressed={maskFillColor === 'black'}
-            onClick={() => setMaskFillColor('black')}
-          >
-            <span className="mask-color-check" aria-hidden="true">✓</span>
-            검정
-          </button>
-          <button
             className="mask-color-option mask-color-option-white"
             type="button"
             aria-pressed={maskFillColor === 'white'}
@@ -974,6 +1013,15 @@ function PdfUploadPanel() {
           >
             <span className="mask-color-check" aria-hidden="true">✓</span>
             흰색
+          </button>
+          <button
+            className="mask-color-option mask-color-option-black"
+            type="button"
+            aria-pressed={maskFillColor === 'black'}
+            onClick={() => setMaskFillColor('black')}
+          >
+            <span className="mask-color-check" aria-hidden="true">✓</span>
+            검정
           </button>
         </div>
       </div>
@@ -983,53 +1031,92 @@ function PdfUploadPanel() {
             <div>
               <h2>자동 탐지 결과</h2>
               <p>
-                검토 대기 {autoReviewMasks.length.toLocaleString()}개 · 승인됨 {autoAcceptedMasks.length.toLocaleString()}개
+                선택됨 {autoSelectedMasks.length.toLocaleString()}개 · 해제됨 {autoRejectedMasks.length.toLocaleString()}개
               </p>
-            </div>
-            <div className="auto-review-actions">
-              <button type="button" onClick={acceptCandidateMasks} disabled={!autoReviewMasks.length}>
-                자동 후보 전체 승인
-              </button>
-              <button type="button" onClick={discardAutoMasks} disabled={!autoReviewMasks.length && !autoAcceptedMasks.length}>
-                자동 후보 전체 폐기
-              </button>
             </div>
           </div>
           <div className="auto-detection-list">
-            {ocrReviewSummaries.map((summary) => (
-              <div className="auto-detection-group" key={summary.pdfId}>
-                <h3>{summary.fileName}</h3>
-                {summary.detections.length ? (
-                  <ul>
-                    {summary.candidates.map((candidate) => {
-                      const detection = summary.detections.find((item) => item.id === candidate.detectionId);
-                      const candidateMask = getMaskForCandidate(summary.pdfId, candidate);
-                      const isRejected = candidateMask?.status === 'rejected';
+            {ocrReviewSummaries.map((summary) => {
+              const autoMasks = getAutoMasksForSummary(summary);
+              const manualMasks = getManualMasksForPdf(summary.pdfId);
+              const allAutoSelected = autoMasks.length > 0 && autoMasks.every((mask) => mask.status !== 'rejected');
 
-                      return (
-                        <li key={candidate.id}>
-                          <span>{candidate.label}</span>
-                          <strong>{candidate.maskText || candidate.rawText}</strong>
-                          <em>{candidate.pageNumber.toLocaleString()}페이지</em>
-                          <button
-                            className="auto-detection-delete"
-                            type="button"
-                            aria-label={`${candidate.label} 자동 후보 ${isRejected ? '원복' : '삭제'}`}
-                            aria-pressed={isRejected}
-                            title={detection?.rawText}
-                            onClick={() => toggleCandidateReview(summary.pdfId, candidate)}
-                          >
-                            ×
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : (
-                  <p>탐지된 항목이 없습니다.</p>
-                )}
-              </div>
-            ))}
+              return (
+                <div className="auto-detection-group" key={summary.pdfId}>
+                  <div className="auto-detection-file-row">
+                    <span>{summary.fileName}</span>
+                  </div>
+                  <div className="auto-detection-columns">
+                    <div className="auto-detection-column">
+                      <div className="auto-detection-column-header">
+                        <h4>자동 탐지</h4>
+                        <label className="auto-file-toggle" aria-label={`${summary.fileName} 자동 후보 전체 설정 또는 해제`}>
+                          <input
+                            type="checkbox"
+                            checked={allAutoSelected}
+                            disabled={!summary.candidates.length}
+                            onChange={() => toggleFileAutoCandidates(summary)}
+                          />
+                        </label>
+                      </div>
+                      {summary.candidates.length ? (
+                        <ul>
+                          {summary.candidates.map((candidate) => {
+                            const detection = summary.detections.find((item) => item.id === candidate.detectionId);
+                            const candidateMask = getMaskForCandidate(summary.pdfId, candidate);
+                            const isRejected = candidateMask?.status === 'rejected';
+
+                            return (
+                              <li key={candidate.id}>
+                                <span>{candidate.label}</span>
+                                <strong>{candidate.maskText || candidate.rawText}</strong>
+                                <em>{candidate.pageNumber.toLocaleString()}페이지</em>
+                                <button
+                                  className="auto-detection-delete"
+                                  type="button"
+                                  aria-label={`${candidate.label} 자동 후보 ${isRejected ? '원복' : '삭제'}`}
+                                  aria-pressed={isRejected}
+                                  title={detection?.rawText}
+                                  onClick={() => toggleCandidateReview(summary.pdfId, candidate)}
+                                >
+                                  ×
+                                </button>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : (
+                        <p>탐지된 항목이 없습니다.</p>
+                      )}
+                    </div>
+                    <div className="auto-detection-column manual-mask-column">
+                      <h4>{`수동 마스킹 ${manualMasks.length.toLocaleString()}개`}</h4>
+                      {manualMasks.length ? (
+                        <ul>
+                          {manualMasks.map((mask) => (
+                            <li key={mask.id}>
+                              <span>수동</span>
+                              <strong>{`${mask.width.toFixed(0)}×${mask.height.toFixed(0)}`}</strong>
+                              <em>{mask.pageNumber.toLocaleString()}페이지</em>
+                              <button
+                                className="auto-detection-delete"
+                                type="button"
+                                aria-label={`${summary.fileName} ${mask.pageNumber}페이지 수동 마스킹 삭제`}
+                                onClick={() => deleteMask(summary.pdfId, mask.pageNumber, mask)}
+                              >
+                                ×
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>수동 마스킹 없음</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
       ) : null}

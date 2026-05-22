@@ -678,16 +678,74 @@ body {
 
 .auto-detection-group {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--border-subtle);
 }
 
-.auto-detection-group h3 {
-  margin: 0;
+.auto-detection-file-row {
+  display: flex;
+  align-items: center;
+  min-height: 28px;
   color: var(--text-secondary);
   font-size: 14px;
   font-weight: 500;
+}
+
+.auto-detection-file-row span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auto-file-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auto-file-toggle input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #3ecf8e;
+}
+
+.auto-detection-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: 0;
+}
+
+.auto-detection-column {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.auto-detection-column + .auto-detection-column {
+  padding-left: 12px;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.auto-detection-column:first-child {
+  padding-right: 12px;
+}
+
+.auto-detection-column-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 8px;
+}
+
+.auto-detection-column h4 {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .auto-detection-group ul {
@@ -721,6 +779,27 @@ body {
   color: var(--text-muted);
   font-style: normal;
   white-space: nowrap;
+}
+
+
+@media (max-width: 760px) {
+  .auto-detection-columns {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .auto-detection-column,
+  .auto-detection-column:first-child,
+  .auto-detection-column + .auto-detection-column {
+    padding-right: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .masked-download-link button,
+  .auto-detection-delete {
+    margin-left: 0;
+  }
 }
 
 .pdf-mask-box-review,
