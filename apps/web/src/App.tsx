@@ -1,6 +1,5 @@
 import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { PDFDocument } from 'pdf-lib';
 import PdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?worker';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
@@ -8,6 +7,7 @@ import { StepCard } from './components/StepCard';
 import type { MaskBox, MaskFillColor, MaskingMode, MaskStatus, MaskingWorkflowState, PageRenderState, WorkingBase } from './maskingTypes';
 import type { Detection, MaskBoxCandidate, OcrPageImage, OcrResponse } from './ocr/apiContract';
 import { getFinalMasks } from './maskingWorkflow';
+import { generateMaskedPdf } from './maskedPdfEngine';
 import './styles.css';
 
 pdfjsLib.GlobalWorkerOptions.workerPort = new PdfWorker();
@@ -589,71 +589,6 @@ function PdfUploadPanel() {
     }
   };
 
-  const getMasksForPage = (page: PageRenderState, masks: MaskBox[]) => {
-    return masks.filter((mask) => mask.pageNumber === page.pageNumber);
-  };
-
-  const loadImage = (src: string) => {
-    return new Promise<HTMLImageElement>((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => resolve(image);
-      image.onerror = () => reject(new Error('마스킹 PDF 생성을 위한 페이지 이미지를 불러올 수 없습니다.'));
-      image.src = src;
-    });
-  };
-
-  const getMaskFillStyle = (fillColor: MaskFillColor) => {
-    return fillColor === 'white' ? '#fff' : '#000';
-  };
-
-  const createMaskedPagePng = async (page: PageRenderState, masks: MaskBox[], fillColor: MaskFillColor) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = page.width;
-    canvas.height = page.height;
-
-    const context = canvas.getContext('2d');
-    if (!context) {
-      throw new Error('마스킹 PDF 생성을 위한 canvas context를 만들 수 없습니다.');
-    }
-
-    const image = await loadImage(page.canvasDataUrl);
-    context.drawImage(image, 0, 0, page.width, page.height);
-    context.fillStyle = getMaskFillStyle(fillColor);
-
-    getMasksForPage(page, masks).forEach((mask) => {
-      const x = Math.min(Math.max(mask.x, 0), page.width);
-      const y = Math.min(Math.max(mask.y, 0), page.height);
-      const width = Math.min(Math.max(mask.width, 0), page.width - x);
-      const height = Math.min(Math.max(mask.height, 0), page.height - y);
-
-      if (width > 0 && height > 0) {
-        context.fillRect(x, y, width, height);
-      }
-    });
-
-    return canvas.toDataURL('image/png');
-  };
-
-  const createImageBasedMaskedPdfBytes = async (pdfs: UploadedPdfPreview[], masks: MaskBox[], fillColor: MaskFillColor) => {
-    const resultPdf = await PDFDocument.create();
-
-    for (const pdf of pdfs) {
-      for (const page of pdf.pages) {
-        const pngDataUrl = await createMaskedPagePng(page, masks, fillColor);
-        const pngImage = await resultPdf.embedPng(pngDataUrl);
-        const pdfPage = resultPdf.addPage([page.width, page.height]);
-        pdfPage.drawImage(pngImage, {
-          x: 0,
-          y: 0,
-          width: page.width,
-          height: page.height
-        });
-      }
-    }
-
-    return resultPdf.save();
-  };
-
   const getMaskedPdfFileName = () => {
     if (uploadedPdfs.length === 1) {
       const originalName = uploadedPdfs[0].file.name.replace(/\.pdf$/i, '');
@@ -687,7 +622,11 @@ function PdfUploadPanel() {
     setMaskDownloadError('');
 
     try {
-      const pdfBytes = await createImageBasedMaskedPdfBytes(renderablePdfs, masksToApply, maskFillColor);
+      const pdfBytes = await generateMaskedPdf({
+        documents: renderablePdfs,
+        masks: masksToApply,
+        fillColor: maskFillColor
+      });
       downloadPdfBytes(pdfBytes, getMaskedPdfFileName());
     } catch (error) {
       setMaskDownloadError(getErrorMessage(error));
