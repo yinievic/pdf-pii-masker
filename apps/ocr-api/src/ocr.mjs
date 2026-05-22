@@ -11,7 +11,17 @@ const execFileAsync = promisify(execFile);
 export const DEFAULT_PROVIDER = 'tesseract-local';
 export const DEFAULT_LANGUAGE = process.env.TESSERACT_LANG || 'kor+eng';
 export const DEFAULT_DPI = Number.parseInt(process.env.PDF_RENDER_DPI || '200', 10);
+export const DEFAULT_TESSERACT_PSM = parseOptionalPsm(process.env.TESSERACT_PSM);
 export const DEFAULT_TEMP_ROOT = process.env.OCR_TEMP_DIR || join(tmpdir(), 'p2-ocr');
+
+function parseOptionalPsm(value) {
+  if (!value) {
+    return undefined;
+  }
+
+  const parsed = Number.parseInt(value, 10);
+  return Number.isInteger(parsed) && parsed >= 0 && parsed <= 13 ? parsed : undefined;
+}
 
 export class OcrUserFacingError extends Error {
   constructor(message = 'OCR 처리 중 오류가 발생했습니다.') {
@@ -167,13 +177,14 @@ export async function recognizePdf(pdfBuffer, options = {}) {
     const words = [];
     const pageImages = [];
     const errors = [];
+    const tesseractOptions = options.tesseractOptions ?? (DEFAULT_TESSERACT_PSM === undefined ? {} : { psm: DEFAULT_TESSERACT_PSM });
 
     for (const pageNumber of validPages) {
       try {
         const pngPath = await convertPdfPageToPng(pdfPath, pageNumber, workDir, options.dpi || DEFAULT_DPI);
         const dimensions = await getPngDimensions(pngPath);
         pageImages.push({ pageNumber, ...dimensions });
-        const pageWords = await recognizePng(pngPath, pageNumber, options.language || DEFAULT_LANGUAGE);
+        const pageWords = await recognizePng(pngPath, pageNumber, options.language || DEFAULT_LANGUAGE, tesseractOptions);
         words.push(...pageWords);
       } catch {
         errors.push({ pageNumber, message: '해당 페이지 OCR 처리에 실패했습니다.' });

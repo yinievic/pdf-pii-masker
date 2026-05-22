@@ -59,6 +59,13 @@ const variants = [
     label: '기본 kor+eng OCR'
   },
   {
+    id: 'psm-11-sparse',
+    label: 'kor+eng OCR + psm 11 sparse text',
+    tesseractOptions: {
+      psm: 11
+    }
+  },
+  {
     id: 'digit-whitelist',
     label: '숫자 전용 OCR + tessedit_char_whitelist',
     language: 'eng',

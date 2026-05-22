@@ -7,6 +7,7 @@ Step 11A는 Step 12로 넘어가기 전 OCR 탐지 품질을 최소한으로 개
 - 기본 `kor+eng` OCR
 - 숫자 전용 OCR pass
 - `tessedit_char_whitelist=0123456789-` 적용 OCR
+- `psm 11` sparse text OCR
 - grayscale 렌더링과 Tesseract thresholding 기반 전처리 OCR
 - 주민등록번호·계좌번호 후보 영역 확장 후처리
 
@@ -25,6 +26,17 @@ mock 검증은 로컬 devbox에서도 실행 가능하다.
 cd apps/ocr-api
 npm run test:quality
 ```
+
+
+## PSM 비교 기록
+
+사용자 PSM 테스트 결과, sample PDF 2페이지에서는 default 및 `psm 6`보다 `psm 11` 결과가 가장 양호했다. `psm 11`은 sparse text 탐색에 유리할 수 있으므로 주민등록번호처럼 고위험 개인정보가 기본 OCR 결과에서 누락되는 경우의 내부 보완 전략 후보로 기록한다.
+
+다만 현재 단계에서는 전체 문서 기본값을 `psm 11`로 변경하지 않는다. 전체 기본값으로 적용하기 전에는 여러 문서 샘플에서 주소, 일반 한글 텍스트, 숫자 개인정보 탐지 모두에 대한 회귀 검증이 필요하다.
+
+개발자는 OCR API 실행 시 `TESSERACT_PSM=11`을 지정해 동일 API 구조에서 PSM 영향을 비교할 수 있다. 이 설정은 개발자 내부 검증용이며 사용자 UI에는 노출하지 않는다.
+
+자동 재OCR 파이프라인은 아직 구현하지 않는다. 향후 고위험 개인정보 미탐지 가능성이 확인되는 경우, 기본 OCR 후 특정 조건에서만 `psm 11` 재시도를 수행하는 내부 fallback으로 검토한다.
 
 ## 해석
 

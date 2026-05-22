@@ -7,6 +7,7 @@ import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
 import type { MaskBox, MaskFillColor, MaskingMode, MaskStatus, MaskingWorkflowState, PageRenderState, WorkingBase } from './maskingTypes';
 import type { Detection, MaskBoxCandidate, OcrPageImage, OcrResponse } from './ocr/apiContract';
+import { getFinalMasks } from './maskingWorkflow';
 import './styles.css';
 
 pdfjsLib.GlobalWorkerOptions.workerPort = new PdfWorker();
@@ -109,7 +110,7 @@ function PdfUploadPanel() {
   const hasVisiblePreviewPage = showPreviews && uploadedPdfs.some((pdf) => pdf.pages.length > 0);
   const isPreviewCurrent = hasVisiblePreviewPage && previewVersion === fileListVersion;
   const canConfirmPdfPages = hasRenderablePdf && !isReadingPdf && !isPreviewCurrent;
-  const finalMasks = maskingWorkflow.masks.filter((mask) => mask.status === 'accepted');
+  const finalMasks = getFinalMasks(maskingWorkflow.masks);
   const autoReviewMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && (mask.status === 'review' || mask.status === 'candidate'));
   const autoAcceptedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status === 'accepted');
   const hasAutoReviewItems = ocrReviewSummaries.some((summary) => summary.detections.length > 0 || summary.candidates.length > 0);
@@ -152,10 +153,6 @@ function PdfUploadPanel() {
 
   const syncWorkflowMasksFromPages = (pdfs: UploadedPdfPreview[]) => {
     return pdfs.flatMap((pdf) => pdf.pages.flatMap((page) => page.masks));
-  };
-
-  const getFinalMasks = (workflow: MaskingWorkflowState) => {
-    return workflow.masks.filter((mask) => mask.status === 'accepted');
   };
 
   const getOcrApiUrl = () => `${OCR_API_URL.replace(/\/$/, '')}/ocr`;
@@ -592,8 +589,8 @@ function PdfUploadPanel() {
     }
   };
 
-  const getAcceptedMasksForPage = (page: PageRenderState, masks: MaskBox[]) => {
-    return masks.filter((mask) => mask.pageNumber === page.pageNumber && mask.status === 'accepted');
+  const getMasksForPage = (page: PageRenderState, masks: MaskBox[]) => {
+    return masks.filter((mask) => mask.pageNumber === page.pageNumber);
   };
 
   const loadImage = (src: string) => {
@@ -623,7 +620,7 @@ function PdfUploadPanel() {
     context.drawImage(image, 0, 0, page.width, page.height);
     context.fillStyle = getMaskFillStyle(fillColor);
 
-    getAcceptedMasksForPage(page, masks).forEach((mask) => {
+    getMasksForPage(page, masks).forEach((mask) => {
       const x = Math.min(Math.max(mask.x, 0), page.width);
       const y = Math.min(Math.max(mask.y, 0), page.height);
       const width = Math.min(Math.max(mask.width, 0), page.width - x);
@@ -637,12 +634,12 @@ function PdfUploadPanel() {
     return canvas.toDataURL('image/png');
   };
 
-  const createImageBasedMaskedPdfBytes = async (pdfs: UploadedPdfPreview[], fillColor: MaskFillColor) => {
+  const createImageBasedMaskedPdfBytes = async (pdfs: UploadedPdfPreview[], masks: MaskBox[], fillColor: MaskFillColor) => {
     const resultPdf = await PDFDocument.create();
 
     for (const pdf of pdfs) {
       for (const page of pdf.pages) {
-        const pngDataUrl = await createMaskedPagePng(page, page.masks, fillColor);
+        const pngDataUrl = await createMaskedPagePng(page, masks, fillColor);
         const pngImage = await resultPdf.embedPng(pngDataUrl);
         const pdfPage = resultPdf.addPage([page.width, page.height]);
         pdfPage.drawImage(pngImage, {
@@ -684,16 +681,13 @@ function PdfUploadPanel() {
     const renderablePdfs = uploadedPdfs.filter((pdf) => pdf.pages.length > 0);
     if (!renderablePdfs.length || isGeneratingMaskedPdf) return;
 
-    if (autoReviewMasks.length > 0) {
-      setMaskDownloadError('자동 탐지 후보를 승인하거나 삭제한 뒤 다운로드할 수 있습니다.');
-      return;
-    }
+    const masksToApply = getFinalMasks(maskingWorkflow.masks);
 
     setIsGeneratingMaskedPdf(true);
     setMaskDownloadError('');
 
     try {
-      const pdfBytes = await createImageBasedMaskedPdfBytes(renderablePdfs, maskFillColor);
+      const pdfBytes = await createImageBasedMaskedPdfBytes(renderablePdfs, masksToApply, maskFillColor);
       downloadPdfBytes(pdfBytes, getMaskedPdfFileName());
     } catch (error) {
       setMaskDownloadError(getErrorMessage(error));

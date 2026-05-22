@@ -57,6 +57,17 @@ curl -X POST \
   'http://localhost:5173/ocr-api/ocr?pages=1,2'
 ```
 
+
+## 개발자 전용 OCR 설정
+
+기본 OCR 동작은 Tesseract 기본 PSM을 사용한다. 개발자가 품질 비교를 위해 내부적으로 PSM을 바꿔 테스트해야 하는 경우에만 OCR API 실행 환경에 `TESSERACT_PSM`을 지정한다.
+
+```bash
+TESSERACT_PSM=11 docker compose up --build ocr-api
+```
+
+이 값은 사용자 UI에 노출하지 않는다. `psm 11`은 sparse text 탐색에 유리할 수 있지만, 전체 기본값으로 적용하기 전에는 여러 문서 샘플에서 회귀 검증이 필요하다. 자동 재OCR fallback은 후속 개선 과제로 남긴다.
+
 ## OCR 실행 전 검증 명령
 
 컨테이너 안에서 다음 명령을 실행해 OCR 도구 설치 상태를 확인한다.
