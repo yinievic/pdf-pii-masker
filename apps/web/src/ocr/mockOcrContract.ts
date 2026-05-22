@@ -13,6 +13,10 @@ export const mockOcrResponse = {
   pageCount: 2,
   coordinateSpace: 'pdf-page-image',
   dpi: 200,
+  pageImages: [
+    { pageNumber: 1, width: 1200, height: 1600 },
+    { pageNumber: 2, width: 1200, height: 1600 }
+  ],
   words: [
     {
       pageNumber: 1,

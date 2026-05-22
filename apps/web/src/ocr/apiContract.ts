@@ -42,6 +42,8 @@ export type Detection = {
   source: 'regex';
   textRange: { start: number; end: number };
   lineText: string;
+  groupId?: string;
+  normalizedText?: string;
 };
 
 export type MaskBoxCandidateStatus = 'review' | 'accepted' | 'rejected';
@@ -63,15 +65,23 @@ export type MaskBoxCandidate = {
   maskText: string;
   confidence?: number;
   policy?: string;
+  groupId?: string;
 };
 
 export type OcrCoordinateSpace = 'pdf-page-image';
+
+export type OcrPageImage = {
+  pageNumber: number;
+  width: number;
+  height: number;
+};
 
 export type OcrResponse = {
   provider: EnabledOcrProvider;
   pageCount?: number;
   coordinateSpace?: OcrCoordinateSpace;
   dpi?: number;
+  pageImages?: OcrPageImage[];
   words: OcrWord[];
   detections?: Detection[];
   maskBoxCandidates?: MaskBoxCandidate[];

@@ -1,6 +1,6 @@
 export type MaskSource = 'manual' | 'ocr' | 'regex' | 'llm';
 
-export type MaskStatus = 'candidate' | 'accepted' | 'rejected';
+export type MaskStatus = 'candidate' | 'review' | 'accepted' | 'rejected';
 
 export type MaskFillColor = 'black' | 'white';
 
@@ -20,6 +20,9 @@ export type MaskBox = {
   label?: string;
   confidence?: number;
   text?: string;
+  detectionId?: string;
+  rawText?: string;
+  maskText?: string;
 };
 
 export type PageRenderState = {

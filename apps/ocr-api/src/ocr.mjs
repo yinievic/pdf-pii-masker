@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
@@ -107,18 +107,34 @@ export async function getPdfPageCount(pdfPath) {
   return parsePdfPageCount(stdout);
 }
 
-export async function convertPdfPageToPng(pdfPath, pageNumber, workDir, dpi = DEFAULT_DPI) {
+export async function convertPdfPageToPng(pdfPath, pageNumber, workDir, dpi = DEFAULT_DPI, options = {}) {
   const outputPrefix = join(workDir, `page-${pageNumber}`);
+  const formatArgs = options.grayscale ? ['-gray', '-png'] : ['-png'];
 
-  await execFileAsync('pdftoppm', ['-r', String(dpi), '-f', String(pageNumber), '-l', String(pageNumber), '-singlefile', '-png', pdfPath, outputPrefix], {
+  await execFileAsync('pdftoppm', ['-r', String(dpi), '-f', String(pageNumber), '-l', String(pageNumber), '-singlefile', ...formatArgs, pdfPath, outputPrefix], {
     maxBuffer: 1024 * 1024
   });
 
   return `${outputPrefix}.png`;
 }
 
-export async function recognizePng(imagePath, pageNumber, language = DEFAULT_LANGUAGE) {
-  const { stdout } = await execFileAsync('tesseract', [imagePath, 'stdout', '-l', language, 'tsv'], {
+export async function getPngDimensions(imagePath) {
+  const header = await readFile(imagePath);
+
+  if (header.length < 24 || header.toString('ascii', 1, 4) !== 'PNG') {
+    throw new Error('Unable to read PNG dimensions.');
+  }
+
+  return {
+    width: header.readUInt32BE(16),
+    height: header.readUInt32BE(20)
+  };
+}
+
+export async function recognizePng(imagePath, pageNumber, language = DEFAULT_LANGUAGE, options = {}) {
+  const psmArgs = options.psm ? ['--psm', String(options.psm)] : [];
+  const configArgs = Object.entries(options.configs ?? {}).flatMap(([key, value]) => ['-c', `${key}=${value}`]);
+  const { stdout } = await execFileAsync('tesseract', [imagePath, 'stdout', '-l', language, ...psmArgs, ...configArgs, 'tsv'], {
     maxBuffer: 50 * 1024 * 1024
   });
 
@@ -149,11 +165,14 @@ export async function recognizePdf(pdfBuffer, options = {}) {
     }
 
     const words = [];
+    const pageImages = [];
     const errors = [];
 
     for (const pageNumber of validPages) {
       try {
         const pngPath = await convertPdfPageToPng(pdfPath, pageNumber, workDir, options.dpi || DEFAULT_DPI);
+        const dimensions = await getPngDimensions(pngPath);
+        pageImages.push({ pageNumber, ...dimensions });
         const pageWords = await recognizePng(pngPath, pageNumber, options.language || DEFAULT_LANGUAGE);
         words.push(...pageWords);
       } catch {
@@ -168,6 +187,7 @@ export async function recognizePdf(pdfBuffer, options = {}) {
       pageCount,
       coordinateSpace: 'pdf-page-image',
       dpi: options.dpi || DEFAULT_DPI,
+      pageImages,
       words,
       detections,
       maskBoxCandidates,

@@ -135,6 +135,271 @@ function mergeRects(rects) {
   };
 }
 
+
+function normalizeDetectionCharacter(character) {
+  const codePoint = character.codePointAt(0);
+
+  if (codePoint >= 0xff10 && codePoint <= 0xff19) {
+    return String.fromCodePoint(codePoint - 0xff10 + 0x30);
+  }
+
+  if (/\d/u.test(character)) return character;
+  if (/[‐‑‒–—―﹘﹣－]/u.test(character)) return '-';
+  if (/[Il|]/u.test(character)) return '1';
+  if (/[OoQ]/u.test(character)) return '0';
+
+  return character;
+}
+
+function createNormalizedWordChars(words, { collapseWhitespace = true } = {}) {
+  const chars = [];
+
+  for (const [wordIndex, word] of words.entries()) {
+    if (!collapseWhitespace && wordIndex > 0) {
+      chars.push({ value: ' ', word: undefined, rawIndex: -1 });
+    }
+
+    for (const [rawIndex, character] of [...word.text].entries()) {
+      const normalized = normalizeDetectionCharacter(character);
+      if (collapseWhitespace && /\s/u.test(normalized)) continue;
+      chars.push({ value: normalized, word, rawIndex });
+    }
+  }
+
+  return chars;
+}
+
+function getTextFromNormalizedChars(chars) {
+  return chars.map((char) => char.value).join('');
+}
+
+function getRectForNormalizedCharRange(chars, start, end) {
+  const rects = chars.slice(start, end).flatMap((char) => {
+    if (!char.word || char.rawIndex < 0) return [];
+    return [estimatePartialWordRect(char.word, 0, [...char.word.text].length, char.rawIndex, char.rawIndex + 1)];
+  });
+
+  return rects.length > 0 ? mergeRects(rects) : undefined;
+}
+
+function getLineId(line) {
+  return line.key ?? `${Math.round(Math.min(...line.words.map((word) => word.y)))}-${Math.round(Math.min(...line.words.map((word) => word.x)))}`;
+}
+
+function createResidentRegistrationDetection({ rule, line, words, startIndex, windowSize, match }) {
+  const rawText = words.map((word) => word.text).join(' ');
+  const normalizedChars = createNormalizedWordChars(words);
+  const normalizedText = getTextFromNormalizedChars(normalizedChars);
+  const rearSevenStart = normalizedText.length - 7;
+  const rect = getBoundingRect(words);
+  const maskRect = getRectForNormalizedCharRange(normalizedChars, rearSevenStart, normalizedText.length);
+  const confidenceValues = words.map((word) => word.confidence).filter((confidence) => Number.isFinite(confidence));
+  const confidence = confidenceValues.length > 0 ? Math.min(...confidenceValues) : undefined;
+  const lineId = getLineId(line);
+  const detectionId = createId('det', [rule.id, line.pageNumber, lineId, startIndex, windowSize, 'normalized']);
+
+  const detection = {
+    id: detectionId,
+    type: rule.type,
+    ruleId: rule.id,
+    label: rule.label,
+    pageNumber: line.pageNumber,
+    rawText,
+    x: rect.x,
+    y: rect.y,
+    width: rect.width,
+    height: rect.height,
+    confidence,
+    source: DEFAULT_SOURCE,
+    textRange: { start: 0, end: rawText.length },
+    lineText: line.words.map((word) => word.text).join(' '),
+    normalizedText
+  };
+
+  const maskBoxCandidate = maskRect
+    ? {
+        id: createId('mask-candidate', [rule.id, line.pageNumber, lineId, startIndex, windowSize, 'rear7']),
+        detectionId,
+        type: rule.type,
+        ruleId: rule.id,
+        label: rule.label,
+        pageNumber: line.pageNumber,
+        x: maskRect.x,
+        y: maskRect.y,
+        width: maskRect.width,
+        height: maskRect.height,
+        status: DEFAULT_STATUS,
+        source: DEFAULT_SOURCE,
+        rawText,
+        maskText: match[2],
+        confidence,
+        policy: rule.maskPolicy?.description
+      }
+    : undefined;
+
+  return { detection, maskBoxCandidate };
+}
+
+function detectResidentRegistrationNumbers(lines, rule) {
+  const detections = [];
+  const maskBoxCandidates = [];
+  const seen = new Set();
+  const rrnPattern = /^(\d{6})-?(\d{7})$/u;
+
+  for (const line of lines) {
+    for (let startIndex = 0; startIndex < line.words.length; startIndex += 1) {
+      for (let windowSize = 1; windowSize <= 5 && startIndex + windowSize <= line.words.length; windowSize += 1) {
+        const words = line.words.slice(startIndex, startIndex + windowSize);
+        const normalizedText = getTextFromNormalizedChars(createNormalizedWordChars(words));
+        const match = rrnPattern.exec(normalizedText);
+
+        if (!match) continue;
+
+        const key = `${line.pageNumber}-${getLineId(line)}-${startIndex}-${startIndex + windowSize}-${normalizedText}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+
+        const result = createResidentRegistrationDetection({ rule, line, words, startIndex, windowSize, match });
+        detections.push(result.detection);
+
+        if (result.maskBoxCandidate) {
+          maskBoxCandidates.push(result.maskBoxCandidate);
+        }
+      }
+    }
+  }
+
+  return { detections, maskBoxCandidates };
+}
+
+function isAddressContinuationLine(lineText) {
+  const compactText = lineText.replace(/\s+/gu, '');
+  if (!compactText) return false;
+  if (/(시|군|구)/u.test(compactText)) return false;
+  if (/^\d{6}-?\d{7}$/u.test(compactText)) return false;
+  return /(?:\d|로|길|번지|층|동|호|읍|면|리|대로|빌딩|타워|스톤|아파트|오피스텔|주택|일원)/u.test(compactText);
+}
+
+function isCloseNextLine(currentLine, nextLine) {
+  const currentBottom = Math.max(...currentLine.words.map((word) => word.y + word.height));
+  const nextTop = Math.min(...nextLine.words.map((word) => word.y));
+  const currentHeight = Math.max(...currentLine.words.map((word) => word.height));
+  return nextTop - currentBottom <= currentHeight * 1.8;
+}
+
+function createAddressDetectionGroup({ rule, lines, startLineIndex }) {
+  const firstLine = lines[startLineIndex];
+  const { text: firstLineText, spans: firstLineSpans } = buildLineText(firstLine.words);
+  const regex = new RegExp(rule.pattern, 'u');
+  const match = regex.exec(firstLineText);
+  if (!match) return undefined;
+
+  const groupLines = [firstLine];
+  const continuationLimit = Math.min(lines.length, startLineIndex + 3);
+
+  for (let index = startLineIndex + 1; index < continuationLimit; index += 1) {
+    const nextLine = lines[index];
+    if (nextLine.pageNumber !== firstLine.pageNumber) break;
+    const { text: nextLineText } = buildLineText(nextLine.words);
+    if (!isCloseNextLine(groupLines[groupLines.length - 1], nextLine) || !isAddressContinuationLine(nextLineText)) break;
+    groupLines.push(nextLine);
+  }
+
+  const rawText = groupLines.map((line) => buildLineText(line.words).text).join(' ');
+  const allWords = groupLines.flatMap((line) => line.words);
+  const rect = getBoundingRect(allWords);
+  const confidenceValues = allWords.map((word) => word.confidence).filter((confidence) => Number.isFinite(confidence));
+  const confidence = confidenceValues.length > 0 ? Math.min(...confidenceValues) : undefined;
+  const firstMaskRange = resolveMaskRange(rule, match[0], match.index);
+  const firstMaskRect = getRectForCharacterRange(firstLineSpans, firstMaskRange.start, firstMaskRange.end);
+  const lineId = getLineId(firstLine);
+  const detectionId = createId('det', [rule.id, firstLine.pageNumber, lineId, 'address-group']);
+  const groupId = createId('group', [rule.id, firstLine.pageNumber, lineId]);
+
+  const detection = {
+    id: detectionId,
+    type: rule.type,
+    ruleId: rule.id,
+    label: rule.label,
+    pageNumber: firstLine.pageNumber,
+    rawText,
+    x: rect.x,
+    y: rect.y,
+    width: rect.width,
+    height: rect.height,
+    confidence,
+    source: DEFAULT_SOURCE,
+    textRange: { start: 0, end: rawText.length },
+    lineText: rawText,
+    groupId
+  };
+
+  const maskBoxCandidates = [];
+
+  if (firstMaskRect) {
+    maskBoxCandidates.push({
+      id: createId('mask-candidate', [rule.id, firstLine.pageNumber, lineId, 'address-group', 0]),
+      detectionId,
+      groupId,
+      type: rule.type,
+      ruleId: rule.id,
+      label: rule.label,
+      pageNumber: firstLine.pageNumber,
+      x: firstMaskRect.x,
+      y: firstMaskRect.y,
+      width: firstMaskRect.width,
+      height: firstMaskRect.height,
+      status: DEFAULT_STATUS,
+      source: DEFAULT_SOURCE,
+      rawText,
+      maskText: firstMaskRange.text,
+      confidence,
+      policy: rule.maskPolicy?.description
+    });
+  }
+
+  for (const [offset, continuationLine] of groupLines.slice(1).entries()) {
+    const lineRect = getBoundingRect(continuationLine.words);
+    const { text: continuationText } = buildLineText(continuationLine.words);
+    maskBoxCandidates.push({
+      id: createId('mask-candidate', [rule.id, continuationLine.pageNumber, getLineId(continuationLine), 'address-group', offset + 1]),
+      detectionId,
+      groupId,
+      type: rule.type,
+      ruleId: rule.id,
+      label: rule.label,
+      pageNumber: continuationLine.pageNumber,
+      x: lineRect.x,
+      y: lineRect.y,
+      width: lineRect.width,
+      height: lineRect.height,
+      status: DEFAULT_STATUS,
+      source: DEFAULT_SOURCE,
+      rawText,
+      maskText: continuationText,
+      confidence,
+      policy: rule.maskPolicy?.description
+    });
+  }
+
+  return { detection, maskBoxCandidates };
+}
+
+function detectAddresses(lines, rule) {
+  const detections = [];
+  const maskBoxCandidates = [];
+
+  for (const [lineIndex, line] of lines.entries()) {
+    const result = createAddressDetectionGroup({ rule, lines, startLineIndex: lineIndex });
+    if (!result) continue;
+
+    detections.push(result.detection);
+    maskBoxCandidates.push(...result.maskBoxCandidates);
+  }
+
+  return { detections, maskBoxCandidates };
+}
+
 export function getRectForCharacterRange(spans, start, end) {
   const rects = spans.flatMap((span) => {
     const rect = estimatePartialWordRect(span.word, span.start, span.end, start, end);
@@ -186,7 +451,8 @@ function createDetection({ rule, match, line, lineText, spans, matchIndex }) {
   const maskRect = getRectForCharacterRange(spans, maskRange.start, maskRange.end);
   const confidenceValues = matchedWords.map((word) => word.confidence).filter((confidence) => Number.isFinite(confidence));
   const confidence = confidenceValues.length > 0 ? Math.min(...confidenceValues) : undefined;
-  const detectionId = createId('det', [rule.id, line.pageNumber, matchIndex, matchStart]);
+  const lineId = getLineId(line);
+  const detectionId = createId('det', [rule.id, line.pageNumber, lineId, matchIndex, matchStart]);
 
   const detection = {
     id: detectionId,
@@ -207,7 +473,7 @@ function createDetection({ rule, match, line, lineText, spans, matchIndex }) {
 
   const maskBoxCandidate = maskRect
     ? {
-        id: createId('mask-candidate', [rule.id, line.pageNumber, matchIndex, maskRange.start]),
+        id: createId('mask-candidate', [rule.id, line.pageNumber, lineId, matchIndex, maskRange.start]),
         detectionId,
         type: rule.type,
         ruleId: rule.id,
@@ -234,10 +500,23 @@ export function detectSensitiveInfo(words, activeRules = rules) {
   const maskBoxCandidates = [];
   const lines = groupWordsByLine(words);
 
-  for (const line of lines) {
-    const { text: lineText, spans } = buildLineText(line.words);
+  for (const rule of activeRules) {
+    if (rule.type === 'residentRegistrationNumber') {
+      const result = detectResidentRegistrationNumbers(lines, rule);
+      detections.push(...result.detections);
+      maskBoxCandidates.push(...result.maskBoxCandidates);
+      continue;
+    }
 
-    for (const rule of activeRules) {
+    if (rule.type === 'address') {
+      const result = detectAddresses(lines, rule);
+      detections.push(...result.detections);
+      maskBoxCandidates.push(...result.maskBoxCandidates);
+      continue;
+    }
+
+    for (const line of lines) {
+      const { text: lineText, spans } = buildLineText(line.words);
       const regex = new RegExp(rule.pattern, 'gu');
       const matches = [...lineText.matchAll(regex)];
 

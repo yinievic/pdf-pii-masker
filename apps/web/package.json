@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:proxy": "node scripts/check-dev-proxy.mjs"
   },
   "dependencies": {
     "pdf-lib": "^1.17.1",

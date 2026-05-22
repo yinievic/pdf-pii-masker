@@ -1,14 +1,15 @@
-import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useState } from 'react';
+import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument } from 'pdf-lib';
-import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
+import PdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?worker';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
 import type { MaskBox, MaskFillColor, MaskingMode, MaskStatus, MaskingWorkflowState, PageRenderState, WorkingBase } from './maskingTypes';
+import type { Detection, MaskBoxCandidate, OcrPageImage, OcrResponse } from './ocr/apiContract';
 import './styles.css';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+pdfjsLib.GlobalWorkerOptions.workerPort = new PdfWorker();
 const steps = [
   {
     title: 'PDF 업로드',
@@ -55,6 +56,13 @@ type MaskDraft = {
   displayHeight: number;
 };
 
+type OcrReviewSummary = {
+  pdfId: string;
+  fileName: string;
+  detections: Detection[];
+  candidates: MaskBoxCandidate[];
+};
+
 type UploadedPdfPreview = {
   id: string;
   file: File;
@@ -66,6 +74,7 @@ type UploadedPdfPreview = {
 };
 
 const PDF_RENDER_SCALE = 2;
+const OCR_API_URL = import.meta.env.VITE_OCR_API_URL ?? '/ocr-api';
 
 const initialMaskingWorkflow: MaskingWorkflowState = {
   mode: 'idle',
@@ -79,10 +88,18 @@ function PdfUploadPanel() {
   const [maskingWorkflow, setMaskingWorkflow] = useState<MaskingWorkflowState>(initialMaskingWorkflow);
   const [maskDraft, setMaskDraft] = useState<MaskDraft | null>(null);
   const [isGeneratingMaskedPdf, setIsGeneratingMaskedPdf] = useState(false);
+  const [isRunningAutoMask, setIsRunningAutoMask] = useState(false);
+  const [autoMaskProgress, setAutoMaskProgress] = useState<{ current: number; total: number } | null>(null);
+  const autoMaskRunIdRef = useRef(0);
+  const autoMaskAbortControllerRef = useRef<AbortController | null>(null);
   const [maskDownloadError, setMaskDownloadError] = useState('');
+  const [autoMaskError, setAutoMaskError] = useState('');
+  const [ocrReviewSummaries, setOcrReviewSummaries] = useState<OcrReviewSummary[]>([]);
   const [maskFillColor, setMaskFillColor] = useState<MaskFillColor>('black');
   const [currentPages, setCurrentPages] = useState<Record<string, number>>({});
   const [showPreviews, setShowPreviews] = useState(false);
+  const [fileListVersion, setFileListVersion] = useState(0);
+  const [previewVersion, setPreviewVersion] = useState(-1);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
 
@@ -90,7 +107,12 @@ function PdfUploadPanel() {
   const pdfReadError = uploadedPdfs.find((pdf) => pdf.error)?.error ?? '';
   const hasRenderablePdf = uploadedPdfs.some((pdf) => pdf.arrayBuffer);
   const hasVisiblePreviewPage = showPreviews && uploadedPdfs.some((pdf) => pdf.pages.length > 0);
+  const isPreviewCurrent = hasVisiblePreviewPage && previewVersion === fileListVersion;
+  const canConfirmPdfPages = hasRenderablePdf && !isReadingPdf && !isPreviewCurrent;
   const finalMasks = maskingWorkflow.masks.filter((mask) => mask.status === 'accepted');
+  const autoReviewMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && (mask.status === 'review' || mask.status === 'candidate'));
+  const autoAcceptedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status === 'accepted');
+  const hasAutoReviewItems = ocrReviewSummaries.some((summary) => summary.detections.length > 0 || summary.candidates.length > 0);
 
   const isPdfFile = (file: File) => file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
@@ -136,6 +158,24 @@ function PdfUploadPanel() {
     return workflow.masks.filter((mask) => mask.status === 'accepted');
   };
 
+  const getOcrApiUrl = () => `${OCR_API_URL.replace(/\/$/, '')}/ocr`;
+
+  const getPageImage = (pageImages: OcrPageImage[] | undefined, pageNumber: number) => {
+    return pageImages?.find((pageImage) => pageImage.pageNumber === pageNumber);
+  };
+
+  const clampCanvasRect = (rect: DisplayRect, page: PageRenderState): DisplayRect => {
+    const x = Math.min(Math.max(rect.x, 0), page.width);
+    const y = Math.min(Math.max(rect.y, 0), page.height);
+
+    return {
+      x,
+      y,
+      width: Math.min(Math.max(rect.width, 0), page.width - x),
+      height: Math.min(Math.max(rect.height, 0), page.height - y)
+    };
+  };
+
   const setMaskingMode = (mode: MaskingMode, workingBase: WorkingBase = maskingWorkflow.workingBase) => {
     setMaskingWorkflow((currentWorkflow) => ({ ...currentWorkflow, mode, workingBase }));
   };
@@ -156,6 +196,8 @@ function PdfUploadPanel() {
       workingBase: 'original',
       masks: currentWorkflow.masks.filter((mask) => mask.source === 'manual')
     }));
+    setOcrReviewSummaries([]);
+    setAutoMaskError('');
   };
 
   const getDisplayToCanvasScale = (page: PageRenderState, displayWidth: number, displayHeight: number): DisplayToCanvasScale => {
@@ -286,7 +328,7 @@ function PdfUploadPanel() {
       id: mask.id ?? createMaskId(),
       pageNumber,
       source,
-      status: mask.status ?? (source === 'manual' ? 'accepted' : 'candidate')
+      status: mask.status ?? (source === 'manual' ? 'accepted' : 'review')
     };
 
     setUploadedPdfs((currentPdfs) => {
@@ -335,7 +377,7 @@ function PdfUploadPanel() {
     });
   };
 
-  const rejectMask = (pdfId: string, pageNumber: number, maskId: string) => {
+  const setMaskStatus = (pdfId: string, pageNumber: number, maskId: string, status: MaskStatus) => {
     setUploadedPdfs((currentPdfs) => {
       const nextPdfs = currentPdfs.map((pdf) =>
         pdf.id === pdfId
@@ -346,7 +388,7 @@ function PdfUploadPanel() {
                   ? {
                       ...page,
                       masks: page.masks.map((mask) =>
-                        mask.id === maskId ? { ...mask, status: 'rejected' as MaskStatus } : mask
+                        mask.id === maskId ? { ...mask, status } : mask
                       )
                     }
                   : page
@@ -364,6 +406,14 @@ function PdfUploadPanel() {
     });
   };
 
+  const rejectMask = (pdfId: string, pageNumber: number, maskId: string) => {
+    setMaskStatus(pdfId, pageNumber, maskId, 'rejected');
+  };
+
+  const restoreMask = (pdfId: string, pageNumber: number, maskId: string) => {
+    setMaskStatus(pdfId, pageNumber, maskId, 'review');
+  };
+
   const deleteMask = (pdfId: string, pageNumber: number, mask: MaskBox) => {
     if (mask.source === 'manual') {
       removeMask(pdfId, pageNumber, mask.id);
@@ -379,7 +429,11 @@ function PdfUploadPanel() {
         ...pdf,
         pages: pdf.pages.map((page) => ({
           ...page,
-          masks: page.masks.map((mask) => (mask.status === 'candidate' ? { ...mask, status: 'accepted' as MaskStatus } : mask))
+          masks: page.masks.map((mask) =>
+            mask.source !== 'manual' && (mask.status === 'candidate' || mask.status === 'review')
+              ? { ...mask, status: 'accepted' as MaskStatus }
+              : mask
+          )
         }))
       }));
 
@@ -393,6 +447,150 @@ function PdfUploadPanel() {
     });
   };
 
+
+  const mapCandidateToMask = (candidate: MaskBoxCandidate, page: PageRenderState, pageImage?: OcrPageImage): MaskBox => {
+    const scaleX = pageImage && pageImage.width > 0 ? page.width / pageImage.width : 1;
+    const scaleY = pageImage && pageImage.height > 0 ? page.height / pageImage.height : 1;
+    const canvasRect = clampCanvasRect(
+      {
+        x: candidate.x * scaleX,
+        y: candidate.y * scaleY,
+        width: candidate.width * scaleX,
+        height: candidate.height * scaleY
+      },
+      page
+    );
+
+    return {
+      id: candidate.id,
+      pageNumber: candidate.pageNumber,
+      ...canvasRect,
+      source: 'regex',
+      status: 'review',
+      label: candidate.label,
+      confidence: candidate.confidence,
+      text: candidate.rawText,
+      detectionId: candidate.detectionId,
+      rawText: candidate.rawText,
+      maskText: candidate.maskText
+    };
+  };
+
+  const applyOcrResponseToPdf = (pdfId: string, response: OcrResponse) => {
+    setUploadedPdfs((currentPdfs) => {
+      const nextPdfs = currentPdfs.map((pdf) => {
+        if (pdf.id !== pdfId) return pdf;
+
+        return {
+          ...pdf,
+          pages: pdf.pages.map((page) => {
+            const pageImage = getPageImage(response.pageImages, page.pageNumber);
+            const nextAutoMasks = (response.maskBoxCandidates ?? [])
+              .filter((candidate) => candidate.pageNumber === page.pageNumber)
+              .map((candidate) => mapCandidateToMask(candidate, page, pageImage));
+
+            return {
+              ...page,
+              masks: [...page.masks.filter((mask) => mask.source === 'manual'), ...nextAutoMasks]
+            };
+          })
+        };
+      });
+
+      setMaskingWorkflow((currentWorkflow) => ({
+        ...currentWorkflow,
+        mode: 'autoReview',
+        workingBase: 'autoResult',
+        masks: syncWorkflowMasksFromPages(nextPdfs)
+      }));
+
+      return nextPdfs;
+    });
+  };
+
+  const getMaskForCandidate = (pdfId: string, candidate: MaskBoxCandidate) => {
+    return uploadedPdfs
+      .find((pdf) => pdf.id === pdfId)
+      ?.pages.find((page) => page.pageNumber === candidate.pageNumber)
+      ?.masks.find((mask) => mask.id === candidate.id);
+  };
+
+  const toggleCandidateReview = (pdfId: string, candidate: MaskBoxCandidate) => {
+    const mask = getMaskForCandidate(pdfId, candidate);
+    if (!mask) return;
+
+    if (mask.status === 'rejected') {
+      restoreMask(pdfId, candidate.pageNumber, mask.id);
+      return;
+    }
+
+    deleteMask(pdfId, candidate.pageNumber, mask);
+  };
+
+  const handleAutoMaskReview = async () => {
+    const renderablePdfs = uploadedPdfs.filter((pdf) => pdf.pages.length > 0 && pdf.file);
+    if (!renderablePdfs.length) return;
+
+    autoMaskAbortControllerRef.current?.abort();
+    const runId = autoMaskRunIdRef.current + 1;
+    const abortController = new AbortController();
+    autoMaskRunIdRef.current = runId;
+    autoMaskAbortControllerRef.current = abortController;
+
+    discardAutoMasks();
+    setIsRunningAutoMask(true);
+    setAutoMaskProgress({ current: 0, total: renderablePdfs.length });
+    setAutoMaskError('');
+    setMaskDownloadError('');
+
+    try {
+      const summaries: OcrReviewSummary[] = [];
+
+      for (const [index, pdf] of renderablePdfs.entries()) {
+        if (autoMaskRunIdRef.current !== runId) return;
+        setAutoMaskProgress({ current: index + 1, total: renderablePdfs.length });
+
+        const response = await fetch(getOcrApiUrl(), {
+          method: 'POST',
+          headers: { 'content-type': 'application/pdf' },
+          body: pdf.file,
+          signal: abortController.signal
+        });
+
+        if (!response.ok) {
+          throw new Error(`OCR API 요청이 실패했습니다. (${response.status})`);
+        }
+
+        const ocrResponse = (await response.json()) as OcrResponse;
+        if (autoMaskRunIdRef.current !== runId) return;
+
+        applyOcrResponseToPdf(pdf.id, ocrResponse);
+        summaries.push({
+          pdfId: pdf.id,
+          fileName: pdf.file.name,
+          detections: ocrResponse.detections ?? [],
+          candidates: ocrResponse.maskBoxCandidates ?? []
+        });
+      }
+
+      if (autoMaskRunIdRef.current === runId) {
+        setOcrReviewSummaries(summaries);
+      }
+    } catch (error) {
+      if (autoMaskRunIdRef.current !== runId || (error instanceof DOMException && error.name === 'AbortError')) return;
+
+      const message = error instanceof TypeError && error.message === 'Failed to fetch'
+        ? `OCR API에 연결할 수 없습니다. OCR API 프록시(${OCR_API_URL})가 Vite 서버에서 접근 가능한 OCR API로 연결되는지 확인해 주세요.`
+        : getErrorMessage(error);
+      setAutoMaskError(message);
+    } finally {
+      if (autoMaskRunIdRef.current === runId) {
+        setIsRunningAutoMask(false);
+        setAutoMaskProgress(null);
+        autoMaskAbortControllerRef.current = null;
+      }
+    }
+  };
 
   const getAcceptedMasksForPage = (page: PageRenderState, masks: MaskBox[]) => {
     return masks.filter((mask) => mask.pageNumber === page.pageNumber && mask.status === 'accepted');
@@ -486,6 +684,11 @@ function PdfUploadPanel() {
     const renderablePdfs = uploadedPdfs.filter((pdf) => pdf.pages.length > 0);
     if (!renderablePdfs.length || isGeneratingMaskedPdf) return;
 
+    if (autoReviewMasks.length > 0) {
+      setMaskDownloadError('자동 탐지 후보를 승인하거나 삭제한 뒤 다운로드할 수 있습니다.');
+      return;
+    }
+
     setIsGeneratingMaskedPdf(true);
     setMaskDownloadError('');
 
@@ -511,7 +714,9 @@ function PdfUploadPanel() {
   };
 
   const handlePreviewButtonClick = () => {
+    if (!canConfirmPdfPages) return;
     setShowPreviews(true);
+    setPreviewVersion(fileListVersion);
   };
 
   const renderPdfPages = async (arrayBuffer: ArrayBuffer) => {
@@ -587,7 +792,10 @@ function PdfUploadPanel() {
       }));
 
       setShowPreviews(false);
+      setFileListVersion((currentVersion) => currentVersion + 1);
       setMaskingWorkflow(initialMaskingWorkflow);
+      setOcrReviewSummaries([]);
+      setAutoMaskError('');
       setUploadedPdfs((currentPdfs) => [...currentPdfs, ...nextUploadedPdfs]);
       setCurrentPages((currentPagesById) => ({
         ...currentPagesById,
@@ -625,12 +833,14 @@ function PdfUploadPanel() {
     const removedPdf = uploadedPdfs[fileIndex];
 
     setFiles((currentFiles) => currentFiles.filter((_, index) => index !== fileIndex));
+    setFileListVersion((currentVersion) => currentVersion + 1);
     setUploadedPdfs((currentPdfs) => {
       const nextPdfs = currentPdfs.filter((_, index) => index !== fileIndex);
       setMaskingWorkflow((currentWorkflow) => ({
         ...currentWorkflow,
         masks: syncWorkflowMasksFromPages(nextPdfs)
       }));
+      setOcrReviewSummaries((currentSummaries) => currentSummaries.filter((summary) => summary.pdfId !== removedPdf?.id));
       return nextPdfs;
     });
 
@@ -688,6 +898,7 @@ function PdfUploadPanel() {
       {isReadingPdf ? <p className="upload-message">PDF 파일을 읽고 미리보기를 생성하는 중입니다.</p> : null}
       {pdfReadError ? <p className="upload-message">PDF 파일을 처리할 수 없습니다. {pdfReadError}</p> : null}
       {maskDownloadError ? <p className="upload-message">마스킹 PDF를 생성할 수 없습니다. {maskDownloadError}</p> : null}
+      {autoMaskError ? <p className="upload-message">자동 탐지를 완료할 수 없습니다. {autoMaskError}</p> : null}
       {files.length ? (
         <ul className="upload-files" aria-label="선택된 PDF 파일 목록">
           {files.map((file, index) => (
@@ -702,19 +913,38 @@ function PdfUploadPanel() {
         </ul>
       ) : null}
       <div className={`masking-actions${hasVisiblePreviewPage ? ' has-preview-actions' : ''}`}>
-        <button className="masking-button" type="button" data-pdf-ready={hasRenderablePdf} onClick={handlePreviewButtonClick}>
+        <button
+          className="masking-button"
+          type="button"
+          data-pdf-ready={hasRenderablePdf}
+          disabled={!canConfirmPdfPages}
+          onClick={handlePreviewButtonClick}
+        >
           PDF 파일 페이지 확인
         </button>
         {hasVisiblePreviewPage ? (
-          <button
-            className="masking-button"
-            type="button"
-            data-pdf-ready={hasRenderablePdf}
-            disabled={isGeneratingMaskedPdf || !hasVisiblePreviewPage}
-            onClick={handleMaskedPdfDownload}
-          >
-            {isGeneratingMaskedPdf ? 'PDF 생성 중' : `마스킹된 PDF 파일 다운로드${finalMasks.length ? ` (${finalMasks.length})` : ''}`}
-          </button>
+          <>
+            <button
+              className="masking-button"
+              type="button"
+              data-pdf-ready={hasRenderablePdf}
+              disabled={!hasVisiblePreviewPage}
+              onClick={handleAutoMaskReview}
+            >
+              {isRunningAutoMask && autoMaskProgress
+                ? `자동 탐지 중 (${autoMaskProgress.current}/${autoMaskProgress.total})`
+                : '자동 개인정보 탐지'}
+            </button>
+            <button
+              className="masking-button"
+              type="button"
+              data-pdf-ready={hasRenderablePdf}
+              disabled={isGeneratingMaskedPdf || !hasVisiblePreviewPage}
+              onClick={handleMaskedPdfDownload}
+            >
+              {isGeneratingMaskedPdf ? 'PDF 생성 중' : `마스킹된 PDF 파일 다운로드${finalMasks.length ? ` (${finalMasks.length})` : ''}`}
+            </button>
+          </>
         ) : null}
       </div>
       <div className="mask-color-control" aria-label="마스킹 색상 선택">
@@ -726,6 +956,7 @@ function PdfUploadPanel() {
             aria-pressed={maskFillColor === 'black'}
             onClick={() => setMaskFillColor('black')}
           >
+            <span className="mask-color-check" aria-hidden="true">✓</span>
             검정
           </button>
           <button
@@ -734,10 +965,67 @@ function PdfUploadPanel() {
             aria-pressed={maskFillColor === 'white'}
             onClick={() => setMaskFillColor('white')}
           >
+            <span className="mask-color-check" aria-hidden="true">✓</span>
             흰색
           </button>
         </div>
       </div>
+      {hasAutoReviewItems ? (
+        <section className="auto-review-panel" aria-label="자동 탐지 결과 검토">
+          <div className="auto-review-summary">
+            <div>
+              <h2>자동 탐지 결과</h2>
+              <p>
+                검토 대기 {autoReviewMasks.length.toLocaleString()}개 · 승인됨 {autoAcceptedMasks.length.toLocaleString()}개
+              </p>
+            </div>
+            <div className="auto-review-actions">
+              <button type="button" onClick={acceptCandidateMasks} disabled={!autoReviewMasks.length}>
+                자동 후보 전체 승인
+              </button>
+              <button type="button" onClick={discardAutoMasks} disabled={!autoReviewMasks.length && !autoAcceptedMasks.length}>
+                자동 후보 전체 폐기
+              </button>
+            </div>
+          </div>
+          <div className="auto-detection-list">
+            {ocrReviewSummaries.map((summary) => (
+              <div className="auto-detection-group" key={summary.pdfId}>
+                <h3>{summary.fileName}</h3>
+                {summary.detections.length ? (
+                  <ul>
+                    {summary.candidates.map((candidate) => {
+                      const detection = summary.detections.find((item) => item.id === candidate.detectionId);
+                      const candidateMask = getMaskForCandidate(summary.pdfId, candidate);
+                      const isRejected = candidateMask?.status === 'rejected';
+
+                      return (
+                        <li key={candidate.id}>
+                          <span>{candidate.label}</span>
+                          <strong>{candidate.maskText || candidate.rawText}</strong>
+                          <em>{candidate.pageNumber.toLocaleString()}페이지</em>
+                          <button
+                            className="auto-detection-delete"
+                            type="button"
+                            aria-label={`${candidate.label} 자동 후보 ${isRejected ? '원복' : '삭제'}`}
+                            aria-pressed={isRejected}
+                            title={detection?.rawText}
+                            onClick={() => toggleCandidateReview(summary.pdfId, candidate)}
+                          >
+                            ×
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  <p>탐지된 항목이 없습니다.</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
       {showPreviews && uploadedPdfs.length ? (
         <div className="pdf-preview-list" aria-label="PDF 미리보기 목록">
           {uploadedPdfs.map((pdf) => {
@@ -809,8 +1097,9 @@ function PdfUploadPanel() {
 
                             return (
                               <div
-                                className={`pdf-mask-box pdf-mask-box-${mask.source}`}
+                                className={`pdf-mask-box pdf-mask-box-${mask.source} pdf-mask-box-${mask.status}`}
                                 key={mask.id}
+                                title={mask.label ? `${mask.label}${mask.maskText ? `: ${mask.maskText}` : ''}` : undefined}
                                 style={{
                                   left: `${maskRect.x}%`,
                                   top: `${maskRect.y}%`,
@@ -818,6 +1107,7 @@ function PdfUploadPanel() {
                                   height: `${maskRect.height}%`
                                 }}
                               >
+                                {mask.source !== 'manual' ? <span className="pdf-mask-label">{mask.label ?? '자동 후보'}</span> : null}
                                 <button
                                   className="pdf-mask-delete"
                                   type="button"

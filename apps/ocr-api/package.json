@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.mjs",
-    "check": "node --check src/ocr.mjs && node --check src/server.mjs && node --check scripts/verify-tools.mjs && node --check scripts/test-mock-tsv.mjs",
+    "check": "node --check src/ocr.mjs && node --check src/server.mjs && node --check scripts/verify-tools.mjs && node --check scripts/test-mock-tsv.mjs && node --check scripts/test-ocr-quality-mock.mjs && node --check scripts/compare-ocr-quality.mjs",
     "test:mocks": "node scripts/test-mock-tsv.mjs",
+    "test:quality": "node scripts/test-ocr-quality-mock.mjs",
+    "compare:quality": "node scripts/compare-ocr-quality.mjs",
     "verify:tools": "node scripts/verify-tools.mjs"
   },
   "engines": {
