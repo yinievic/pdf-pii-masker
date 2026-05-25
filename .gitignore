@@ -145,4 +145,7 @@ vite.config.ts.timestamp-*
 # OCR runtime verification artifacts
 /sample.pdf
 /ocr-result-sample.json
+/ocr-all.json
+/ocr-page1.json
+/ocr-page2.json
 

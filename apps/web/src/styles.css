@@ -467,6 +467,8 @@ body {
 }
 
 
+
+
 .masked-download-link {
   display: flex;
   flex-wrap: wrap;
@@ -479,6 +481,13 @@ body {
   background: var(--bg-elevated);
   color: var(--text-secondary);
   font-size: 13px;
+}
+
+.masked-download-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-width: 0;
 }
 
 .masked-download-link a {
@@ -574,7 +583,7 @@ body {
 }
 
 .masking-actions.has-preview-actions {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) minmax(0, 5fr);
 }
 
 .masking-button {
@@ -625,14 +634,20 @@ body {
 
 .auto-review-summary {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 14px;
 }
 
 .auto-review-summary h2 {
-  margin: 0 0 6px;
+  margin: 0;
   font-size: 17px;
+}
+
+.auto-review-summary .mask-color-control {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 0;
 }
 
 .auto-review-summary p,
@@ -746,6 +761,12 @@ body {
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 600;
+}
+
+.auto-detection-status {
+  margin-left: 6px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .auto-detection-group ul {

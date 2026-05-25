@@ -1,4 +1,4 @@
-import { type CSSProperties, type ChangeEvent, type DragEvent, type PointerEvent, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, type ChangeEvent, type DragEvent, type MouseEvent, type PointerEvent, useEffect, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
@@ -71,8 +71,33 @@ type UploadedPdfPreview = {
 };
 
 type DownloadLinkState = {
+  id: string;
   url: string;
   fileName: string;
+  blob: Blob;
+};
+
+type SaveFilePickerOptions = {
+  suggestedName?: string;
+  types?: Array<{
+    description: string;
+    accept: Record<string, string[]>;
+  }>;
+  excludeAcceptAllOption?: boolean;
+  startIn?: 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos';
+};
+
+type FileSystemWritableFileStreamLike = {
+  write: (data: Blob) => Promise<void>;
+  close: () => Promise<void>;
+};
+
+type FileSystemFileHandleLike = {
+  createWritable: () => Promise<FileSystemWritableFileStreamLike>;
+};
+
+type WindowWithSaveFilePicker = Window & {
+  showSaveFilePicker?: (options?: SaveFilePickerOptions) => Promise<FileSystemFileHandleLike>;
 };
 
 const PDF_RENDER_SCALE = 2;
@@ -95,8 +120,8 @@ function PdfUploadPanel() {
   const autoMaskRunIdRef = useRef(0);
   const autoMaskAbortControllerRef = useRef<AbortController | null>(null);
   const pdfJsLibRef = useRef<typeof import('pdfjs-dist') | null>(null);
-  const downloadUrlRef = useRef<string | null>(null);
-  const [maskedPdfDownloadLink, setMaskedPdfDownloadLink] = useState<DownloadLinkState | null>(null);
+  const downloadUrlsRef = useRef<string[]>([]);
+  const [maskedPdfDownloadLinks, setMaskedPdfDownloadLinks] = useState<DownloadLinkState[]>([]);
   const [isLoadingPdfRenderer, setIsLoadingPdfRenderer] = useState(false);
   const [pdfRendererError, setPdfRendererError] = useState('');
   const [isLoadingPdfGenerator, setIsLoadingPdfGenerator] = useState(false);
@@ -118,26 +143,42 @@ function PdfUploadPanel() {
   const isPreviewCurrent = hasVisiblePreviewPage && previewVersion === fileListVersion;
   const canConfirmPdfPages = hasRenderablePdf && !isReadingPdf && !isPreviewCurrent;
   const finalMasks = getFinalMasks(maskingWorkflow.masks);
-  const autoSelectedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status !== 'rejected');
-  const autoRejectedMasks = maskingWorkflow.masks.filter((mask) => mask.source !== 'manual' && mask.status === 'rejected');
-  const hasAutoReviewItems = ocrReviewSummaries.some((summary) => summary.detections.length > 0 || summary.candidates.length > 0);
+  const hasWorkInProgress = uploadedPdfs.length > 0 || maskingWorkflow.masks.length > 0 || maskedPdfDownloadLinks.length > 0;
 
-  const clearMaskedPdfDownloadLink = () => {
-    if (downloadUrlRef.current) {
-      URL.revokeObjectURL(downloadUrlRef.current);
-      downloadUrlRef.current = null;
+  const clearMaskedPdfDownloadLinks = (pdfId?: string) => {
+    if (!pdfId) {
+      downloadUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      downloadUrlsRef.current = [];
+      setMaskedPdfDownloadLinks([]);
+      return;
     }
 
-    setMaskedPdfDownloadLink(null);
+    setMaskedPdfDownloadLinks((currentLinks) => {
+      const removedLinks = currentLinks.filter((link) => link.id === pdfId);
+      removedLinks.forEach((link) => URL.revokeObjectURL(link.url));
+      const nextLinks = currentLinks.filter((link) => link.id !== pdfId);
+      downloadUrlsRef.current = nextLinks.map((link) => link.url);
+      return nextLinks;
+    });
   };
 
   useEffect(() => {
     return () => {
-      if (downloadUrlRef.current) {
-        URL.revokeObjectURL(downloadUrlRef.current);
-      }
+      downloadUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     };
   }, []);
+
+  useEffect(() => {
+    if (!hasWorkInProgress) return;
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasWorkInProgress]);
 
   const isPdfFile = (file: File) => file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
 
@@ -351,6 +392,10 @@ function PdfUploadPanel() {
       source,
       status: mask.status ?? (source === 'manual' ? 'accepted' : 'review')
     };
+
+    if (source === 'manual') {
+      clearMaskedPdfDownloadLinks(pdfId);
+    }
 
     setUploadedPdfs((currentPdfs) => {
       const nextPdfs = currentPdfs.map((pdf) =>
@@ -686,33 +731,55 @@ function PdfUploadPanel() {
     }
   };
 
-  const getMaskedPdfFileName = () => {
-    if (uploadedPdfs.length === 1) {
-      const originalName = uploadedPdfs[0].file.name.replace(/\.pdf$/i, '');
-      return `${originalName || 'masked'}_masked.pdf`;
-    }
-
-    return 'masked-pdfs.pdf';
+  const getMaskedPdfFileName = (pdf: UploadedPdfPreview) => {
+    const originalName = pdf.file.name.replace(/\.pdf$/i, '');
+    return `${originalName || 'masked'}_masked.pdf`;
   };
 
-  const createMaskedPdfDownloadLink = (bytes: Uint8Array, fileName: string) => {
-    if (downloadUrlRef.current) {
-      URL.revokeObjectURL(downloadUrlRef.current);
+  const createMaskedPdfDownloadLinks = (outputs: Array<{ id: string; bytes: Uint8Array; fileName: string }>) => {
+    downloadUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+
+    const links = outputs.map((output) => {
+      const pdfBuffer = new ArrayBuffer(output.bytes.byteLength);
+      new Uint8Array(pdfBuffer).set(output.bytes);
+      const blob = new Blob([pdfBuffer], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      return { id: output.id, url, fileName: output.fileName, blob };
+    });
+
+    downloadUrlsRef.current = links.map((link) => link.url);
+    setMaskedPdfDownloadLinks(links);
+  };
+
+  const handleMaskedPdfLinkClick = async (event: MouseEvent<HTMLAnchorElement>, downloadLink: DownloadLinkState) => {
+    event.preventDefault();
+    setMaskDownloadError('');
+
+    const saveFilePicker = (window as WindowWithSaveFilePicker).showSaveFilePicker;
+    if (!saveFilePicker) {
+      setMaskDownloadError('현재 브라우저 또는 접속 방식에서는 다른 이름으로 저장 창을 열 수 없습니다. Chrome/Edge에서 HTTPS 또는 localhost 주소로 접속해야 저장 위치와 파일명을 직접 선택할 수 있습니다.');
+      return;
     }
 
-    const pdfBuffer = new ArrayBuffer(bytes.byteLength);
-    new Uint8Array(pdfBuffer).set(bytes);
-    const blob = new Blob([pdfBuffer], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    downloadUrlRef.current = url;
-    setMaskedPdfDownloadLink({ url, fileName });
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    try {
+      const fileHandle = await saveFilePicker({
+        suggestedName: downloadLink.fileName,
+        startIn: 'downloads',
+        types: [
+          {
+            description: 'PDF 파일',
+            accept: { 'application/pdf': ['.pdf'] }
+          }
+        ],
+        excludeAcceptAllOption: true
+      });
+      const writable = await fileHandle.createWritable();
+      await writable.write(downloadLink.blob);
+      await writable.close();
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      setMaskDownloadError(getErrorMessage(error));
+    }
   };
 
   const handleMaskedPdfDownload = async () => {
@@ -727,12 +794,18 @@ function PdfUploadPanel() {
     try {
       setIsLoadingPdfGenerator(true);
       const { generateMaskedPdf } = await import('./maskedPdfEngine');
-      const pdfBytes = await generateMaskedPdf({
-        documents: renderablePdfs,
-        masks: masksToApply,
-        fillColor: maskFillColor
-      });
-      createMaskedPdfDownloadLink(pdfBytes, getMaskedPdfFileName());
+      const outputs = [];
+
+      for (const pdf of renderablePdfs) {
+        const pdfBytes = await generateMaskedPdf({
+          documents: [pdf],
+          masks: masksToApply,
+          fillColor: maskFillColor
+        });
+        outputs.push({ id: pdf.id, bytes: pdfBytes, fileName: getMaskedPdfFileName(pdf) });
+      }
+
+      createMaskedPdfDownloadLinks(outputs);
     } catch (error) {
       setMaskDownloadError(getErrorMessage(error));
     } finally {
@@ -818,7 +891,11 @@ function PdfUploadPanel() {
     const pdfFiles = nextFiles.filter(isPdfFile);
 
     if (pdfFiles.length) {
-      clearMaskedPdfDownloadLink();
+      if (hasWorkInProgress && !window.confirm('새 파일을 추가하면 기존 다운로드 링크가 초기화됩니다. 계속할까요?')) {
+        return;
+      }
+
+      clearMaskedPdfDownloadLinks();
       setUploadMessage('');
       setFiles((currentFiles) => [...currentFiles, ...pdfFiles]);
 
@@ -871,7 +948,11 @@ function PdfUploadPanel() {
   };
 
   const removeFile = (fileIndex: number) => {
-    clearMaskedPdfDownloadLink();
+    if (!window.confirm('이 파일과 연결된 마스킹 작업이 제거될 수 있습니다. 계속할까요?')) {
+      return;
+    }
+
+    clearMaskedPdfDownloadLinks();
     const removedPdf = uploadedPdfs[fileIndex];
 
     setFiles((currentFiles) => currentFiles.filter((_, index) => index !== fileIndex));
@@ -986,137 +1067,155 @@ function PdfUploadPanel() {
               disabled={isGeneratingMaskedPdf || !hasVisiblePreviewPage}
               onClick={handleMaskedPdfDownload}
             >
-              {isGeneratingMaskedPdf ? 'PDF 생성 중' : '마스킹된 PDF 파일 다운로드'}
+              {isGeneratingMaskedPdf ? 'PDF 생성 중' : '마스킹된 PDF 파일(들) 다운로드 링크 생성'}
             </button>
           </>
         ) : null}
       </div>
-      {maskedPdfDownloadLink ? (
+      {maskedPdfDownloadLinks.length > 0 ? (
         <div className="masked-download-link" role="status">
-          <span>다운로드 링크가 준비되었습니다.</span>
-          <a href={maskedPdfDownloadLink.url} download={maskedPdfDownloadLink.fileName}>
-            {maskedPdfDownloadLink.fileName}
-          </a>
-          <button type="button" onClick={clearMaskedPdfDownloadLink}>
-            링크 정리
+          <span>{maskedPdfDownloadLinks.length > 1 ? '파일별 저장 링크가 준비되었습니다.' : '저장 링크가 준비되었습니다.'}</span>
+          <div className="masked-download-link-list">
+            {maskedPdfDownloadLinks.map((downloadLink) => (
+              <a
+                key={downloadLink.id}
+                href={downloadLink.url}
+                download={downloadLink.fileName}
+                onClick={(event) => handleMaskedPdfLinkClick(event, downloadLink)}
+              >
+                {downloadLink.fileName}
+              </a>
+            ))}
+          </div>
+          <button type="button" onClick={() => clearMaskedPdfDownloadLinks()}>
+            초기화
           </button>
         </div>
       ) : null}
-      <div className="mask-color-control" aria-label="마스킹 색상 선택">
-        <span>마스킹 색상</span>
-        <div className="mask-color-options">
-          <button
-            className="mask-color-option mask-color-option-white"
-            type="button"
-            aria-pressed={maskFillColor === 'white'}
-            onClick={() => setMaskFillColor('white')}
-          >
-            <span className="mask-color-check" aria-hidden="true">✓</span>
-            흰색
-          </button>
-          <button
-            className="mask-color-option mask-color-option-black"
-            type="button"
-            aria-pressed={maskFillColor === 'black'}
-            onClick={() => setMaskFillColor('black')}
-          >
-            <span className="mask-color-check" aria-hidden="true">✓</span>
-            검정
-          </button>
-        </div>
-      </div>
-      {hasAutoReviewItems ? (
-        <section className="auto-review-panel" aria-label="자동 탐지 결과 검토">
+      {hasVisiblePreviewPage ? (
+        <section className="auto-review-panel" aria-label="현재 마스킹 상황">
           <div className="auto-review-summary">
-            <div>
-              <h2>자동 탐지 결과</h2>
-              <p>
-                선택됨 {autoSelectedMasks.length.toLocaleString()}개 · 해제됨 {autoRejectedMasks.length.toLocaleString()}개
-              </p>
+            <h2>현재 마스킹 상황</h2>
+            <div className="mask-color-control" aria-label="마스킹 색상 선택">
+              <span>마스킹 색상</span>
+              <div className="mask-color-options">
+                <button
+                  className="mask-color-option mask-color-option-white"
+                  type="button"
+                  aria-pressed={maskFillColor === 'white'}
+                  onClick={() => setMaskFillColor('white')}
+                >
+                  <span className="mask-color-check" aria-hidden="true">✓</span>
+                  흰색
+                </button>
+                <button
+                  className="mask-color-option mask-color-option-black"
+                  type="button"
+                  aria-pressed={maskFillColor === 'black'}
+                  onClick={() => setMaskFillColor('black')}
+                >
+                  <span className="mask-color-check" aria-hidden="true">✓</span>
+                  검정
+                </button>
+              </div>
             </div>
           </div>
           <div className="auto-detection-list">
-            {ocrReviewSummaries.map((summary) => {
-              const autoMasks = getAutoMasksForSummary(summary);
-              const manualMasks = getManualMasksForPdf(summary.pdfId);
-              const allAutoSelected = autoMasks.length > 0 && autoMasks.every((mask) => mask.status !== 'rejected');
+            {uploadedPdfs
+              .filter((pdf) => pdf.pages.length > 0)
+              .map((pdf) => {
+                const summary = ocrReviewSummaries.find((item) => item.pdfId === pdf.id);
+                const autoMasks = summary ? getAutoMasksForSummary(summary) : [];
+                const manualMasks = getManualMasksForPdf(pdf.id);
+                const selectedAutoCount = autoMasks.filter((mask) => mask.status !== 'rejected').length;
+                const rejectedAutoCount = autoMasks.filter((mask) => mask.status === 'rejected').length;
+                const autoStatusText = summary
+                  ? `선택됨 ${selectedAutoCount.toLocaleString()}개 · 해제됨 ${rejectedAutoCount.toLocaleString()}개`
+                  : '';
+                const allAutoSelected = autoMasks.length > 0 && autoMasks.every((mask) => mask.status !== 'rejected');
 
-              return (
-                <div className="auto-detection-group" key={summary.pdfId}>
-                  <div className="auto-detection-file-row">
-                    <span>{summary.fileName}</span>
-                  </div>
-                  <div className="auto-detection-columns">
-                    <div className="auto-detection-column">
-                      <div className="auto-detection-column-header">
-                        <h4>자동 탐지</h4>
-                        <label className="auto-file-toggle" aria-label={`${summary.fileName} 자동 후보 전체 설정 또는 해제`}>
-                          <input
-                            type="checkbox"
-                            checked={allAutoSelected}
-                            disabled={!summary.candidates.length}
-                            onChange={() => toggleFileAutoCandidates(summary)}
-                          />
-                        </label>
+                return (
+                  <div className="auto-detection-group" key={pdf.id}>
+                    <div className="auto-detection-file-row">
+                      <span>{pdf.file.name}</span>
+                    </div>
+                    <div className="auto-detection-columns">
+                      <div className="auto-detection-column">
+                        <div className="auto-detection-column-header">
+                          <h4>
+                            자동 탐지 {autoStatusText ? <span className="auto-detection-status">{autoStatusText}</span> : null}
+                          </h4>
+                          <label className="auto-file-toggle" aria-label={`${pdf.file.name} 자동 후보 전체 설정 또는 해제`}>
+                            <input
+                              type="checkbox"
+                              checked={allAutoSelected}
+                              disabled={!summary?.candidates.length}
+                              onChange={() => {
+                                if (summary) {
+                                  toggleFileAutoCandidates(summary);
+                                }
+                              }}
+                            />
+                          </label>
+                        </div>
+                        {summary?.candidates.length ? (
+                          <ul>
+                            {summary.candidates.map((candidate) => {
+                              const detection = summary.detections.find((item) => item.id === candidate.detectionId);
+                              const candidateMask = getMaskForCandidate(pdf.id, candidate);
+                              const isRejected = candidateMask?.status === 'rejected';
+
+                              return (
+                                <li key={candidate.id}>
+                                  <span>{candidate.label}</span>
+                                  <strong>{candidate.maskText || candidate.rawText}</strong>
+                                  <em>{candidate.pageNumber.toLocaleString()}페이지</em>
+                                  <button
+                                    className="auto-detection-delete"
+                                    type="button"
+                                    aria-label={`${candidate.label} 자동 후보 ${isRejected ? '원복' : '삭제'}`}
+                                    aria-pressed={isRejected}
+                                    title={detection?.rawText}
+                                    onClick={() => toggleCandidateReview(pdf.id, candidate)}
+                                  >
+                                    ×
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        ) : (
+                          <p>{summary ? '탐지된 항목이 없습니다.' : '자동 탐지가 아직 실행되지 않았습니다.'}</p>
+                        )}
                       </div>
-                      {summary.candidates.length ? (
-                        <ul>
-                          {summary.candidates.map((candidate) => {
-                            const detection = summary.detections.find((item) => item.id === candidate.detectionId);
-                            const candidateMask = getMaskForCandidate(summary.pdfId, candidate);
-                            const isRejected = candidateMask?.status === 'rejected';
-
-                            return (
-                              <li key={candidate.id}>
-                                <span>{candidate.label}</span>
-                                <strong>{candidate.maskText || candidate.rawText}</strong>
-                                <em>{candidate.pageNumber.toLocaleString()}페이지</em>
+                      <div className="auto-detection-column manual-mask-column">
+                        <h4>{`수동 마스킹 ${manualMasks.length.toLocaleString()}개`}</h4>
+                        {manualMasks.length ? (
+                          <ul>
+                            {manualMasks.map((mask) => (
+                              <li key={mask.id}>
+                                <span>수동</span>
+                                <strong>{`${mask.width.toFixed(0)}×${mask.height.toFixed(0)}`}</strong>
+                                <em>{mask.pageNumber.toLocaleString()}페이지</em>
                                 <button
                                   className="auto-detection-delete"
                                   type="button"
-                                  aria-label={`${candidate.label} 자동 후보 ${isRejected ? '원복' : '삭제'}`}
-                                  aria-pressed={isRejected}
-                                  title={detection?.rawText}
-                                  onClick={() => toggleCandidateReview(summary.pdfId, candidate)}
+                                  aria-label={`${pdf.file.name} ${mask.pageNumber}페이지 수동 마스킹 삭제`}
+                                  onClick={() => deleteMask(pdf.id, mask.pageNumber, mask)}
                                 >
                                   ×
                                 </button>
                               </li>
-                            );
-                          })}
-                        </ul>
-                      ) : (
-                        <p>탐지된 항목이 없습니다.</p>
-                      )}
-                    </div>
-                    <div className="auto-detection-column manual-mask-column">
-                      <h4>{`수동 마스킹 ${manualMasks.length.toLocaleString()}개`}</h4>
-                      {manualMasks.length ? (
-                        <ul>
-                          {manualMasks.map((mask) => (
-                            <li key={mask.id}>
-                              <span>수동</span>
-                              <strong>{`${mask.width.toFixed(0)}×${mask.height.toFixed(0)}`}</strong>
-                              <em>{mask.pageNumber.toLocaleString()}페이지</em>
-                              <button
-                                className="auto-detection-delete"
-                                type="button"
-                                aria-label={`${summary.fileName} ${mask.pageNumber}페이지 수동 마스킹 삭제`}
-                                onClick={() => deleteMask(summary.pdfId, mask.pageNumber, mask)}
-                              >
-                                ×
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>수동 마스킹 없음</p>
-                      )}
+                            ))}
+                          </ul>
+                        ) : (
+                          <p>수동 마스킹 없음</p>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </section>
       ) : null}
