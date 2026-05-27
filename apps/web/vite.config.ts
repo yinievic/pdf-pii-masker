@@ -29,9 +29,16 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 5174,
     strictPort: true,
     allowedHosts: ['firecloud64.synology.me', '.synology.me'],
+
+    hmr: {
+      protocol: 'wss',
+      host: 'firecloud64.synology.me',
+      clientPort: 5173
+    },
+
     proxy: {
       '/ocr-api': {
         target: ocrProxyTarget,
@@ -39,6 +46,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/ocr-api/, '')
       }
     },
+
     watch: {
       usePolling: true,
       interval: 500

@@ -76,11 +76,17 @@ export type OcrPageImage = {
   height: number;
 };
 
+export type OcrOptions = {
+  language?: string;
+  psm?: number | null;
+};
+
 export type OcrResponse = {
   provider: EnabledOcrProvider;
   pageCount?: number;
   coordinateSpace?: OcrCoordinateSpace;
   dpi?: number;
+  ocrOptions?: OcrOptions;
   pageImages?: OcrPageImage[];
   words: OcrWord[];
   detections?: Detection[];

@@ -107,6 +107,21 @@ body {
   margin-bottom: 0;
 }
 
+.section-header-copy {
+  width: 100%;
+  min-width: 0;
+}
+
+.section-description {
+  width: 100%;
+  max-width: 980px;
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
 .demo-page {
   min-height: 340px;
 }
@@ -115,6 +130,27 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
+}
+
+.guide-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.guide-notes {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+}
+
+.guide-notes p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .step-card h3 {
@@ -583,7 +619,7 @@ body {
 }
 
 .masking-actions.has-preview-actions {
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) minmax(0, 5fr);
 }
 
 .masking-button {
@@ -609,6 +645,36 @@ body {
 .masking-button:disabled {
   color: var(--border-default);
   cursor: default;
+}
+
+.auto-mask-action-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  background: var(--bg-deep);
+}
+
+.auto-mask-action-group .masking-button {
+  min-height: 100%;
+  padding-right: 12px;
+  padding-left: 12px;
+  border-radius: 10px;
+  background: var(--bg-elevated);
+}
+
+.auto-mask-action-group .masking-button:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.auto-mask-action-group .masking-button:hover:not(:disabled) {
+  border-color: rgba(62, 207, 142, 0.72);
+}
+
+.auto-mask-action-group .masking-button:disabled {
+  background: #171717;
 }
 
 .policy-panel {
@@ -804,6 +870,15 @@ body {
 
 
 @media (max-width: 760px) {
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .masking-actions.has-preview-actions,
+  .auto-mask-action-group {
+    grid-template-columns: 1fr;
+  }
+
   .auto-detection-columns {
     grid-template-columns: 1fr;
     gap: 12px;

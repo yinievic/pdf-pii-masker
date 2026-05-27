@@ -14,7 +14,7 @@ export const DEFAULT_DPI = Number.parseInt(process.env.PDF_RENDER_DPI || '200', 
 export const DEFAULT_TESSERACT_PSM = parseOptionalPsm(process.env.TESSERACT_PSM);
 export const DEFAULT_TEMP_ROOT = process.env.OCR_TEMP_DIR || join(tmpdir(), 'p2-ocr');
 
-function parseOptionalPsm(value) {
+export function parseOptionalPsm(value) {
   if (!value) {
     return undefined;
   }
@@ -198,6 +198,10 @@ export async function recognizePdf(pdfBuffer, options = {}) {
       pageCount,
       coordinateSpace: 'pdf-page-image',
       dpi: options.dpi || DEFAULT_DPI,
+      ocrOptions: {
+        language: options.language || DEFAULT_LANGUAGE,
+        psm: tesseractOptions.psm ?? null
+      },
       pageImages,
       words,
       detections,

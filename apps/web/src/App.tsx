@@ -1,6 +1,5 @@
 import { type CSSProperties, type ChangeEvent, type DragEvent, type MouseEvent, type PointerEvent, useEffect, useRef, useState } from 'react';
 import { Header } from './components/Header';
-import { PolicyPanel } from './components/PolicyPanel';
 import { StepCard } from './components/StepCard';
 import type { MaskBox, MaskFillColor, MaskingMode, MaskStatus, MaskingWorkflowState, PageRenderState, WorkingBase } from './maskingTypes';
 import type { Detection, MaskBoxCandidate, OcrPageImage, OcrResponse } from './ocr/apiContract';
@@ -9,25 +8,39 @@ import './styles.css';
 
 const steps = [
   {
-    title: 'PDF 업로드',
-    description: '공문서/계약서 PDF를 업로드하고 파일 용량·페이지 제한을 즉시 검증합니다.'
+    title: 'PDF 파일 업로드',
+    description: '<찾아보기>로 PDF 파일을 추가합니다. 여러 파일을 올리면 파일별로 미리보기와 결과 링크가 분리됩니다.'
   },
   {
-    title: '개인정보 자동 탐지',
-    description: '전화번호/이메일/식별정보 패턴을 기반으로 후보를 추출합니다.'
+    title: 'PDF 페이지 확인',
+    description: '<PDF 파일 페이지 확인>을 눌러 각 문서의 페이지를 렌더링합니다. 한 번에 한 페이지씩 확인하고, 페이지 번호 입력이나 좌우 이동 버튼으로 이동합니다.'
   },
   {
-    title: '검수 및 수동 수정',
-    description: '사용자가 마스킹 영역을 추가·해제·범위 조정하여 결과를 확정합니다.'
+    title: '마스킹 색상 선택',
+    description: '현재 마스킹 상황에서 흰색 또는 검정색 마스킹 색상을 선택합니다. 기본값은 흰색입니다.'
   },
   {
-    title: '마스킹 PDF 생성',
-    description: '확정된 영역으로 이미지 기반 PDF를 생성해 원문 노출을 최소화합니다.'
+    title: '자동 개인정보 탐지 실행 및 확인',
+    description: '<자동 개인정보 탐지>를 누르면 문서를 분석해 주민등록번호와 주소 후보를 생성합니다. 기본 탐지 후 <누락 탐지 보완>으로 누락 가능성이 있는 후보를 한 번 더 확인할 수 있습니다. 현재 마스킹 상황에서 파일별 자동 탐지 후보를 확인하고, <X> 버튼이나 파일 단위 체크박스로 후보를 해제하거나 다시 원복할 수 있습니다.'
   },
   {
-    title: '1회 다운로드',
-    description: '짧은 만료시간의 1회성 링크로 내려받고, 완료 즉시 토큰을 폐기합니다.'
+    title: '수동 마스킹 추가',
+    description: '미리보기 페이지 위에서 드래그해 수동 마스킹 박스를 추가합니다. 자동 탐지에서 누락된 영역이나 직접 가리고 싶은 영역을 보완할 수 있습니다.'
+  },
+  {
+    title: '마스킹 상태 확인',
+    description: '현재 마스킹 상황에서 파일별 자동 후보의 선택/해제 수량과 수동 마스킹 위치를 확인합니다. 수동 마스킹은 목록 또는 페이지 위 <X> 버튼으로 삭제할 수 있습니다.'
+  },
+  {
+    title: '다운로드 링크 생성 및 다운로드',
+    description: '<마스킹된 PDF 파일(들) 다운로드 링크 생성> 버튼을 누르면 파일별 링크가 생성됩니다. 링크 클릭 시 파일명 및 폴더를 선택하여 저장할 수 있습니다.'
   }
+];
+
+const guideNotes = [
+  '자동 탐지는 OCR 품질과 원본 스캔 상태에 따라 누락 또는 오탐이 발생할 수 있습니다. 다운로드 전 파일별 현재 마스킹 상황과 페이지 미리보기를 함께 확인하세요.',
+  '결과 PDF는 텍스트 레이어를 유지하지 않는 이미지 기반 PDF로 생성됩니다.',
+  '<마스킹된 PDF 파일(들) 다운로드 링크 생성> 후 수동 마스킹을 추가하면 해당 파일의 기존 링크는 자동으로 초기화됩니다. 수정사항을 반영하려면 다운로드 링크를 다시 생성하세요.'
 ];
 
 type DisplayRect = {
@@ -116,6 +129,7 @@ function PdfUploadPanel() {
   const [maskDraft, setMaskDraft] = useState<MaskDraft | null>(null);
   const [isGeneratingMaskedPdf, setIsGeneratingMaskedPdf] = useState(false);
   const [isRunningAutoMask, setIsRunningAutoMask] = useState(false);
+  const [autoMaskRunType, setAutoMaskRunType] = useState<'default' | 'supplement'>('default');
   const [autoMaskProgress, setAutoMaskProgress] = useState<{ current: number; total: number } | null>(null);
   const autoMaskRunIdRef = useRef(0);
   const autoMaskAbortControllerRef = useRef<AbortController | null>(null);
@@ -144,6 +158,7 @@ function PdfUploadPanel() {
   const canConfirmPdfPages = hasRenderablePdf && !isReadingPdf && !isPreviewCurrent;
   const finalMasks = getFinalMasks(maskingWorkflow.masks);
   const hasWorkInProgress = uploadedPdfs.length > 0 || maskingWorkflow.masks.length > 0 || maskedPdfDownloadLinks.length > 0;
+  const hasAutoMaskResults = ocrReviewSummaries.length > 0;
 
   const clearMaskedPdfDownloadLinks = (pdfId?: string) => {
     if (!pdfId) {
@@ -542,7 +557,7 @@ function PdfUploadPanel() {
     };
   };
 
-  const applyOcrResponseToPdf = (pdfId: string, response: OcrResponse) => {
+  const applyOcrResponseToPdf = (pdfId: string, response: OcrResponse, mergeMode: 'replace' | 'append' = 'replace') => {
     setUploadedPdfs((currentPdfs) => {
       const nextPdfs = currentPdfs.map((pdf) => {
         if (pdf.id !== pdfId) return pdf;
@@ -554,6 +569,14 @@ function PdfUploadPanel() {
             const nextAutoMasks = (response.maskBoxCandidates ?? [])
               .filter((candidate) => candidate.pageNumber === page.pageNumber)
               .map((candidate) => mapCandidateToMask(candidate, page, pageImage));
+
+            if (mergeMode === 'append') {
+              const existingMaskIds = new Set(page.masks.map((mask) => mask.id));
+              return {
+                ...page,
+                masks: [...page.masks, ...nextAutoMasks.filter((mask) => !existingMaskIds.has(mask.id))]
+              };
+            }
 
             return {
               ...page,
@@ -641,7 +664,35 @@ function PdfUploadPanel() {
     setFileAutoCandidateStatus(summary, shouldRejectAll ? 'rejected' : 'review');
   };
 
-  const handleAutoMaskReview = async () => {
+  const mergeOcrReviewSummaries = (currentSummaries: OcrReviewSummary[], nextSummaries: OcrReviewSummary[]) => {
+    const summaryMap = new Map(currentSummaries.map((summary) => [summary.pdfId, summary]));
+
+    for (const nextSummary of nextSummaries) {
+      const currentSummary = summaryMap.get(nextSummary.pdfId);
+      if (!currentSummary) {
+        summaryMap.set(nextSummary.pdfId, nextSummary);
+        continue;
+      }
+
+      const detectionIds = new Set(currentSummary.detections.map((detection) => detection.id));
+      const candidateIds = new Set(currentSummary.candidates.map((candidate) => candidate.id));
+      summaryMap.set(nextSummary.pdfId, {
+        ...currentSummary,
+        detections: [
+          ...currentSummary.detections,
+          ...nextSummary.detections.filter((detection) => !detectionIds.has(detection.id))
+        ],
+        candidates: [
+          ...currentSummary.candidates,
+          ...nextSummary.candidates.filter((candidate) => !candidateIds.has(candidate.id))
+        ]
+      });
+    }
+
+    return [...summaryMap.values()];
+  };
+
+  const handleAutoMaskReview = async (mode: 'default' | 'supplement' = 'default') => {
     const renderablePdfs = uploadedPdfs.filter((pdf) => pdf.pages.length > 0 && pdf.file);
     if (!renderablePdfs.length) return;
 
@@ -651,7 +702,10 @@ function PdfUploadPanel() {
     autoMaskRunIdRef.current = runId;
     autoMaskAbortControllerRef.current = abortController;
 
-    discardAutoMasks();
+    if (mode === 'default') {
+      discardAutoMasks();
+    }
+    setAutoMaskRunType(mode);
     setIsRunningAutoMask(true);
     setAutoMaskProgress({ current: 0, total: renderablePdfs.length });
     setAutoMaskError('');
@@ -664,7 +718,7 @@ function PdfUploadPanel() {
         if (autoMaskRunIdRef.current !== runId) return;
         setAutoMaskProgress({ current: index + 1, total: renderablePdfs.length });
 
-        const response = await fetch(getOcrApiUrl(), {
+        const response = await fetch(mode === 'supplement' ? `${getOcrApiUrl()}?psm=11` : getOcrApiUrl(), {
           method: 'POST',
           headers: { 'content-type': 'application/pdf' },
           body: pdf.file,
@@ -678,7 +732,11 @@ function PdfUploadPanel() {
         const ocrResponse = (await response.json()) as OcrResponse;
         if (autoMaskRunIdRef.current !== runId) return;
 
-        applyOcrResponseToPdf(pdf.id, ocrResponse);
+        if (mode === 'supplement' && ocrResponse.ocrOptions?.psm !== 11) {
+          throw new Error('OCR API가 누락 탐지 보완 요청을 PSM 11로 처리하지 않았습니다. OCR API 컨테이너를 최신 코드로 재빌드/재시작한 뒤 다시 시도해 주세요.');
+        }
+
+        applyOcrResponseToPdf(pdf.id, ocrResponse, mode === 'supplement' ? 'append' : 'replace');
         summaries.push({
           pdfId: pdf.id,
           fileName: pdf.file.name,
@@ -688,7 +746,9 @@ function PdfUploadPanel() {
       }
 
       if (autoMaskRunIdRef.current === runId) {
-        setOcrReviewSummaries(summaries);
+        setOcrReviewSummaries((currentSummaries) => (
+          mode === 'supplement' ? mergeOcrReviewSummaries(currentSummaries, summaries) : summaries
+        ));
       }
     } catch (error) {
       if (autoMaskRunIdRef.current !== runId || (error instanceof DOMException && error.name === 'AbortError')) return;
@@ -940,7 +1000,7 @@ function PdfUploadPanel() {
           .filter((file): file is File => Boolean(file));
 
     if (filesToUpload.some((file) => file.size === 0)) {
-      setUploadMessage('드래그 앤 드롭으로 실제 파일을 읽을 수 없습니다. 찾아보기를 사용해 주세요.');
+      setUploadMessage('드래그 앤 드롭으로 실제 파일을 읽을 수 없습니다. <찾아보기>를 사용해 주세요.');
       return;
     }
 
@@ -1011,7 +1071,7 @@ function PdfUploadPanel() {
           onChange={handleInputChange}
         />
         <span className="muted upload-instruction">
-          찾아보기를 눌러 마스킹할 PDF 파일(들)을 선택할 수 있습니다.
+          &lt;찾아보기&gt;를 눌러 마스킹할 PDF 파일(들)을 선택할 수 있습니다.
         </span>
         <label className="btn-secondary upload-button" htmlFor="pdf-upload-input">
           찾아보기
@@ -1049,17 +1109,30 @@ function PdfUploadPanel() {
         </button>
         {hasVisiblePreviewPage ? (
           <>
-            <button
-              className="masking-button"
-              type="button"
-              data-pdf-ready={hasRenderablePdf}
-              disabled={!hasVisiblePreviewPage}
-              onClick={handleAutoMaskReview}
-            >
-              {isRunningAutoMask && autoMaskProgress
-                ? `자동 탐지 중 (${autoMaskProgress.current}/${autoMaskProgress.total})`
-                : '자동 개인정보 탐지'}
-            </button>
+            <div className="auto-mask-action-group" aria-label="자동 개인정보 탐지 기능">
+              <button
+                className="masking-button auto-mask-button"
+                type="button"
+                data-pdf-ready={hasRenderablePdf}
+                disabled={!hasVisiblePreviewPage}
+                onClick={() => handleAutoMaskReview('default')}
+              >
+                {isRunningAutoMask && autoMaskRunType === 'default' && autoMaskProgress
+                  ? `자동 탐지 중 (${autoMaskProgress.current}/${autoMaskProgress.total})`
+                  : '자동 개인정보 탐지'}
+              </button>
+              <button
+                className="masking-button auto-mask-button"
+                type="button"
+                data-pdf-ready={hasRenderablePdf}
+                disabled={!hasVisiblePreviewPage || !hasAutoMaskResults}
+                onClick={() => handleAutoMaskReview('supplement')}
+              >
+                {isRunningAutoMask && autoMaskRunType === 'supplement' && autoMaskProgress
+                  ? `보완 탐지 중 (${autoMaskProgress.current}/${autoMaskProgress.total})`
+                  : '누락 탐지 보완'}
+              </button>
+            </div>
             <button
               className="masking-button"
               type="button"
@@ -1360,22 +1433,27 @@ export function App() {
       {page === 'demo' ? (
         <section className="section demo-page" aria-labelledby="demo-flow-title">
           <div className="section-header">
-            <div>
-              <p className="eyebrow">DEMO FLOW</p>
-              <h2 id="demo-flow-title">처리 단계</h2>
+            <div className="section-header-copy">
+              <p className="eyebrow">USER GUIDE</p>
+              <h2 id="demo-flow-title">사용 방법</h2>
+              <p className="section-description">
+                PDF 파일을 페이지별로 확인 후, 개인정보를 자동 탐지하고 수동 마스킹을 추가한 뒤 파일별 마스킹 PDF 저장 링크를 생성합니다.
+              </p>
             </div>
           </div>
-          <div className="grid">
+          <div className="grid guide-grid">
             {steps.map((step, idx) => (
               <StepCard key={step.title} index={idx + 1} title={step.title} description={step.description} />
             ))}
           </div>
+          <div className="guide-notes" aria-label="추가 안내">
+            {guideNotes.map((note) => (
+              <p key={note}>{note}</p>
+            ))}
+          </div>
         </section>
       ) : (
-        <>
-          <PdfUploadPanel />
-          <PolicyPanel />
-        </>
+        <PdfUploadPanel />
       )}
     </main>
   );

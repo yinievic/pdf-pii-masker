@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { createRequestId, parsePagesParam, recognizePdf } from './ocr.mjs';
+import { createRequestId, parseOptionalPsm, parsePagesParam, recognizePdf } from './ocr.mjs';
 
 const PORT = Number.parseInt(process.env.PORT || '8080', 10);
 const MAX_UPLOAD_BYTES = Number.parseInt(process.env.MAX_UPLOAD_BYTES || String(50 * 1024 * 1024), 10);
@@ -52,7 +52,12 @@ async function handleOcr(request, response, url) {
     }
 
     const pages = parsePagesParam(url.searchParams.get('pages'));
-    const result = await recognizePdf(pdfBuffer, { pages, provider: 'tesseract-local' });
+    const psm = parseOptionalPsm(url.searchParams.get('psm'));
+    const result = await recognizePdf(pdfBuffer, {
+      pages,
+      provider: 'tesseract-local',
+      ...(psm === undefined ? {} : { tesseractOptions: { psm } })
+    });
 
     sendJson(response, 200, {
       requestId: createRequestId(),

@@ -6,19 +6,18 @@ type HeaderProps = {
 export function Header({ onStart, onShowDemo }: HeaderProps) {
   return (
     <header className="hero card">
-      <p className="eyebrow">SESSION ACTIVE · TTL PROTECTED</p>
       <h1>PDF 개인정보 마스킹</h1>
       <p className="subtitle">
-        PDF 파일을 업로드하면 개인식별정보 등을 탐지하고,
+        PDF 파일을 페이지별로 확인 후, 개인정보를 자동 탐지하고 수동 마스킹을 추가한 뒤
         <br />
-        검수 후 마스킹된 이미지형 PDF를 1회성 링크로 안전하게 내려받을 수 있습니다.
+        파일별 이미지형 마스킹 PDF 저장 링크를 생성합니다.
       </p>
       <div className="hero-actions">
         <button className="btn-primary" onClick={onStart}>
           지금 시작
         </button>
         <button className="btn-secondary" onClick={onShowDemo}>
-          데모 흐름 보기
+          사용 방법
         </button>
       </div>
     </header>
