@@ -1,8 +1,8 @@
 # OCR API Runtime
 
-## Step 9 범위
+## Version 9 범위
 
-Step 9는 내부 OCR API 컨테이너에서 PDF 페이지를 이미지로 변환하고 Tesseract OCR을 실행하는 구조를 구현한다. 외부 OCR API는 사용하지 않는다.
+Version 9는 내부 OCR API 컨테이너에서 PDF 페이지를 이미지로 변환하고 Tesseract OCR을 실행하는 구조를 구현한다. 외부 OCR API는 사용하지 않는다.
 
 ## 컨테이너 구성
 
@@ -131,7 +131,7 @@ pdftoppm -h
 }
 ```
 
-좌표는 `pdftoppm`으로 생성한 페이지 이미지 기준이다. `pageImages`는 프론트엔드 canvas 좌표로 변환할 때 사용한다. Step 10은 OCR API 응답에서 `Detection[]`과 `MaskBoxCandidate[]`를 생성한다. Step 11 이후 프론트엔드 `MaskBox` 후보로 변환할 때 canvas 좌표와의 scale 변환을 적용해야 한다.
+좌표는 `pdftoppm`으로 생성한 페이지 이미지 기준이다. `pageImages`는 프론트엔드 canvas 좌표로 변환할 때 사용한다. Version 10은 OCR API 응답에서 `Detection[]`과 `MaskBoxCandidate[]`를 생성한다. Version 11 이후 프론트엔드 `MaskBox` 후보로 변환할 때 canvas 좌표와의 scale 변환을 적용해야 한다.
 
 ## 보안 정책
 

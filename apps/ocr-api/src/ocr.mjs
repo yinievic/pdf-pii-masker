@@ -12,7 +12,7 @@ export const DEFAULT_PROVIDER = 'tesseract-local';
 export const DEFAULT_LANGUAGE = process.env.TESSERACT_LANG || 'kor+eng';
 export const DEFAULT_DPI = Number.parseInt(process.env.PDF_RENDER_DPI || '200', 10);
 export const DEFAULT_TESSERACT_PSM = parseOptionalPsm(process.env.TESSERACT_PSM);
-export const DEFAULT_TEMP_ROOT = process.env.OCR_TEMP_DIR || join(tmpdir(), 'p2-ocr');
+export const DEFAULT_TEMP_ROOT = process.env.OCR_TEMP_DIR || join(tmpdir(), 'pdf-pii-masker-ocr');
 
 export function parseOptionalPsm(value) {
   if (!value) {

@@ -89,7 +89,7 @@ const variants = [
   }
 ];
 
-const tempRoot = await mkdtemp(join(tmpdir(), 'p2-ocr-quality-'));
+const tempRoot = await mkdtemp(join(tmpdir(), 'pdf-pii-masker-ocr-quality-'));
 const workPdfPath = join(tempRoot, basename(pdfPath));
 
 try {

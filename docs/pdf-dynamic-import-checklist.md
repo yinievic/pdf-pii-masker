@@ -1,6 +1,6 @@
 # PDF Dynamic Import 수동 검증 체크리스트
 
-Step 14A는 PDF.js와 `pdf-lib`를 초기 번들에서 분리하고 실제 사용 시점에 로드하는 성능 최적화 단계다.
+Version 14A는 PDF.js와 `pdf-lib`를 초기 번들에서 분리하고 실제 사용 시점에 로드하는 성능 최적화 단계다.
 
 ## 빌드 확인
 

@@ -82,7 +82,7 @@ project-root/
 │        │  ├─ FileDropzone.tsx
 │        │  ├─ PdfPreview.tsx
 │        │  ├─ MaskLayerEditor.tsx
-│        │  ├─ ProgressStepper.tsx
+│        │  ├─ ProgressTracker.tsx
 │        │  └─ ExpireTimer.tsx
 │        ├─ features/
 │        │  ├─ upload/

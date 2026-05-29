@@ -1,5 +1,5 @@
 {
-  "name": "p2-ocr-api",
+  "name": "pdf-pii-masker-ocr-api",
   "private": true,
   "version": "0.0.1",
   "type": "module",

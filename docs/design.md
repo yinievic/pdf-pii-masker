@@ -75,7 +75,7 @@
 - 우측 액션: `새 세션 시작` Pill 버튼
 - 상태 배지: `SESSION ACTIVE`, `TTL 09:42`
 
-### 4.2 Progress Stepper (핵심)
+### 4.2 Progress Tracker (핵심)
 - 5단계: 업로드 → 탐지 → 검수 → 생성 → 다운로드
 - 활성 단계: `--brand-green-border` + `--text-primary`
 - 완료 단계: 테두리 `--brand-green`
@@ -123,7 +123,7 @@
 4. 처리 제한/보안 안내
 
 ### ReviewPage
-1. Progress Stepper
+1. Progress Tracker
 2. 좌측: PDF 프리뷰(페이지 이동)
 3. 우측: 탐지 목록 + 수정 패널
 4. 하단: “마스킹 PDF 생성” 액션
@@ -153,7 +153,7 @@
 
 - [ ] `apps/web/src/styles.css`를 토큰 기반 CSS 변수로 교체
 - [ ] `apps/web/src/App.tsx`를 3개 페이지 구조(Upload/Review/Download)로 분리
-- [ ] 공통 컴포넌트 `Stepper`, `PolicyBox`, `TokenTimer` 추가
+- [ ] 공통 컴포넌트 `ProgressTracker`, `PolicyBox`, `TokenTimer` 추가
 - [ ] 정책 문구를 UI 내 고정 위치에 배치
 - [ ] (선택) 다크 테마 대비 접근성(AA) 점검
 

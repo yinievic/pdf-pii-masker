@@ -17,7 +17,7 @@ COPY scripts ./scripts
 
 ENV NODE_ENV=production
 ENV PORT=8080
-ENV OCR_TEMP_DIR=/tmp/p2-ocr
+ENV OCR_TEMP_DIR=/tmp/pdf-pii-masker-ocr
 ENV TESSERACT_LANG=kor+eng
 ENV PDF_RENDER_DPI=200
 ENV MAX_UPLOAD_BYTES=52428800
