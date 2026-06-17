@@ -1,0 +1,5109 @@
+{
+  "sourceFiles": [
+    "tax-office-jurisdictions-source-260408.csv"
+  ],
+  "sourceDates": [
+    "250603",
+    "260408",
+    "260617"
+  ],
+  "description": "마스킹 제외 대상으로 관리할 공공기관 주소 목록입니다. 현재는 국세청/세무서 주소를 포함합니다.",
+  "exclusionCount": 563,
+  "exclusions": [
+    {
+      "category": "taxOffice",
+      "name": "서울지방국세청",
+      "address": "서울특별시 종로구 종로5길 86(수송동)",
+      "normalizedAddress": "서울특별시종로구종로5길86수송동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "강남세무서",
+      "address": "서울특별시 강남구 학동로 425(청담동)",
+      "normalizedAddress": "서울특별시강남구학동로425청담동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "강동세무서",
+      "address": "서울특별시 강동구 천호대로 1139(길동)",
+      "normalizedAddress": "서울특별시강동구천호대로1139길동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "강서세무서",
+      "address": "서울특별시 강서구 마곡서1로 60(마곡동)",
+      "normalizedAddress": "서울특별시강서구마곡서1로60마곡동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "관악세무서",
+      "address": "서울특별시 관악구 문성로 187(신림동)",
+      "normalizedAddress": "서울특별시관악구문성로187신림동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "구로세무서",
+      "address": "서울특별시 영등포구 경인로 778(문래동 1가)",
+      "normalizedAddress": "서울특별시영등포구경인로778문래동1가",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "금천세무서",
+      "address": "서울특별시 금천구 시흥대로 315 금천롯데캐슬골드파크4차 업무시설동",
+      "normalizedAddress": "서울특별시금천구시흥대로315금천롯데캐슬골드파크4차업무시설동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "남대문세무서",
+      "address": "서울특별시 중구 삼일대로 340(저동1가) 나라키움저동빌딩",
+      "normalizedAddress": "서울특별시중구삼일대로340저동1가나라키움저동빌딩",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "노원세무서",
+      "address": "서울특별시 도봉구 노해로69길 14 (창동)",
+      "normalizedAddress": "서울특별시도봉구노해로69길14창동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "도봉세무서",
+      "address": "서울특별시 강북구 도봉로 117 (미아동)",
+      "normalizedAddress": "서울특별시강북구도봉로117미아동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동대문세무서",
+      "address": "서울특별시 동대문구 약령시로 159 (청량리동)",
+      "normalizedAddress": "서울특별시동대문구약령시로159청량리동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동작세무서",
+      "address": "서울특별시 영등포구 대방천로 259 (신길동)",
+      "normalizedAddress": "서울특별시영등포구대방천로259신길동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "마포세무서",
+      "address": "서울특별시 마포구 독막로 234(신수동)",
+      "normalizedAddress": "서울특별시마포구독막로234신수동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "반포세무서",
+      "address": "서울특별시 서초구 방배로163 (방배동)",
+      "normalizedAddress": "서울특별시서초구방배로163방배동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "삼성세무서",
+      "address": "서울특별시 강남구 테헤란로 114(역삼동) 1,5,6,9,10층 삼성세무서",
+      "normalizedAddress": "서울특별시강남구테헤란로114역삼동156910층삼성세무서",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서대문세무서",
+      "address": "서울특별시 서대문구 세무서길 11 (홍제동 251)",
+      "normalizedAddress": "서울특별시서대문구세무서길11홍제동251",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서초세무서",
+      "address": "서울특별시 강남구 테헤란로 114 (역삼동) 역삼빌딩 3~4층, 9층 조사과, 10층 납세자보호담당관",
+      "normalizedAddress": "서울특별시강남구테헤란로114역삼동역삼빌딩3~4층9층조사과10층납세자보호담당관",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "성동세무서",
+      "address": "서울특별시 성동구 광나루로 297(송정동)",
+      "normalizedAddress": "서울특별시성동구광나루로297송정동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "성북세무서",
+      "address": "서울특별시 성북구 삼선교로16길 13",
+      "normalizedAddress": "서울특별시성북구삼선교로16길13",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "송파세무서",
+      "address": "서울특별시 송파구 강동대로 62 (풍납동)",
+      "normalizedAddress": "서울특별시송파구강동대로62풍납동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "양천세무서",
+      "address": "서울특별시 양천구 목동동로 165 (신정동)",
+      "normalizedAddress": "서울특별시양천구목동동로165신정동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "역삼세무서",
+      "address": "서울특별시 강남구 테헤란로 114(역삼동) 역삼빌딩 7, 8층 및 9층 일부",
+      "normalizedAddress": "서울특별시강남구테헤란로114역삼동역삼빌딩78층및9층일부",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "영등포세무서",
+      "address": "서울특별시 영등포구 선유로 243",
+      "normalizedAddress": "서울특별시영등포구선유로243",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "용산세무서",
+      "address": "서울특별시 용산구 서빙고로24길15(한강로3가 65-342)",
+      "normalizedAddress": "서울특별시용산구서빙고로24길15한강로3가65342",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "은평세무서",
+      "address": "서울특별시 은평구 은평로 185 은평세무서 (녹번동 185)",
+      "normalizedAddress": "서울특별시은평구은평로185은평세무서녹번동185",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "잠실세무서",
+      "address": "서울특별시 송파구 강동대로 62(풍납2동 388-6)",
+      "normalizedAddress": "서울특별시송파구강동대로62풍납2동3886",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "종로세무서",
+      "address": "서울특별시 종로구 삼일대로30길22",
+      "normalizedAddress": "서울특별시종로구삼일대로30길22",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "중랑세무서",
+      "address": "서울특별시 중랑구 망우로 176(상봉동 137-1)",
+      "normalizedAddress": "서울특별시중랑구망우로176상봉동1371",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "중부세무서",
+      "address": "서울특별시 중구 퇴계로 170 (남학동 12-3)",
+      "normalizedAddress": "서울특별시중구퇴계로170남학동123",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "중부지방국세청",
+      "address": "경기도 수원시 장안구 경수대로 1110-17 (파장동 644)",
+      "normalizedAddress": "경기도수원시장안구경수대로111017파장동644",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "강릉세무서",
+      "address": "강원특별자치도 강릉시 수리골길 65 (교동)",
+      "normalizedAddress": "강원특별자치도강릉시수리골길65교동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "경기광주세무서",
+      "address": "경기도 광주시 문화로 127",
+      "normalizedAddress": "경기도광주시문화로127",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "구리세무서",
+      "address": "구리시 안골로 36 (교문동 736-2)",
+      "normalizedAddress": "구리시안골로36교문동7362",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "기흥세무서",
+      "address": "경기도 용인시 기흥구 흥덕2로117번길 15(영덕동974-3)",
+      "normalizedAddress": "경기도용인시기흥구흥덕2로117번길15영덕동9743",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "남양주세무서",
+      "address": "경기도 남양주시 화도읍 경춘로 1807(묵현리) 쉼터빌딩",
+      "normalizedAddress": "경기도남양주시화도읍경춘로1807묵현리쉼터빌딩",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동수원세무서",
+      "address": "경기도 수원시 영통구 청명남로 13(영통동)",
+      "normalizedAddress": "경기도수원시영통구청명남로13영통동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동안산세무서",
+      "address": "경기도 안산시 상록구 상록수로 20(본오동 877-6)",
+      "normalizedAddress": "경기도안산시상록구상록수로20본오동8776",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동안양세무서",
+      "address": "경기도 안양시 동안구 관평로 202번길 27(관양동)",
+      "normalizedAddress": "경기도안양시동안구관평로202번길27관양동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동화성세무서",
+      "address": "경기도 화성시 동탄구 동탄오산로 86-3 (MK 타워 3,4,9,10,11층)",
+      "normalizedAddress": "경기도화성시동탄구동탄오산로863MK타워3491011층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "분당세무서",
+      "address": "경기도 성남시 분당구 분당로 23 (서현동 277)",
+      "normalizedAddress": "경기도성남시분당구분당로23서현동277",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "삼척세무서",
+      "address": "강원특별자치도 삼척시 교동로 148",
+      "normalizedAddress": "강원특별자치도삼척시교동로148",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "성남세무서",
+      "address": "경기도 성남시 수정구 희망로 480(단대동)",
+      "normalizedAddress": "경기도성남시수정구희망로480단대동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "속초세무서",
+      "address": "강원특별자치도 속초시 수복로 28(교동)",
+      "normalizedAddress": "강원특별자치도속초시수복로28교동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "수원세무서",
+      "address": "경기도 수원시 팔달구 매산로61(매산로3가 28)",
+      "normalizedAddress": "경기도수원시팔달구매산로61매산로3가28",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "시흥세무서",
+      "address": "시흥시 마유로 368(정왕동)",
+      "normalizedAddress": "시흥시마유로368정왕동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "안산세무서",
+      "address": "경기도 안산시 단원구 화랑로 350 (고잔동 517)",
+      "normalizedAddress": "경기도안산시단원구화랑로350고잔동517",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "안양세무서",
+      "address": "경기도 안양시 만안구 냉천로 83 (안양동)",
+      "normalizedAddress": "경기도안양시만안구냉천로83안양동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "영월세무서",
+      "address": "강원특별자치도 영월군 영월읍 하송안길 49",
+      "normalizedAddress": "강원특별자치도영월군영월읍하송안길49",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "용인세무서",
+      "address": "용인시 처인구 중부대로 1161번길 71 (삼가동)",
+      "normalizedAddress": "용인시처인구중부대로1161번길71삼가동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "원주세무서",
+      "address": "강원특별자치도 원주 북원로 2325",
+      "normalizedAddress": "강원특별자치도원주북원로2325",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "이천세무서",
+      "address": "본관 : 경기도 이천시 부악로 47 (중리동), 여주민원실 : 경기도 여주시 세종로10 영무빌딩 여주시청 별관5층,  양평민원실 : 경기도 양평군 양평읍 군청앞길2(양평군청1층)",
+      "normalizedAddress": "본관:경기도이천시부악로47중리동여주민원실:경기도여주시세종로10영무빌딩여주시청별관5층양평민원실:경기도양평군양평읍군청앞길2양평군청1층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "춘천세무서",
+      "address": "강원특별자치도 춘천시 중앙로 115",
+      "normalizedAddress": "강원특별자치도춘천시중앙로115",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "평택세무서",
+      "address": "본관 : 경기도 평택시 죽백6로 6 (죽백동 796), 안성지서 : 안성시 대덕면 중앙로 13 (건지리 376-5)",
+      "normalizedAddress": "본관:경기도평택시죽백6로6죽백동796안성지서:안성시대덕면중앙로13건지리3765",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "홍천세무서",
+      "address": "강원특별자치도 홍천군 홍천읍 생명과학관길 50 (연봉리)",
+      "normalizedAddress": "강원특별자치도홍천군홍천읍생명과학관길50연봉리",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "화성세무서",
+      "address": "경기도 화성시 효행구 봉담읍 참샘길 27 (와우리 31-16)",
+      "normalizedAddress": "경기도화성시효행구봉담읍참샘길27와우리3116",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "인천지방국세청",
+      "address": "인천광역시 남동구 남동대로 763(구월동)",
+      "normalizedAddress": "인천광역시남동구남동대로763구월동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "계양세무서",
+      "address": "인천광역시 계양구 효서로 244",
+      "normalizedAddress": "인천광역시계양구효서로244",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "고양세무서",
+      "address": "경기도 고양시 일산동구 중앙로1275번길 14-43 (장항동774)",
+      "normalizedAddress": "경기도고양시일산동구중앙로1275번길1443장항동774",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "광명세무서",
+      "address": "본관 : 경기도 광명시 철산로 3-12(철산동 251), 별관 : 경기도 광명시 철산로 5(철산동 250)",
+      "normalizedAddress": "본관:경기도광명시철산로312철산동251별관:경기도광명시철산로5철산동250",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "김포세무서",
+      "address": "본관 : 경기도 김포시 김포한강1로22, 강화민원봉사실 : 인천광역시 강화군 강화읍 강화대로 394",
+      "normalizedAddress": "본관:경기도김포시김포한강1로22강화민원봉사실:인천광역시강화군강화읍강화대로394",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "남동세무서",
+      "address": "인천광역시 남동구 인하로 548 (구월동 1447-1)",
+      "normalizedAddress": "인천광역시남동구인하로548구월동14471",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "남부천세무서",
+      "address": "경기도 부천시 경인옛로 115 (괴안동 6-5)",
+      "normalizedAddress": "경기도부천시경인옛로115괴안동65",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동고양세무서",
+      "address": "경기도 고양시 덕양구 화중로104번길 16 (화정동) 화정아카데미타워 3층(민원실), 4층, 5층, 9층",
+      "normalizedAddress": "경기도고양시덕양구화중로104번길16화정동화정아카데미타워3층민원실4층5층9층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "부천세무서",
+      "address": "경기도 부천시 계남로227",
+      "normalizedAddress": "경기도부천시계남로227",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "부평세무서",
+      "address": "인천광역시 부평구 부평대로 147",
+      "normalizedAddress": "인천광역시부평구부평대로147",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서인천세무서",
+      "address": "인천광역시 서구 청라사파이어로 192",
+      "normalizedAddress": "인천광역시서구청라사파이어로192",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "연수세무서",
+      "address": "인천광역시 연수구 인천타워대로 323(송도동, 송도센트로드A동 1층~5층)",
+      "normalizedAddress": "인천광역시연수구인천타워대로323송도동송도센트로드A동1층~5층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "의정부세무서",
+      "address": "경기도 의정부시 의정로 77 (의정부동)",
+      "normalizedAddress": "경기도의정부시의정로77의정부동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "인천세무서",
+      "address": "본관 : 인천광역시 동구 우각로 75 (창영동), 별관 : 인천 미추홀구 인중로 22, 2층 조사과(숭의동, 용운빌딩), 영종도민원실 : 인천 중구 신도시남로 142번길 17, 301호(운서동)",
+      "normalizedAddress": "본관:인천광역시동구우각로75창영동별관:인천미추홀구인중로222층조사과숭의동용운빌딩영종도민원실:인천중구신도시남로142번길17301호운서동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "파주세무서",
+      "address": "경기도 파주시 금릉역로 62 (금촌동)",
+      "normalizedAddress": "경기도파주시금릉역로62금촌동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "포천세무서",
+      "address": "경기도 포천시 소흘읍 송우로 75",
+      "normalizedAddress": "경기도포천시소흘읍송우로75",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "대전지방국세청",
+      "address": "대전광역시 대덕구 계족로 677(법동)",
+      "normalizedAddress": "대전광역시대덕구계족로677법동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "공주세무서",
+      "address": "충청남도 공주시 봉황로 87(반죽동 332)",
+      "normalizedAddress": "충청남도공주시봉황로87반죽동332",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "논산세무서",
+      "address": "충청남도 논산시 논산대로241번길 6 (강산동)",
+      "normalizedAddress": "충청남도논산시논산대로241번길6강산동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "대전세무서",
+      "address": "대전광역시 중구 보문로 285 (선화동 287-1) 대전세무서",
+      "normalizedAddress": "대전광역시중구보문로285선화동2871대전세무서",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동청주세무서",
+      "address": "충북 청주시 청원구 1순환로 44(율량동)",
+      "normalizedAddress": "충북청주시청원구1순환로44율량동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "보령세무서",
+      "address": "충남 보령시 옥마로 56",
+      "normalizedAddress": "충남보령시옥마로56",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "북대전세무서",
+      "address": "대전광역시 유성구 유성대로 935번길7 (죽동 731-4)",
+      "normalizedAddress": "대전광역시유성구유성대로935번길7죽동7314",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서대전세무서",
+      "address": "대전광역시 서구 둔산서로 70 (둔산동)",
+      "normalizedAddress": "대전광역시서구둔산서로70둔산동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서산세무서",
+      "address": "충청남도 서산시 덕지천로 145-6",
+      "normalizedAddress": "충청남도서산시덕지천로1456",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "세종세무서",
+      "address": "세종특별자치시 시청대로 126 (보람동 724)",
+      "normalizedAddress": "세종특별자치시시청대로126보람동724",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "아산세무서",
+      "address": "충청남도 아산시 배방읍 배방로 57-29 토마토빌딩",
+      "normalizedAddress": "충청남도아산시배방읍배방로5729토마토빌딩",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "영동세무서",
+      "address": "충북 영동군 영동읍 계산로2길 10 (계산리 681-4)",
+      "normalizedAddress": "충북영동군영동읍계산로2길10계산리6814",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "예산세무서",
+      "address": "충청남도 예산군 오가면 윤봉길로 1883",
+      "normalizedAddress": "충청남도예산군오가면윤봉길로1883",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "제천세무서",
+      "address": "충북 제천시 복합타운1길 78",
+      "normalizedAddress": "충북제천시복합타운1길78",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "천안세무서",
+      "address": "충청남도 천안시 동남구 청수14로 80",
+      "normalizedAddress": "충청남도천안시동남구청수14로80",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "청주세무서",
+      "address": "충북 청주시 흥덕구 죽천로 151 (복대동 262-1)",
+      "normalizedAddress": "충북청주시흥덕구죽천로151복대동2621",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "충주세무서",
+      "address": "충북 충주시 충원대로 724 (금릉동)",
+      "normalizedAddress": "충북충주시충원대로724금릉동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "홍성세무서",
+      "address": "충남 홍성군 홍성읍 홍덕서로 32",
+      "normalizedAddress": "충남홍성군홍성읍홍덕서로32",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "광주지방국세청",
+      "address": "광주광역시 북구 첨단과기로208번길 43(오룡동)",
+      "normalizedAddress": "광주광역시북구첨단과기로208번길43오룡동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "광산세무서",
+      "address": "광주광역시 광산구 하남대로 83(하남동 1276)",
+      "normalizedAddress": "광주광역시광산구하남대로83하남동1276",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "광주세무서",
+      "address": "광주 동구 중앙로209(대인동)",
+      "normalizedAddress": "광주동구중앙로209대인동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "군산세무서",
+      "address": "전북특별자치도 군산시 미장13길 49(미장동)",
+      "normalizedAddress": "전북특별자치도군산시미장13길49미장동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "나주세무서",
+      "address": "전라남도 나주시 재신길 33",
+      "normalizedAddress": "전라남도나주시재신길33",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "남원세무서",
+      "address": "전북특별자치도 남원시 동림로 91-1(향교동 232-31)",
+      "normalizedAddress": "전북특별자치도남원시동림로911향교동23231",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "목포세무서",
+      "address": "전라남도 목포시 호남로58번길 19(대안동)",
+      "normalizedAddress": "전라남도목포시호남로58번길19대안동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "북광주세무서",
+      "address": "광주광역시 북구 금호로 70",
+      "normalizedAddress": "광주광역시북구금호로70",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "북전주세무서",
+      "address": "본관 : 전북특별자치도 전주시 덕진구 벚꽃로 33, 진안지서 : 진안군 진안읍 중앙로 45, 무주민원실 : 무주군 무주읍 주계로 97",
+      "normalizedAddress": "본관:전북특별자치도전주시덕진구벚꽃로33진안지서:진안군진안읍중앙로45무주민원실:무주군무주읍주계로97",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서광주세무서",
+      "address": "광주광역시 서구 상무민주로6번길 31(쌍촌동)",
+      "normalizedAddress": "광주광역시서구상무민주로6번길31쌍촌동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "순천세무서",
+      "address": "본관 : 전남 순천 연향번영길 64(연향동), 벌교지서 : 전남 보성 벌교 채동선로 260, 광양지서 : 전남 광양 중마중앙로 149",
+      "normalizedAddress": "본관:전남순천연향번영길64연향동벌교지서:전남보성벌교채동선로260광양지서:전남광양중마중앙로149",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "여수세무서",
+      "address": "전라남도 여수시 좌수영로 948-5(봉계동)",
+      "normalizedAddress": "전라남도여수시좌수영로9485봉계동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "익산세무서",
+      "address": "전북특별자치도 익산시 선화로425(영등동 191-3), 김제지서 : 전북 김제시 신풍길 205",
+      "normalizedAddress": "전북특별자치도익산시선화로425영등동1913김제지서:전북김제시신풍길205",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "전주세무서",
+      "address": "전북특별자치도 전주시 완산구 서곡로 95 (효자동3가 1406)",
+      "normalizedAddress": "전북특별자치도전주시완산구서곡로95효자동3가1406",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "정읍세무서",
+      "address": "전북특별자치도 정읍시 중앙1길 93(수성동)",
+      "normalizedAddress": "전북특별자치도정읍시중앙1길93수성동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "해남세무서",
+      "address": "전남 해남군 해남읍 중앙1로 18",
+      "normalizedAddress": "전남해남군해남읍중앙1로18",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "대구지방국세청",
+      "address": "대구광역시 달서구 화암로 301(대곡동)",
+      "normalizedAddress": "대구광역시달서구화암로301대곡동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "경산세무서",
+      "address": "경상북도 경산시 박물관로 3 (사동633-2)",
+      "normalizedAddress": "경상북도경산시박물관로3사동6332",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "경주세무서",
+      "address": "경상북도 경주시 원화로 335(성동동 180-4)",
+      "normalizedAddress": "경상북도경주시원화로335성동동1804",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "구미세무서",
+      "address": "경북 구미시 수출대로 179 (공단동)",
+      "normalizedAddress": "경북구미시수출대로179공단동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "김천세무서",
+      "address": "경북 김천시 평화길 128 (평화동)",
+      "normalizedAddress": "경북김천시평화길128평화동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "남대구세무서",
+      "address": "대구광역시 남구 대명로 55(대명동)",
+      "normalizedAddress": "대구광역시남구대명로55대명동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동대구세무서",
+      "address": "대구광역시 동구 동부로30길 102-3",
+      "normalizedAddress": "대구광역시동구동부로30길1023",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "북대구세무서",
+      "address": "대구광역시 북구 원대로 118(침산동)",
+      "normalizedAddress": "대구광역시북구원대로118침산동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "상주세무서",
+      "address": "경북 상주시 경상대로 3173-11(만산동)",
+      "normalizedAddress": "경북상주시경상대로317311만산동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서대구세무서",
+      "address": "대구광역시 달서구 당산로 38길 33",
+      "normalizedAddress": "대구광역시달서구당산로38길33",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "수성세무서",
+      "address": "대구광역시 수성구 달구벌대로2362(수성동3가5-1)",
+      "normalizedAddress": "대구광역시수성구달구벌대로2362수성동3가51",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "안동세무서",
+      "address": "경북 안동시 서동문로 208",
+      "normalizedAddress": "경북안동시서동문로208",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "영덕세무서",
+      "address": "경북 영덕군 영덕읍 영덕로 35-11(남산리61-1)",
+      "normalizedAddress": "경북영덕군영덕읍영덕로3511남산리611",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "영주세무서",
+      "address": "경북 영주시 중앙로 15(가흥동)",
+      "normalizedAddress": "경북영주시중앙로15가흥동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "포항세무서",
+      "address": "경북 포항시 북구 중앙로 346(덕수동)",
+      "normalizedAddress": "경북포항시북구중앙로346덕수동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "부산지방국세청",
+      "address": "부산광역시 연제구 연제로 12 (연산2동 1557번지)",
+      "normalizedAddress": "부산광역시연제구연제로12연산2동1557번지",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "거창세무서",
+      "address": "경남 거창군 거창읍 상동2길 14 (상림리)",
+      "normalizedAddress": "경남거창군거창읍상동2길14상림리",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "금정세무서",
+      "address": "부산 금정구 중앙대로 1636 (부곡동)",
+      "normalizedAddress": "부산금정구중앙대로1636부곡동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "김해세무서",
+      "address": "경남 김해시 호계로 440 (부원동)",
+      "normalizedAddress": "경남김해시호계로440부원동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동래세무서",
+      "address": "부산시 연제구 거제천로269번길 16(거제동 1463-4)",
+      "normalizedAddress": "부산시연제구거제천로269번길16거제동14634",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "동울산세무서",
+      "address": "울산광역시 북구 사청2길 7 (화봉동)",
+      "normalizedAddress": "울산광역시북구사청2길7화봉동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "마산세무서",
+      "address": "경남 창원시 마산합포구 3.15대로 211[지번주소 : 창원시 마산합포구 중앙동3가 3-8]",
+      "normalizedAddress": "경남창원시마산합포구315대로211[지번주소:창원시마산합포구중앙동3가38]",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "부산강서세무서",
+      "address": "부산시 강서구 명지국제7로 44 (퍼스트월드브라이튼 3~6층)",
+      "normalizedAddress": "부산시강서구명지국제7로44퍼스트월드브라이튼3~6층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "부산진세무서",
+      "address": "부산광역시 동구 진성로 23 (수정동)",
+      "normalizedAddress": "부산광역시동구진성로23수정동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "북부산세무서",
+      "address": "부산광역시 사상구 학감대로 263(감전동)",
+      "normalizedAddress": "부산광역시사상구학감대로263감전동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "서부산세무서",
+      "address": "부산광역시 서구 대영로 10 (서대신동2가 288-2)",
+      "normalizedAddress": "부산광역시서구대영로10서대신동2가2882",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "수영세무서",
+      "address": "부산광역시 수영구 남천동로 19번길 28 (남천동)",
+      "normalizedAddress": "부산광역시수영구남천동로19번길28남천동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "양산세무서",
+      "address": "경상남도 양산시 물금읍 증산역로135, (퍼스트조양 9층, 10층)",
+      "normalizedAddress": "경상남도양산시물금읍증산역로135퍼스트조양9층10층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "울산세무서",
+      "address": "울산광역시 남구 갈밭로 49",
+      "normalizedAddress": "울산광역시남구갈밭로49",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "제주세무서",
+      "address": "제주특별자치도 제주시 청사로 59(도남동)",
+      "normalizedAddress": "제주특별자치도제주시청사로59도남동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "중부산세무서",
+      "address": "부산광역시 중구 충장대로 6 (한진중공업 빌딩) 4, 5, 6, 10층",
+      "normalizedAddress": "부산광역시중구충장대로6한진중공업빌딩45610층",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "진주세무서",
+      "address": "경상남도 진주시 진주대로908번길 15(칠암동)",
+      "normalizedAddress": "경상남도진주시진주대로908번길15칠암동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "창원세무서",
+      "address": "경남 창원시 성산구 중앙대로209번길 16",
+      "normalizedAddress": "경남창원시성산구중앙대로209번길16",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "통영세무서",
+      "address": "경남 통영시 무전5길 20-9 (무전동)",
+      "normalizedAddress": "경남통영시무전5길209무전동",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "taxOffice",
+      "name": "해운대세무서",
+      "address": "부산광역시 해운대구 좌동순환로 17(좌동) 해운대세무서(본관)",
+      "normalizedAddress": "부산광역시해운대구좌동순환로17좌동해운대세무서본관",
+      "sourceFile": "tax-office-jurisdictions-source-260408.csv",
+      "sourceDate": "260408"
+    },
+    {
+      "category": "court",
+      "name": "대법원",
+      "address": "서울특별시 서초구 서초대로 219",
+      "normalizedAddress": "서울특별시서초구서초대로219",
+      "postalCode": "06590",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "법원행정처",
+      "address": "서울특별시 서초구 서초대로 219 (서초동 대법원)",
+      "normalizedAddress": "서울특별시서초구서초대로219서초동대법원",
+      "postalCode": "06590",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "사법연수원",
+      "address": "경기 고양시 일산동구 호수로 550(장항동 사법연수원)",
+      "normalizedAddress": "경기고양시일산동구호수로550장항동사법연수원",
+      "postalCode": "10413",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "사법정책연구원",
+      "address": "경기 고양시 일산동구 호수로 550 본관동 9,10층",
+      "normalizedAddress": "경기고양시일산동구호수로550본관동910층",
+      "postalCode": "10413",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "법원공무원교육원",
+      "address": "경기 고양시 일산동구 호수로 523(장항동)",
+      "normalizedAddress": "경기고양시일산동구호수로523장항동",
+      "postalCode": "10430",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "법원도서관",
+      "address": "경기도 고양시 일산동구 호수로 550",
+      "normalizedAddress": "경기도고양시일산동구호수로550",
+      "postalCode": "10413",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "양형위원회",
+      "address": "서울특별시 서초구 서초대로 219",
+      "normalizedAddress": "서울특별시서초구서초대로219",
+      "postalCode": "06590",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "서울고등법원",
+      "address": "서울특별시 서초구 서초중앙로 157",
+      "normalizedAddress": "서울특별시서초구서초중앙로157",
+      "postalCode": "06594",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "서울고등법원 원외재판부(인천)",
+      "address": "인천광역시 미추홀구 소성로163번길 17 (학익동)",
+      "normalizedAddress": "인천광역시미추홀구소성로163번길17학익동",
+      "postalCode": "22220",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "서울고등법원 원외재판부(춘천)",
+      "address": "강원특별자치도 춘천시 공지로 284 (효자동)",
+      "normalizedAddress": "강원특별자치도춘천시공지로284효자동",
+      "postalCode": "24342",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+      "sourceDate": "260617",
+      "sourcePage": 1
+    },
+    {
+      "category": "court",
+      "name": "대전고등법원",
+      "address": "대전광역시 서구 둔산중로 78번길 45(둔산동)",
+      "normalizedAddress": "대전광역시서구둔산중로78번길45둔산동",
+      "postalCode": "35237",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "대전고등법원 원외재판부(청주)",
+      "address": "충청북도 청주시 서원구 산남로62번길 51 (산남동 505)",
+      "normalizedAddress": "충청북도청주시서원구산남로62번길51산남동505",
+      "postalCode": "28624",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "대구고등법원",
+      "address": "대구광역시 수성구 동대구로 364",
+      "normalizedAddress": "대구광역시수성구동대구로364",
+      "postalCode": "42027",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "부산고등법원",
+      "address": "부산광역시 연제구 법원로31(거제동 1500번지)",
+      "normalizedAddress": "부산광역시연제구법원로31거제동1500번지",
+      "postalCode": "47510",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "부산고등법원 원외재판부(창원)",
+      "address": "경상남도 창원시 성산구 창이대로 681 (사파동 1번지)",
+      "normalizedAddress": "경상남도창원시성산구창이대로681사파동1번지",
+      "postalCode": "51456",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "부산고등법원 원외재판부(울산)",
+      "address": "울산시 남구 법대로 55",
+      "normalizedAddress": "울산시남구법대로55",
+      "postalCode": "44643",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "광주고등법원",
+      "address": "광주광역시 동구 준법로 7-12 (지산2동 342-1)",
+      "normalizedAddress": "광주광역시동구준법로712지산2동3421",
+      "postalCode": "61441",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "광주고등법원 원외재판부(전주)",
+      "address": "전북특별자치도 전주시 덕진구 가인로 33 (만성동) 전주지방법원",
+      "normalizedAddress": "전북특별자치도전주시덕진구가인로33만성동전주지방법원",
+      "postalCode": "54867",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "광주고등법원 원외재판부(제주)",
+      "address": "제주특별자치도 제주시 남광북 5길 3(이도2동)",
+      "normalizedAddress": "제주특별자치도제주시남광북5길3이도2동",
+      "postalCode": "63223",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "수원고등법원",
+      "address": "경기도 수원시 영통구 법조로 105 (하동, 수원법원종합청사)",
+      "normalizedAddress": "경기도수원시영통구법조로105하동수원법원종합청사",
+      "postalCode": "16512",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+      "sourceDate": "260617",
+      "sourcePage": 2
+    },
+    {
+      "category": "court",
+      "name": "특허법원 [대전]",
+      "address": "대전광역시 서구 둔산중로 69(둔산동)",
+      "normalizedAddress": "대전광역시서구둔산중로69둔산동",
+      "postalCode": "35239",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울중앙지방법원",
+      "address": "서울특별시 서초구 서초중앙로 157 (서초동)",
+      "normalizedAddress": "서울특별시서초구서초중앙로157서초동",
+      "postalCode": "06594",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울가정법원",
+      "address": "서울 서초구 강남대로 193(양재동 25-3)",
+      "normalizedAddress": "서울서초구강남대로193양재동253",
+      "postalCode": "06749",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울행정법원",
+      "address": "서울 서초구 강남대로 193 (양재동 25-3)",
+      "normalizedAddress": "서울서초구강남대로193양재동253",
+      "postalCode": "06749",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울회생법원",
+      "address": "서울특별시 서초구 서초중앙로 157 (서초동)",
+      "normalizedAddress": "서울특별시서초구서초중앙로157서초동",
+      "postalCode": "06594",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울동부지방법원",
+      "address": "서울특별시 송파구 법원로 101 (문정동)",
+      "normalizedAddress": "서울특별시송파구법원로101문정동",
+      "postalCode": "05856",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울남부지방법원",
+      "address": "서울특별시 양천구 신월로 386(신정동)",
+      "normalizedAddress": "서울특별시양천구신월로386신정동",
+      "postalCode": "08088",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울북부지방법원",
+      "address": "서울시 도봉구 마들로749 (도봉2동 626)",
+      "normalizedAddress": "서울시도봉구마들로749도봉2동626",
+      "postalCode": "01322",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "서울서부지방법원",
+      "address": "서울특별시 마포구 마포대로 174 (공덕동)",
+      "normalizedAddress": "서울특별시마포구마포대로174공덕동",
+      "postalCode": "04207",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원",
+      "address": "경기도 의정부시 녹양로34번길 23 (가능동)",
+      "normalizedAddress": "경기도의정부시녹양로34번길23가능동",
+      "postalCode": "11616",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+      "sourceDate": "260617",
+      "sourcePage": 3
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 고양지원",
+      "address": "경기도 고양시 일산동구 장백로 209",
+      "normalizedAddress": "경기도고양시일산동구장백로209",
+      "postalCode": "10413",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 남양주지원",
+      "address": "경기도 남양주시 다산중앙로82번안길 161(다산동)",
+      "normalizedAddress": "경기도남양주시다산중앙로82번안길161다산동",
+      "postalCode": "12249",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "인천지방법원",
+      "address": "인천광역시 미추홀구 소성로 163번길17(학익동)",
+      "normalizedAddress": "인천광역시미추홀구소성로163번길17학익동",
+      "postalCode": "22220",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "인천지방법원 부천지원",
+      "address": "경기도 부천시 원미구 상일로 129(상동)",
+      "normalizedAddress": "경기도부천시원미구상일로129상동",
+      "postalCode": "14602",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "인천가정법원",
+      "address": "인천 미추홀구 경원대로 881(주안동)",
+      "normalizedAddress": "인천미추홀구경원대로881주안동",
+      "postalCode": "22134",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "인천가정법원 부천지원",
+      "address": "경기도 부천시 원미구 상일로 129(상동)",
+      "normalizedAddress": "경기도부천시원미구상일로129상동",
+      "postalCode": "14602",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원",
+      "address": "경기도 수원시 영통구 법조로 105 (하동, 수원법원종합청사)",
+      "normalizedAddress": "경기도수원시영통구법조로105하동수원법원종합청사",
+      "postalCode": "16512",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 성남지원",
+      "address": "경기도 성남시 수정구 산성대로 451 (단대동)",
+      "normalizedAddress": "경기도성남시수정구산성대로451단대동",
+      "postalCode": "13143",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 여주지원",
+      "address": "경기도 여주시 현암동 640-10(현암로 21-12)",
+      "normalizedAddress": "경기도여주시현암동64010현암로2112",
+      "postalCode": "12638",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 평택지원",
+      "address": "경기도 평택시 평남로 1036(동삭동 663)",
+      "normalizedAddress": "경기도평택시평남로1036동삭동663",
+      "postalCode": "17848",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+      "sourceDate": "260617",
+      "sourcePage": 4
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 안산지원",
+      "address": "경기도 안산시 단원구 광덕서로 75 (고잔동)",
+      "normalizedAddress": "경기도안산시단원구광덕서로75고잔동",
+      "postalCode": "15472",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 안양지원",
+      "address": "경기도 안양시 동안구 관평로 212번길 70 (관양동)",
+      "normalizedAddress": "경기도안양시동안구관평로212번길70관양동",
+      "postalCode": "14054",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원가정법원",
+      "address": "경기도 수원시 영통구 매영로345번길 67 (영통동)",
+      "normalizedAddress": "경기도수원시영통구매영로345번길67영통동",
+      "postalCode": "16703",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원가정법원 성남지원",
+      "address": "경기도 성남시 수정구 산성대로 451 (단대동)",
+      "normalizedAddress": "경기도성남시수정구산성대로451단대동",
+      "postalCode": "13143",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원가정법원 여주지원",
+      "address": "경기도 여주시 현암동 640-10(현암로 21-12)",
+      "normalizedAddress": "경기도여주시현암동64010현암로2112",
+      "postalCode": "12638",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원가정법원 평택지원",
+      "address": "경기도 평택시 평남로 1036 (동삭동)",
+      "normalizedAddress": "경기도평택시평남로1036동삭동",
+      "postalCode": "17848",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원가정법원 안산지원",
+      "address": "경기도 안산시 단원구 광덕서로 75 (고잔동)",
+      "normalizedAddress": "경기도안산시단원구광덕서로75고잔동",
+      "postalCode": "15472",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원가정법원 안양지원",
+      "address": "경기도 안양시 동안구 관평로 212번길 70 (관양동)",
+      "normalizedAddress": "경기도안양시동안구관평로212번길70관양동",
+      "postalCode": "14054",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "수원회생법원",
+      "address": "경기도 수원시 영통구 법조로 105(하동) 수원회생법원",
+      "normalizedAddress": "경기도수원시영통구법조로105하동수원회생법원",
+      "postalCode": "16512",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원",
+      "address": "강원특별자치도 춘천시 공지로 284 (효자2동)",
+      "normalizedAddress": "강원특별자치도춘천시공지로284효자2동",
+      "postalCode": "24342",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+      "sourceDate": "260617",
+      "sourcePage": 5
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 강릉지원",
+      "address": "강원특별자치도 강릉시 동해대로 3288-18 (난곡동)",
+      "normalizedAddress": "강원특별자치도강릉시동해대로328818난곡동",
+      "postalCode": "25463",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 원주지원",
+      "address": "강원특별자치도 원주시 시청로149 (무실동)",
+      "normalizedAddress": "강원특별자치도원주시시청로149무실동",
+      "postalCode": "26478",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 속초지원",
+      "address": "강원특별자치도 속초시 법대로 15 (동명동)",
+      "normalizedAddress": "강원특별자치도속초시법대로15동명동",
+      "postalCode": "24822",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 영월지원",
+      "address": "강원특별자치도 영월군 영월읍 영월향교1길 53(영흥리)",
+      "normalizedAddress": "강원특별자치도영월군영월읍영월향교1길53영흥리",
+      "postalCode": "26228",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원",
+      "address": "대전광역시 서구 둔산중로 78번길 45 (둔산동)",
+      "normalizedAddress": "대전광역시서구둔산중로78번길45둔산동",
+      "postalCode": "35237",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 홍성지원",
+      "address": "충남 홍성군 홍성읍 법원로 38 (월산리 848)",
+      "normalizedAddress": "충남홍성군홍성읍법원로38월산리848",
+      "postalCode": "32226",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 공주지원",
+      "address": "충청남도 공주시 한적2길 34-15 (금흥동 610-1)",
+      "normalizedAddress": "충청남도공주시한적2길3415금흥동6101",
+      "postalCode": "32568",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 논산지원",
+      "address": "충청남도 논산시 강경읍 계백로 99 (대흥리 46-1)",
+      "normalizedAddress": "충청남도논산시강경읍계백로99대흥리461",
+      "postalCode": "32930",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 서산지원",
+      "address": "충청남도 서산시 공림4로 24 (예천동 600)",
+      "normalizedAddress": "충청남도서산시공림4로24예천동600",
+      "postalCode": "31988",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 천안지원",
+      "address": "충청남도 천안시 동남구 청수14로 77 (청당동 476)",
+      "normalizedAddress": "충청남도천안시동남구청수14로77청당동476",
+      "postalCode": "31198",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+      "sourceDate": "260617",
+      "sourcePage": 6
+    },
+    {
+      "category": "court",
+      "name": "대전가정법원",
+      "address": "대전광역시 서구 둔산중로 69 (둔산동 1400)",
+      "normalizedAddress": "대전광역시서구둔산중로69둔산동1400",
+      "postalCode": "35239",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "대전가정법원 홍성지원",
+      "address": "충남 홍성군 홍성읍 법원로 38 (월산리 848)",
+      "normalizedAddress": "충남홍성군홍성읍법원로38월산리848",
+      "postalCode": "32226",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "대전가정법원 공주지원",
+      "address": "충청남도 공주시 한적2길 34-15 (금흥동 610-1)",
+      "normalizedAddress": "충청남도공주시한적2길3415금흥동6101",
+      "postalCode": "32568",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "대전가정법원 논산지원",
+      "address": "충청남도 논산시 강경읍 계백로 99 (대흥리 46-1)",
+      "normalizedAddress": "충청남도논산시강경읍계백로99대흥리461",
+      "postalCode": "32930",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "대전가정법원 서산지원",
+      "address": "충청남도 서산시 공림4로 24 (예천동 600)",
+      "normalizedAddress": "충청남도서산시공림4로24예천동600",
+      "postalCode": "31988",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "대전가정법원 천안지원",
+      "address": "충청남도 천안시 동남구 청수14로 77 (청당동)",
+      "normalizedAddress": "충청남도천안시동남구청수14로77청당동",
+      "postalCode": "31198",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "대전회생법원",
+      "address": "대전광역시 서구 둔산중로78번길 45 (둔산동)",
+      "normalizedAddress": "대전광역시서구둔산중로78번길45둔산동",
+      "postalCode": "35237",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "청주지방법원",
+      "address": "충북 청주시 서원구 산남로62번길 51(산남동 505)",
+      "normalizedAddress": "충북청주시서원구산남로62번길51산남동505",
+      "postalCode": "28624",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "청주지방법원 충주지원",
+      "address": "충북 충주시 계명대로 103 (교현2동 720-2)",
+      "normalizedAddress": "충북충주시계명대로103교현2동7202",
+      "postalCode": "27357",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "청주지방법원 제천지원",
+      "address": "충청북도 제천시 칠성로 53 (중앙로2가 16-2)",
+      "normalizedAddress": "충청북도제천시칠성로53중앙로2가162",
+      "postalCode": "27165",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+      "sourceDate": "260617",
+      "sourcePage": 7
+    },
+    {
+      "category": "court",
+      "name": "청주지방법원 영동지원",
+      "address": "충청북도 영동군 영동읍 영동황간로 99 (매천리 306)",
+      "normalizedAddress": "충청북도영동군영동읍영동황간로99매천리306",
+      "postalCode": "29150",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원",
+      "address": "대구광역시 수성구 동대구로 364 (범어동 176-1)",
+      "normalizedAddress": "대구광역시수성구동대구로364범어동1761",
+      "postalCode": "42027",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 서부지원",
+      "address": "대구 달서구 장산남로 30 (용산동 230) 대구지방법원 서부지원",
+      "normalizedAddress": "대구달서구장산남로30용산동230대구지방법원서부지원",
+      "postalCode": "42635",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 안동지원",
+      "address": "경북 안동시 강남로 304 (정하동 235-1)",
+      "normalizedAddress": "경북안동시강남로304정하동2351",
+      "postalCode": "36752",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 경주지원",
+      "address": "경상북도 경주시 화랑로 89 (동부동 203)",
+      "normalizedAddress": "경상북도경주시화랑로89동부동203",
+      "postalCode": "38145",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 포항지원",
+      "address": "경상북도 포항시 북구 법원로 181 (양덕동 768)",
+      "normalizedAddress": "경상북도포항시북구법원로181양덕동768",
+      "postalCode": "37573",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 김천지원",
+      "address": "경상북도 김천시 물망골길 39 (삼락동 1225)",
+      "normalizedAddress": "경상북도김천시물망골길39삼락동1225",
+      "postalCode": "39518",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 상주지원",
+      "address": "경상북도 상주시 북천로 17-9 (만산동 652-2)",
+      "normalizedAddress": "경상북도상주시북천로179만산동6522",
+      "postalCode": "37160",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 의성지원",
+      "address": "경상북도 의성군 의성읍 군청길 67 (중리리 748-7)",
+      "normalizedAddress": "경상북도의성군의성읍군청길67중리리7487",
+      "postalCode": "37339",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구지방법원 영덕지원",
+      "address": "경상북도 영덕군 영덕읍 경동로 8337 (화개리 226-1)",
+      "normalizedAddress": "경상북도영덕군영덕읍경동로8337화개리2261",
+      "postalCode": "36427",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+      "sourceDate": "260617",
+      "sourcePage": 8
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원",
+      "address": "대구광역시 달서구 장산남로 30 (용산동 230) 대구가정법원",
+      "normalizedAddress": "대구광역시달서구장산남로30용산동230대구가정법원",
+      "postalCode": "42635",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 안동지원",
+      "address": "경북 안동시 강남로 304 (정하동 235-1)",
+      "normalizedAddress": "경북안동시강남로304정하동2351",
+      "postalCode": "36752",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 경주지원",
+      "address": "경상북도 경주시 화랑로 89 (동부동 203)",
+      "normalizedAddress": "경상북도경주시화랑로89동부동203",
+      "postalCode": "38145",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 포항지원",
+      "address": "경상북도 포항시 북구 법원로 181 (양덕동 768)",
+      "normalizedAddress": "경상북도포항시북구법원로181양덕동768",
+      "postalCode": "37573",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 김천지원",
+      "address": "경상북도 김천시 물망골길 39 (삼락동 1225)",
+      "normalizedAddress": "경상북도김천시물망골길39삼락동1225",
+      "postalCode": "39518",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 상주지원",
+      "address": "경상북도 상주시 북천로 17-9 (만산동 652-2)",
+      "normalizedAddress": "경상북도상주시북천로179만산동6522",
+      "postalCode": "37160",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 의성지원",
+      "address": "경상북도 의성군 의성읍 군청길 67 (중리리 748-7",
+      "normalizedAddress": "경상북도의성군의성읍군청길67중리리7487",
+      "postalCode": "37339",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구가정법원 영덕지원",
+      "address": "경상북도 영덕군 영덕읍 경동로 8337 (화개리 226-1)",
+      "normalizedAddress": "경상북도영덕군영덕읍경동로8337화개리2261",
+      "postalCode": "36427",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "대구회생법원",
+      "address": "대구광역시 수성구 동대구로 364 (범어동 176-1)",
+      "normalizedAddress": "대구광역시수성구동대구로364범어동1761",
+      "postalCode": "42027",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "부산지방법원",
+      "address": "부산광역시 연제구 법원로 31",
+      "normalizedAddress": "부산광역시연제구법원로31",
+      "postalCode": "47510",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9",
+      "sourceDate": "260617",
+      "sourcePage": 9
+    },
+    {
+      "category": "court",
+      "name": "부산지방법원 동부지원",
+      "address": "부산 해운대구 재반로 112번길 20번(재송동1133)",
+      "normalizedAddress": "부산해운대구재반로112번길20번재송동1133",
+      "postalCode": "48053",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "부산지방법원 서부지원",
+      "address": "부산광역시 강서구 명지국제7로 77 (명지동)",
+      "normalizedAddress": "부산광역시강서구명지국제7로77명지동",
+      "postalCode": "46726",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "부산가정법원",
+      "address": "부산광역시 연제구 법원로 31",
+      "normalizedAddress": "부산광역시연제구법원로31",
+      "postalCode": "47510",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "부산회생법원",
+      "address": "부산광역시 연제구 법원로 31(거제동)",
+      "normalizedAddress": "부산광역시연제구법원로31거제동",
+      "postalCode": "47510",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "울산지방법원",
+      "address": "울산시 남구 법대로 55",
+      "normalizedAddress": "울산시남구법대로55",
+      "postalCode": "44643",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "울산가정법원",
+      "address": "울산광역시 남구 법대로 55 (옥동 1415) 울산법원청사 10층",
+      "normalizedAddress": "울산광역시남구법대로55옥동1415울산법원청사10층",
+      "postalCode": "44643",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "창원지방법원",
+      "address": "경상남도 창원시 성산구 창이대로 681(사파동)",
+      "normalizedAddress": "경상남도창원시성산구창이대로681사파동",
+      "postalCode": "51456",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "창원지방법원 마산지원",
+      "address": "경상남도 창원시 마산합포구 완월동 7길 16",
+      "normalizedAddress": "경상남도창원시마산합포구완월동7길16",
+      "postalCode": "51265",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "창원지방법원 진주지원",
+      "address": "경상남도 진주시 진양호로 303",
+      "normalizedAddress": "경상남도진주시진양호로303",
+      "postalCode": "52676",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "창원지방법원 통영지원",
+      "address": "경남 통영시 용남면 동달안길 67",
+      "normalizedAddress": "경남통영시용남면동달안길67",
+      "postalCode": "53029",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+      "sourceDate": "260617",
+      "sourcePage": 10
+    },
+    {
+      "category": "court",
+      "name": "창원지방법원 밀양지원",
+      "address": "경남 밀양시 밀양대로 1993-20(내이동)",
+      "normalizedAddress": "경남밀양시밀양대로199320내이동",
+      "postalCode": "50424",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "창원지방법원 거창지원",
+      "address": "경남 거창군 거창읍 죽전1길 31",
+      "normalizedAddress": "경남거창군거창읍죽전1길31",
+      "postalCode": "50129",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주지방법원",
+      "address": "광주광역시 동구 준법로 7-12(지산동)",
+      "normalizedAddress": "광주광역시동구준법로712지산동",
+      "postalCode": "61441",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주지방법원 목포지원",
+      "address": "전라남도 목포시 정의로 29 (옥암동)",
+      "normalizedAddress": "전라남도목포시정의로29옥암동",
+      "postalCode": "58671",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주지방법원 장흥지원",
+      "address": "전남 장흥군 장흥읍 읍성로 121-1 (남동리)",
+      "normalizedAddress": "전남장흥군장흥읍읍성로1211남동리",
+      "postalCode": "59330",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주지방법원 순천지원",
+      "address": "전남 순천시 왕지로 21 (왕지동)",
+      "normalizedAddress": "전남순천시왕지로21왕지동",
+      "postalCode": "57932",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주지방법원 해남지원",
+      "address": "전남 해남군 해남읍 중앙1로 330 (구교리)",
+      "normalizedAddress": "전남해남군해남읍중앙1로330구교리",
+      "postalCode": "59031",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주가정법원",
+      "address": "광주광역시 서구 상무번영로 85 (치평동 1205-3)",
+      "normalizedAddress": "광주광역시서구상무번영로85치평동12053",
+      "postalCode": "61946",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주가정법원 목포지원",
+      "address": "전라남도 목포시 정의로 29(옥암동 1201번지)",
+      "normalizedAddress": "전라남도목포시정의로29옥암동1201번지",
+      "postalCode": "58671",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주가정법원 장흥지원",
+      "address": "전남 장흥군 장흥읍 읍성로 121-1 (남동리 88)",
+      "normalizedAddress": "전남장흥군장흥읍읍성로1211남동리88",
+      "postalCode": "59330",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+      "sourceDate": "260617",
+      "sourcePage": 11
+    },
+    {
+      "category": "court",
+      "name": "광주가정법원 순천지원",
+      "address": "전라남도 순천시 왕지로 21 (왕지동 777-1)",
+      "normalizedAddress": "전라남도순천시왕지로21왕지동7771",
+      "postalCode": "57932",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "광주가정법원 해남지원",
+      "address": "전남 해남군 해남읍 중앙1로 330 (구교리 391)",
+      "normalizedAddress": "전남해남군해남읍중앙1로330구교리391",
+      "postalCode": "59031",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "광주회생법원",
+      "address": "광주광역시 동구 준법로 7-12 (지산동)",
+      "normalizedAddress": "광주광역시동구준법로712지산동",
+      "postalCode": "61441",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "전주지방법원",
+      "address": "전북특별자치도 전주시 덕진구 가인로 33 (만성동)",
+      "normalizedAddress": "전북특별자치도전주시덕진구가인로33만성동",
+      "postalCode": "54867",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "전주지방법원 군산지원",
+      "address": "전북특별자치도 군산시 법원로 68 (조촌동)",
+      "normalizedAddress": "전북특별자치도군산시법원로68조촌동",
+      "postalCode": "54079",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "전주지방법원 정읍지원",
+      "address": "전북특별자치도 정읍시 수성6로 29 (수성동)",
+      "normalizedAddress": "전북특별자치도정읍시수성6로29수성동",
+      "postalCode": "56172",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "전주지방법원 남원지원",
+      "address": "전북특별자치도 남원시 용성로 59 (동충동)",
+      "normalizedAddress": "전북특별자치도남원시용성로59동충동",
+      "postalCode": "55761",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "제주지방법원",
+      "address": "제주특별자치도 제주시 남광북5길 3 (이도2동)",
+      "normalizedAddress": "제주특별자치도제주시남광북5길3이도2동",
+      "postalCode": "63223",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 포천시법원",
+      "address": "경기도 포천시 중앙로 27",
+      "normalizedAddress": "경기도포천시중앙로27",
+      "postalCode": "11149",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 남양주지원 가평군법원",
+      "address": "경기도 가평군 가화로 180",
+      "normalizedAddress": "경기도가평군가화로180",
+      "postalCode": "12412",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+      "sourceDate": "260617",
+      "sourcePage": 12
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 연천군법원",
+      "address": "경기도 연천군 연천읍 연천로 376",
+      "normalizedAddress": "경기도연천군연천읍연천로376",
+      "postalCode": "11013",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 철원군법원",
+      "address": "강원특별자치도 철원군 삼부연로 59",
+      "normalizedAddress": "강원특별자치도철원군삼부연로59",
+      "postalCode": "24040",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 동두천시법원",
+      "address": "경기 동두천시 지행로 97 (지행동 284-20)",
+      "normalizedAddress": "경기동두천시지행로97지행동28420",
+      "postalCode": "11362",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "의정부지방법원 고양지원 파주시법원",
+      "address": "경기도 파주시 금바위로 40 (와동동)",
+      "normalizedAddress": "경기도파주시금바위로40와동동",
+      "postalCode": "10894",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "인천지방법원 강화군법원",
+      "address": "인천 강화군 강화읍 강화대로 300",
+      "normalizedAddress": "인천강화군강화읍강화대로300",
+      "postalCode": "23025",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "인천지방법원 부천지원 김포시법원",
+      "address": "경기도 김포시 봉화로 16(사우동)",
+      "normalizedAddress": "경기도김포시봉화로16사우동",
+      "postalCode": "10108",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 오산시법원",
+      "address": "경기도 오산시 법원로 65 (궐동)",
+      "normalizedAddress": "경기도오산시법원로65궐동",
+      "postalCode": "18122",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 용인시법원",
+      "address": "경기도 용인시 처인구 성산로 7 (역북동)",
+      "normalizedAddress": "경기도용인시처인구성산로7역북동",
+      "postalCode": "17020",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 성남지원 광주시법원",
+      "address": "경기도 광주시 행정타운로 49-15 (송정동)",
+      "normalizedAddress": "경기도광주시행정타운로4915송정동",
+      "postalCode": "12746",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 여주지원 양평군법원",
+      "address": "경기도 양평군 양근로 154",
+      "normalizedAddress": "경기도양평군양근로154",
+      "postalCode": "12554",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+      "sourceDate": "260617",
+      "sourcePage": 13
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 여주지원 이천시법원",
+      "address": "경기도 이천시 구만리로 308 (안흥동)",
+      "normalizedAddress": "경기도이천시구만리로308안흥동",
+      "postalCode": "17378",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 평택지원 안성시법원",
+      "address": "경기도 안성시 안성맞춤대로 1188 (당왕동)",
+      "normalizedAddress": "경기도안성시안성맞춤대로1188당왕동",
+      "postalCode": "17584",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "수원지방법원 안산지원 광명시법원",
+      "address": "경기도 광명시 철산로 3-16 (철산동)",
+      "normalizedAddress": "경기도광명시철산로316철산동",
+      "postalCode": "14235",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 인제군법원",
+      "address": "강원특별자치도 인제군 인제읍 인제로 187번길 14 (상동리)",
+      "normalizedAddress": "강원특별자치도인제군인제읍인제로187번길14상동리",
+      "postalCode": "24631",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 홍천군법원",
+      "address": "강원특별자치도 홍천군 홍천읍 홍천로 5길 8 (신장대리)",
+      "normalizedAddress": "강원특별자치도홍천군홍천읍홍천로5길8신장대리",
+      "postalCode": "25136",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 양구군법원",
+      "address": "강원특별자치도 양구군 양구읍 관공서로 30 (중리)",
+      "normalizedAddress": "강원특별자치도양구군양구읍관공서로30중리",
+      "postalCode": "24522",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 화천군법원",
+      "address": "강원특별자치도 화천군 화천읍 상승로 102 (상리)",
+      "normalizedAddress": "강원특별자치도화천군화천읍상승로102상리",
+      "postalCode": "24117",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 강릉지원 삼척시법원",
+      "address": "강원특별자치도 삼척시 청석로 3길 16-17 (교동 737)",
+      "normalizedAddress": "강원특별자치도삼척시청석로3길1617교동737",
+      "postalCode": "25924",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 강릉지원 동해시법원",
+      "address": "강원특별자치도 동해시 해안로 217 (천곡동 822)",
+      "normalizedAddress": "강원특별자치도동해시해안로217천곡동822",
+      "postalCode": "25769",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 원주지원 횡성군법원",
+      "address": "강원특별자치도 횡성군 횡성읍 읍상로 36 (횡성읍 읍상리 300-1)",
+      "normalizedAddress": "강원특별자치도횡성군횡성읍읍상로36횡성읍읍상리3001",
+      "postalCode": "25232",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+      "sourceDate": "260617",
+      "sourcePage": 14
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 속초지원 고성군법원",
+      "address": "강원특별자치도 고성군 간성읍 간성로 84 (간성읍 상리 202)",
+      "normalizedAddress": "강원특별자치도고성군간성읍간성로84간성읍상리202",
+      "postalCode": "24735",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 속초지원 양양군법원",
+      "address": "강원특별자치도 양양군 양양로 93 (양양읍 남문리 184-1)",
+      "normalizedAddress": "강원특별자치도양양군양양로93양양읍남문리1841",
+      "postalCode": "25029",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 영월지원 정선군법원",
+      "address": "강원특별자치도 정선군 정선읍 봉양7길 7 (봉양리 145-3)",
+      "normalizedAddress": "강원특별자치도정선군정선읍봉양7길7봉양리1453",
+      "postalCode": "26130",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 영월지원 태백시법원",
+      "address": "강원특별자치도 태백시 문화로 1길 25 (황지1동 49-220)",
+      "normalizedAddress": "강원특별자치도태백시문화로1길25황지1동49220",
+      "postalCode": "26017",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "춘천지방법원 영월지원 평창군법원",
+      "address": "강원특별자치도 평창군 평창읍 백오로 153 (평창읍 중리 334)",
+      "normalizedAddress": "강원특별자치도평창군평창읍백오로153평창읍중리334",
+      "postalCode": "25375",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 세종특별자치시법원",
+      "address": "세종특별자치시 조치원읍 새내 16길 27 (교리 8-11)",
+      "normalizedAddress": "세종특별자치시조치원읍새내16길27교리811",
+      "postalCode": "30024",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 금산군법원",
+      "address": "충청남도 금산군 금산읍 인삼로 7 (아인리 28-8)",
+      "normalizedAddress": "충청남도금산군금산읍인삼로7아인리288",
+      "postalCode": "32737",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 홍성지원 서천군법원",
+      "address": "충청남도 서천군 장항읍 장항로 245 (원수리 893-5)",
+      "normalizedAddress": "충청남도서천군장항읍장항로245원수리8935",
+      "postalCode": "33675",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 홍성지원 보령시법원",
+      "address": "충청남도 보령시 중앙로 128 (대천동 423-14)",
+      "normalizedAddress": "충청남도보령시중앙로128대천동42314",
+      "postalCode": "33453",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "court",
+      "name": "대전지방법원 홍성지원 예산군법원",
+      "address": "충청남도 예산군 예산읍 벚꽃로 145 (산성리 674-1)",
+      "normalizedAddress": "충청남도예산군예산읍벚꽃로145산성리6741",
+      "postalCode": "32428",
+      "sourceUrl": "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+      "sourceDate": "260617",
+      "sourcePage": 15
+    },
+    {
+      "category": "localGovernment",
+      "name": "서울특별시청",
+      "address": "서울 중구 세종대로 110(태평로1가)",
+      "normalizedAddress": "서울중구세종대로110태평로1가",
+      "postalCode": "04524",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "종로구청",
+      "address": "서울 종로구 종로1길 36(수송동)",
+      "normalizedAddress": "서울종로구종로1길36수송동",
+      "postalCode": "03153",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "중구청",
+      "address": "서울 중구 창경궁로 17(예관동)",
+      "normalizedAddress": "서울중구창경궁로17예관동",
+      "postalCode": "04558",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "용산구청",
+      "address": "서울 용산구 녹사평대로 150(이태원동)",
+      "normalizedAddress": "서울용산구녹사평대로150이태원동",
+      "postalCode": "04390",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "성동구청",
+      "address": "서울 성동구 고산자로 260",
+      "normalizedAddress": "서울성동구고산자로260",
+      "postalCode": "04750",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광진구청",
+      "address": "서울 광진구 아차산로 400(자양동)",
+      "normalizedAddress": "서울광진구아차산로400자양동",
+      "postalCode": "05050",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "동대문구청",
+      "address": "서울 동대문구 천호대로 145(용두동)",
+      "normalizedAddress": "서울동대문구천호대로145용두동",
+      "postalCode": "02565",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "중랑구청",
+      "address": "서울 중랑구 봉화산로 179(신내동)",
+      "normalizedAddress": "서울중랑구봉화산로179신내동",
+      "postalCode": "02043",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "성북구청",
+      "address": "서울 성북구 보문로 168(삼선동5가)",
+      "normalizedAddress": "서울성북구보문로168삼선동5가",
+      "postalCode": "02848",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "강북구청",
+      "address": "서울 강북구 도봉로89길 13(수유동)",
+      "normalizedAddress": "서울강북구도봉로89길13수유동",
+      "postalCode": "01071",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "도봉구청",
+      "address": "서울 도봉구 마들로 656(방학동)",
+      "normalizedAddress": "서울도봉구마들로656방학동",
+      "postalCode": "01331",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "노원구청",
+      "address": "서울 노원구 노해로 437(상계동)",
+      "normalizedAddress": "서울노원구노해로437상계동",
+      "postalCode": "01689",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "은평구청",
+      "address": "서울 은평구 은평로 195(녹번동)",
+      "normalizedAddress": "서울은평구은평로195녹번동",
+      "postalCode": "03384",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서대문구청",
+      "address": "서울 서대문구 연희로 248(연희동)",
+      "normalizedAddress": "서울서대문구연희로248연희동",
+      "postalCode": "03718",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "마포구청",
+      "address": "서울 마포구 월드컵로 212(성산동)",
+      "normalizedAddress": "서울마포구월드컵로212성산동",
+      "postalCode": "03937",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "양천구청",
+      "address": "서울 양천구 목동동로 105(신정동)",
+      "normalizedAddress": "서울양천구목동동로105신정동",
+      "postalCode": "08095",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "강서구청",
+      "address": "서울 강서구 화곡로 302(화곡동)",
+      "normalizedAddress": "서울강서구화곡로302화곡동",
+      "postalCode": "07658",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "구로구청",
+      "address": "서울 구로구 가마산로 245(구로동)",
+      "normalizedAddress": "서울구로구가마산로245구로동",
+      "postalCode": "08284",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "금천구청",
+      "address": "서울 금천구 시흥대로73길 70",
+      "normalizedAddress": "서울금천구시흥대로73길70",
+      "postalCode": "08611",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영등포구청",
+      "address": "서울 영등포구 당산로 123(당산동3가)",
+      "normalizedAddress": "서울영등포구당산로123당산동3가",
+      "postalCode": "07260",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "동작구청",
+      "address": "서울 동작구 장승배기로 70(상도동)",
+      "normalizedAddress": "서울동작구장승배기로70상도동",
+      "postalCode": "06928",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "관악구청",
+      "address": "서울 관악구 관악로 145(봉천동)",
+      "normalizedAddress": "서울관악구관악로145봉천동",
+      "postalCode": "08832",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서초구청",
+      "address": "서울 서초구 남부순환로 2584(서초동)",
+      "normalizedAddress": "서울서초구남부순환로2584서초동",
+      "postalCode": "06750",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "강남구청",
+      "address": "서울 강남구 학동로 426(삼성동)",
+      "normalizedAddress": "서울강남구학동로426삼성동",
+      "postalCode": "06090",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "송파구청",
+      "address": "서울 송파구 올림픽로 326(신천동)",
+      "normalizedAddress": "서울송파구올림픽로326신천동",
+      "postalCode": "05552",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "강동구청",
+      "address": "서울 강동구 성내로 25(성내동)",
+      "normalizedAddress": "서울강동구성내로25성내동",
+      "postalCode": "05397",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산광역시청",
+      "address": "부산 연제구 중앙대로 1001(연산동)",
+      "normalizedAddress": "부산연제구중앙대로1001연산동",
+      "postalCode": "47545",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 중구청",
+      "address": "부산 중구 중구로 120(대청동1가)",
+      "normalizedAddress": "부산중구중구로120대청동1가",
+      "postalCode": "48926",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 서구청",
+      "address": "부산 서구 구덕로 120(토성동4가)",
+      "normalizedAddress": "부산서구구덕로120토성동4가",
+      "postalCode": "49247",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 동구청",
+      "address": "부산 동구 구청로 1(수정동)",
+      "normalizedAddress": "부산동구구청로1수정동",
+      "postalCode": "48781",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 영도구청",
+      "address": "부산 영도구 태종로 423(청학동)",
+      "normalizedAddress": "부산영도구태종로423청학동",
+      "postalCode": "49011",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산진구청",
+      "address": "부산 부산진구 시민공원로 30(부암동)",
+      "normalizedAddress": "부산부산진구시민공원로30부암동",
+      "postalCode": "47193",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 동래구청",
+      "address": "부산 동래구 충렬대로237번길 93(복천동)",
+      "normalizedAddress": "부산동래구충렬대로237번길93복천동",
+      "postalCode": "47808",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 남구청",
+      "address": "부산 남구 못골로 19(대연동)",
+      "normalizedAddress": "부산남구못골로19대연동",
+      "postalCode": "48452",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 북구청",
+      "address": "부산 북구 낙동대로1570번길 33(구포동)",
+      "normalizedAddress": "부산북구낙동대로1570번길33구포동",
+      "postalCode": "46504",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 해운대구청",
+      "address": "부산 해운대구 중동2로 11(중동)",
+      "normalizedAddress": "부산해운대구중동2로11중동",
+      "postalCode": "48095",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 사하구청",
+      "address": "부산 사하구 낙동대로398번길 12(당리동)",
+      "normalizedAddress": "부산사하구낙동대로398번길12당리동",
+      "postalCode": "49328",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 금정구청",
+      "address": "부산 금정구 중앙대로 1777(부곡동)",
+      "normalizedAddress": "부산금정구중앙대로1777부곡동",
+      "postalCode": "46274",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 강서구청",
+      "address": "부산 강서구 낙동북로 477(대저1동)",
+      "normalizedAddress": "부산강서구낙동북로477대저1동",
+      "postalCode": "46702",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 연제구청",
+      "address": "부산 연제구 연제로 2(연산동)",
+      "normalizedAddress": "부산연제구연제로2연산동",
+      "postalCode": "47605",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 수영구청",
+      "address": "부산 수영구 남천동로 100(남천동)",
+      "normalizedAddress": "부산수영구남천동로100남천동",
+      "postalCode": "48305",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 사상구청",
+      "address": "부산 사상구 학감대로 242(감전동)",
+      "normalizedAddress": "부산사상구학감대로242감전동",
+      "postalCode": "46985",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부산 기장군청",
+      "address": "부산 기장군 기장읍 기장대로 560",
+      "normalizedAddress": "부산기장군기장읍기장대로560",
+      "postalCode": "46077",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구광역시청 산격청사",
+      "address": "대구 북구 연암로 40(산격동)",
+      "normalizedAddress": "대구북구연암로40산격동",
+      "postalCode": "41542",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구광역시청 동인청사",
+      "address": "대구 중구 공평로 88(동인동1가)",
+      "normalizedAddress": "대구중구공평로88동인동1가",
+      "postalCode": "41911",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 중구청",
+      "address": "대구 중구 국채보상로139길 1(동인동2가)",
+      "normalizedAddress": "대구중구국채보상로139길1동인동2가",
+      "postalCode": "41908",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 동구청",
+      "address": "대구 동구 아양로 207(신암동)",
+      "normalizedAddress": "대구동구아양로207신암동",
+      "postalCode": "41185",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 서구청",
+      "address": "대구 서구 국채보상로 257(평리동)",
+      "normalizedAddress": "대구서구국채보상로257평리동",
+      "postalCode": "41777",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 남구청",
+      "address": "대구 남구 이천로 51(봉덕동)",
+      "normalizedAddress": "대구남구이천로51봉덕동",
+      "postalCode": "42429",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 북구청",
+      "address": "대구 북구 옥산로 65(침산동)",
+      "normalizedAddress": "대구북구옥산로65침산동",
+      "postalCode": "41590",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 수성구청",
+      "address": "대구 수성구 달구벌대로 2450(범어동)",
+      "normalizedAddress": "대구수성구달구벌대로2450범어동",
+      "postalCode": "42086",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 달서구청",
+      "address": "대구 달서구 학산로 45(월성동)",
+      "normalizedAddress": "대구달서구학산로45월성동",
+      "postalCode": "42731",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 달성군청",
+      "address": "대구 달성군 논공읍 달성군청로 33",
+      "normalizedAddress": "대구달성군논공읍달성군청로33",
+      "postalCode": "42974",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대구 군위군청",
+      "address": "대구 군위군 군위읍 군청로 200",
+      "normalizedAddress": "대구군위군군위읍군청로200",
+      "postalCode": "43113",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천광역시청",
+      "address": "인천 남동구 정각로 29(구월동)",
+      "normalizedAddress": "인천남동구정각로29구월동",
+      "postalCode": "21554",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 강화군청",
+      "address": "인천 강화군 강화읍 강화대로 394",
+      "normalizedAddress": "인천강화군강화읍강화대로394",
+      "postalCode": "23031",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 옹진군청",
+      "address": "인천 미추홀구 매소홀로 120(용현동)",
+      "normalizedAddress": "인천미추홀구매소홀로120용현동",
+      "postalCode": "22193",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 중구청 제1청사",
+      "address": "인천 중구 신포로27번길 80(관동1가)",
+      "normalizedAddress": "인천중구신포로27번길80관동1가",
+      "postalCode": "22315",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 중구청 제2청사",
+      "address": "인천 중구 운남서로 100(운남동)",
+      "normalizedAddress": "인천중구운남서로100운남동",
+      "postalCode": "22372",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 동구청",
+      "address": "인천 동구 금곡로 67(송림동)",
+      "normalizedAddress": "인천동구금곡로67송림동",
+      "postalCode": "22556",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 미추홀구청",
+      "address": "인천 미추홀구 독정이로 95(숭의동)",
+      "normalizedAddress": "인천미추홀구독정이로95숭의동",
+      "postalCode": "22169",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 연수구청",
+      "address": "인천 연수구 원인재로 115(동춘동)",
+      "normalizedAddress": "인천연수구원인재로115동춘동",
+      "postalCode": "21967",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 남동구청",
+      "address": "인천 남동구 소래로 633(만수동)",
+      "normalizedAddress": "인천남동구소래로633만수동",
+      "postalCode": "21589",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 부평구청",
+      "address": "인천 부평구 부평대로 168(부평동)",
+      "normalizedAddress": "인천부평구부평대로168부평동",
+      "postalCode": "21354",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 계양구청",
+      "address": "인천 계양구 계산새로 88(계산동)",
+      "normalizedAddress": "인천계양구계산새로88계산동",
+      "postalCode": "21067",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인천 서구청",
+      "address": "인천 서구 서곶로 307(심곡동)",
+      "normalizedAddress": "인천서구서곶로307심곡동",
+      "postalCode": "22726",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주광역시청",
+      "address": "광주 서구 내방로 111(치평동)",
+      "normalizedAddress": "광주서구내방로111치평동",
+      "postalCode": "61945",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주 동구청",
+      "address": "광주 동구 서남로 1(서석동)",
+      "normalizedAddress": "광주동구서남로1서석동",
+      "postalCode": "61466",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주 서구청",
+      "address": "광주 서구 경열로 33(농성동)",
+      "normalizedAddress": "광주서구경열로33농성동",
+      "postalCode": "61928",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주 남구청",
+      "address": "광주 남구 봉선로 1(봉선동)",
+      "normalizedAddress": "광주남구봉선로1봉선동",
+      "postalCode": "61687",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주 북구청",
+      "address": "광주 북구 우치로 77(용봉동)",
+      "normalizedAddress": "광주북구우치로77용봉동",
+      "postalCode": "61187",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주 광산구청",
+      "address": "광주 광산구 광산로29번길 15(송정동)",
+      "normalizedAddress": "광주광산구광산로29번길15송정동",
+      "postalCode": "62430",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대전광역시청",
+      "address": "대전 서구 둔산로 100(둔산동)",
+      "normalizedAddress": "대전서구둔산로100둔산동",
+      "postalCode": "35242",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대전 동구청",
+      "address": "대전 동구 동구청로 147(가오동)",
+      "normalizedAddress": "대전동구동구청로147가오동",
+      "postalCode": "34691",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대전 중구청",
+      "address": "대전 중구 중앙로 100(대흥동)",
+      "normalizedAddress": "대전중구중앙로100대흥동",
+      "postalCode": "34939",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대전 서구청",
+      "address": "대전 서구 둔산서로 100(둔산동)",
+      "normalizedAddress": "대전서구둔산서로100둔산동",
+      "postalCode": "35238",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대전 유성구청",
+      "address": "대전 유성구 대학로 211(어은동)",
+      "normalizedAddress": "대전유성구대학로211어은동",
+      "postalCode": "34139",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "대전 대덕구청",
+      "address": "대전 대덕구 대전로1033번길 20(오정동)",
+      "normalizedAddress": "대전대덕구대전로1033번길20오정동",
+      "postalCode": "34443",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울산광역시청",
+      "address": "울산 남구 중앙로 201(신정동)",
+      "normalizedAddress": "울산남구중앙로201신정동",
+      "postalCode": "44675",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울산 중구청",
+      "address": "울산 중구 단장골길 1(복산동)",
+      "normalizedAddress": "울산중구단장골길1복산동",
+      "postalCode": "44475",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울산 남구청",
+      "address": "울산 남구 돋질로 233(달동)",
+      "normalizedAddress": "울산남구돋질로233달동",
+      "postalCode": "44701",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울산 동구청",
+      "address": "울산 동구 봉수로 155(화정동)",
+      "normalizedAddress": "울산동구봉수로155화정동",
+      "postalCode": "44021",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울산 북구청",
+      "address": "울산 북구 산업로 1010(연암동)",
+      "normalizedAddress": "울산북구산업로1010연암동",
+      "postalCode": "44248",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울산 울주군청",
+      "address": "울산 울주군 청량읍 군청로 1",
+      "normalizedAddress": "울산울주군청량읍군청로1",
+      "postalCode": "44959",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "세종특별자치시청",
+      "address": "세종시 한누리대로 2130(보람동)",
+      "normalizedAddress": "세종시한누리대로2130보람동",
+      "postalCode": "30151",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "수원시청",
+      "address": "경기 수원시 팔달구 효원로 241(인계동)",
+      "normalizedAddress": "경기수원시팔달구효원로241인계동",
+      "postalCode": "16490",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "장안구청",
+      "address": "경기 수원시 장안구 송원로 101(조원동)",
+      "normalizedAddress": "경기수원시장안구송원로101조원동",
+      "postalCode": "16295",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "권선구청",
+      "address": "경기 수원시 권선구 호매실로 12(탑동)",
+      "normalizedAddress": "경기수원시권선구호매실로12탑동",
+      "postalCode": "16626",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "팔달구청",
+      "address": "경기 수원시 팔달구 창룡대로 23(매향동)",
+      "normalizedAddress": "경기수원시팔달구창룡대로23매향동",
+      "postalCode": "16255",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영통구청",
+      "address": "경기 수원시 영통구 효원로 407(매탄동)",
+      "normalizedAddress": "경기수원시영통구효원로407매탄동",
+      "postalCode": "16545",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "성남시청",
+      "address": "경기 성남시 중원구 성남대로 997(여수동)",
+      "normalizedAddress": "경기성남시중원구성남대로997여수동",
+      "postalCode": "13437",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "수정구청",
+      "address": "경기 성남시 수정구 수정로 283(신흥동)",
+      "normalizedAddress": "경기성남시수정구수정로283신흥동",
+      "postalCode": "13259",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "중원구청",
+      "address": "경기 성남시 중원구 제일로 36(성남동)",
+      "normalizedAddress": "경기성남시중원구제일로36성남동",
+      "postalCode": "13371",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "분당구청",
+      "address": "경기 성남시 분당구 분당로 50(수내동)",
+      "normalizedAddress": "경기성남시분당구분당로50수내동",
+      "postalCode": "13594",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "고양시청",
+      "address": "경기 고양시 덕양구 고양시청로 10(주교동)",
+      "normalizedAddress": "경기고양시덕양구고양시청로10주교동",
+      "postalCode": "10460",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "덕양구청",
+      "address": "경기 고양시 덕양구 화중로104번길 13(화정동)",
+      "normalizedAddress": "경기고양시덕양구화중로104번길13화정동",
+      "postalCode": "10497",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "일산동구청",
+      "address": "경기 고양시 일산동구 중앙로 1256(마두동)",
+      "normalizedAddress": "경기고양시일산동구중앙로1256마두동",
+      "postalCode": "10409",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "일산서구청",
+      "address": "경기 고양시 일산서구 중앙로 1600(대화동)",
+      "normalizedAddress": "경기고양시일산서구중앙로1600대화동",
+      "postalCode": "10226",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "용인시청",
+      "address": "경기 용인시 처인구 중부대로 1199(삼가동)",
+      "normalizedAddress": "경기용인시처인구중부대로1199삼가동",
+      "postalCode": "17019",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "처인구청",
+      "address": "경기 용인시 처인구 금령로 50(김량장동)",
+      "normalizedAddress": "경기용인시처인구금령로50김량장동",
+      "postalCode": "17049",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "기흥구청",
+      "address": "경기 용인시 기흥구 관곡로 95(구갈동)",
+      "normalizedAddress": "경기용인시기흥구관곡로95구갈동",
+      "postalCode": "16963",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "수지구청",
+      "address": "경기 용인시 수지구 포은대로 435(풍덕천동)",
+      "normalizedAddress": "경기용인시수지구포은대로435풍덕천동",
+      "postalCode": "16835",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부천시청",
+      "address": "경기 부천시 원미구 길주로 210(중동)",
+      "normalizedAddress": "경기부천시원미구길주로210중동",
+      "postalCode": "14547",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "안산시청",
+      "address": "경기 안산시 단원구 화랑로 387(고잔동)",
+      "normalizedAddress": "경기안산시단원구화랑로387고잔동",
+      "postalCode": "15335",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "상록구청",
+      "address": "경기 안산시 상록구 석호로 110(사동)",
+      "normalizedAddress": "경기안산시상록구석호로110사동",
+      "postalCode": "15585",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "단원구청",
+      "address": "경기 안산시 단원구 화랑로 250(초지동)",
+      "normalizedAddress": "경기안산시단원구화랑로250초지동",
+      "postalCode": "15396",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "안양시청",
+      "address": "경기 안양시 동안구 시민대로 235(관양동)",
+      "normalizedAddress": "경기안양시동안구시민대로235관양동",
+      "postalCode": "14053",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "만안구청",
+      "address": "경기 안양시 만안구 안양로 128(안양동)",
+      "normalizedAddress": "경기안양시만안구안양로128안양동",
+      "postalCode": "14034",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "동안구청",
+      "address": "경기 안양시 동안구 동안로 158(비산동)",
+      "normalizedAddress": "경기안양시동안구동안로158비산동",
+      "postalCode": "14047",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "남양주시청 제1청사",
+      "address": "경기 남양주시 경춘로 1037(금곡동)",
+      "normalizedAddress": "경기남양주시경춘로1037금곡동",
+      "postalCode": "12232",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "남양주시청 제2청사",
+      "address": "경기 남양주시 경춘로 522(다산동)",
+      "normalizedAddress": "경기남양주시경춘로522다산동",
+      "postalCode": "12284",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "화성시청",
+      "address": "경기 화성시 남양읍 시청로 159",
+      "normalizedAddress": "경기화성시남양읍시청로159",
+      "postalCode": "18274",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "평택시청",
+      "address": "경기 평택시 경기대로 245(비전동)",
+      "normalizedAddress": "경기평택시경기대로245비전동",
+      "postalCode": "17901",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "의정부시청",
+      "address": "경기 의정부시 시민로 1(의정부동)",
+      "normalizedAddress": "경기의정부시시민로1의정부동",
+      "postalCode": "11622",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "시흥시청",
+      "address": "경기 시흥시 시청로 20(장현동)",
+      "normalizedAddress": "경기시흥시시청로20장현동",
+      "postalCode": "14998",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "파주시청",
+      "address": "경기 파주시 시청로 50(아동동)",
+      "normalizedAddress": "경기파주시시청로50아동동",
+      "postalCode": "10932",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광명시청",
+      "address": "경기 광명시 시청로 20(철산동)",
+      "normalizedAddress": "경기광명시시청로20철산동",
+      "postalCode": "14234",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "김포시청",
+      "address": "경기 김포시 사우중로 1(사우동)",
+      "normalizedAddress": "경기김포시사우중로1사우동",
+      "postalCode": "10109",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "군포시청",
+      "address": "경기 군포시 청백리길 6(금정동)",
+      "normalizedAddress": "경기군포시청백리길6금정동",
+      "postalCode": "15835",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광주시청",
+      "address": "경기 광주시 행정타운로 50(송정동)",
+      "normalizedAddress": "경기광주시행정타운로50송정동",
+      "postalCode": "12738",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "이천시청",
+      "address": "경기 이천시 부악로 40(중리동)",
+      "normalizedAddress": "경기이천시부악로40중리동",
+      "postalCode": "17379",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "양주시청",
+      "address": "경기 양주시 부흥로 1533(남방동)",
+      "normalizedAddress": "경기양주시부흥로1533남방동",
+      "postalCode": "11498",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "오산시청",
+      "address": "경기 오산시 성호대로 141(오산동)",
+      "normalizedAddress": "경기오산시성호대로141오산동",
+      "postalCode": "18132",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "구리시청",
+      "address": "경기 구리시 아차산로 439(교문동)",
+      "normalizedAddress": "경기구리시아차산로439교문동",
+      "postalCode": "11954",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "안성시청",
+      "address": "경기 안성시 시청길 25(봉산동)",
+      "normalizedAddress": "경기안성시시청길25봉산동",
+      "postalCode": "17586",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "포천시청",
+      "address": "경기 포천시 중앙로 87(신읍동)",
+      "normalizedAddress": "경기포천시중앙로87신읍동",
+      "postalCode": "11147",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "의왕시청",
+      "address": "경기 의왕시 시청로 11(고천동)",
+      "normalizedAddress": "경기의왕시시청로11고천동",
+      "postalCode": "16075",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "하남시청",
+      "address": "경기 하남시 대청로 10(신장동)",
+      "normalizedAddress": "경기하남시대청로10신장동",
+      "postalCode": "12951",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "여주시청",
+      "address": "경기 여주시 세종로 1(홍문동)",
+      "normalizedAddress": "경기여주시세종로1홍문동",
+      "postalCode": "12619",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "양평군청",
+      "address": "경기 양평군 양평읍 군청앞길 2",
+      "normalizedAddress": "경기양평군양평읍군청앞길2",
+      "postalCode": "12554",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "동두천시청",
+      "address": "경기 동두천시 방죽로 23(생연동)",
+      "normalizedAddress": "경기동두천시방죽로23생연동",
+      "postalCode": "11317",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "과천시청",
+      "address": "경기 과천시 관문로 69(중앙동)",
+      "normalizedAddress": "경기과천시관문로69중앙동",
+      "postalCode": "13806",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "가평군청",
+      "address": "경기 가평군 가평읍 석봉로 181",
+      "normalizedAddress": "경기가평군가평읍석봉로181",
+      "postalCode": "12417",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "연천군청",
+      "address": "경기 연천군 연천읍 연천로 220",
+      "normalizedAddress": "경기연천군연천읍연천로220",
+      "postalCode": "11017",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "춘천시청",
+      "address": "강원 춘천시 시청길 11(옥천동)",
+      "normalizedAddress": "강원춘천시시청길11옥천동",
+      "postalCode": "24347",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "원주시청",
+      "address": "강원 원주시 시청로 1(무실동)",
+      "normalizedAddress": "강원원주시시청로1무실동",
+      "postalCode": "26384",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "강릉시청",
+      "address": "강원 강릉시 강릉대로 33(홍제동)",
+      "normalizedAddress": "강원강릉시강릉대로33홍제동",
+      "postalCode": "25522",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "동해시청",
+      "address": "강원 동해시 천곡로 77(천곡동)",
+      "normalizedAddress": "강원동해시천곡로77천곡동",
+      "postalCode": "25755",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "태백시청",
+      "address": "강원 태백시 태붐로 21(황지동)",
+      "normalizedAddress": "강원태백시태붐로21황지동",
+      "postalCode": "26023",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "속초시청",
+      "address": "강원 속초시 중앙로 183(중앙동)",
+      "normalizedAddress": "강원속초시중앙로183중앙동",
+      "postalCode": "24826",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "삼척시청",
+      "address": "강원 삼척시 중앙로 296(교동)",
+      "normalizedAddress": "강원삼척시중앙로296교동",
+      "postalCode": "25914",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "홍천군청",
+      "address": "강원 홍천군 홍천읍 석화로 93",
+      "normalizedAddress": "강원홍천군홍천읍석화로93",
+      "postalCode": "25121",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "횡성군청",
+      "address": "강원 횡성군 횡성읍 태기로 15",
+      "normalizedAddress": "강원횡성군횡성읍태기로15",
+      "postalCode": "25220",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영월군청",
+      "address": "강원 영월군 영월읍 하송로 64",
+      "normalizedAddress": "강원영월군영월읍하송로64",
+      "postalCode": "26235",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "평창군청",
+      "address": "강원 평창군 평창읍 군청길 77",
+      "normalizedAddress": "강원평창군평창읍군청길77",
+      "postalCode": "25374",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "정선군청",
+      "address": "강원 정선군 정선읍 봉양3길 21",
+      "normalizedAddress": "강원정선군정선읍봉양3길21",
+      "postalCode": "26131",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "철원군청",
+      "address": "강원 철원군 갈말읍 삼부연로 51",
+      "normalizedAddress": "강원철원군갈말읍삼부연로51",
+      "postalCode": "24040",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "화천군청",
+      "address": "강원 화천군 화천읍 화천새싹길 45",
+      "normalizedAddress": "강원화천군화천읍화천새싹길45",
+      "postalCode": "24125",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "양구군청",
+      "address": "강원 양구군 양구읍 관공서로 38",
+      "normalizedAddress": "강원양구군양구읍관공서로38",
+      "postalCode": "24522",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "인제군청",
+      "address": "강원 인제군 인제읍 인제로187번길 8",
+      "normalizedAddress": "강원인제군인제읍인제로187번길8",
+      "postalCode": "24631",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "고성군청",
+      "address": "강원 고성군 간성읍 고성중앙길 9",
+      "normalizedAddress": "강원고성군간성읍고성중앙길9",
+      "postalCode": "24735",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "양양군청",
+      "address": "강원 양양군 양양읍 군청길 1",
+      "normalizedAddress": "강원양양군양양읍군청길1",
+      "postalCode": "25024",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "청주시청",
+      "address": "충북 청주시 상당구 상당로69번길 38(북문로1가)",
+      "normalizedAddress": "충북청주시상당구상당로69번길38북문로1가",
+      "postalCode": "28527",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "상당구청",
+      "address": "충북 청주시 상당구 남일면 단재로 466",
+      "normalizedAddress": "충북청주시상당구남일면단재로466",
+      "postalCode": "28806",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서원구청",
+      "address": "충북 청주시 서원구 사직대로 227(사직동)",
+      "normalizedAddress": "충북청주시서원구사직대로227사직동",
+      "postalCode": "28565",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "흥덕구청",
+      "address": "충북 청주시 흥덕구 강내면 청주역로 71",
+      "normalizedAddress": "충북청주시흥덕구강내면청주역로71",
+      "postalCode": "28426",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "청원구청",
+      "address": "충북 청주시 청원구 직지대로 871(우암동)",
+      "normalizedAddress": "충북청주시청원구직지대로871우암동",
+      "postalCode": "28488",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "충주시청",
+      "address": "충북 충주시 으뜸로 21(금릉동)",
+      "normalizedAddress": "충북충주시으뜸로21금릉동",
+      "postalCode": "27339",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "제천시청",
+      "address": "충북 제천시 내토로 295(천남동)",
+      "normalizedAddress": "충북제천시내토로295천남동",
+      "postalCode": "27188",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "보은군청",
+      "address": "충북 보은군 보은읍 군청길 38",
+      "normalizedAddress": "충북보은군보은읍군청길38",
+      "postalCode": "28937",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "옥천군청",
+      "address": "충북 옥천군 옥천읍 중앙로 99",
+      "normalizedAddress": "충북옥천군옥천읍중앙로99",
+      "postalCode": "29032",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영동군청",
+      "address": "충북 영동군 영동읍 동정로 1",
+      "normalizedAddress": "충북영동군영동읍동정로1",
+      "postalCode": "29140",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "증평군청",
+      "address": "충북 증평군 증평읍 광장로 88",
+      "normalizedAddress": "충북증평군증평읍광장로88",
+      "postalCode": "27927",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "진천군청",
+      "address": "충북 진천군 진천읍 상산로 13",
+      "normalizedAddress": "충북진천군진천읍상산로13",
+      "postalCode": "27832",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "괴산군청",
+      "address": "충북 괴산군 괴산읍 임꺽정로 90",
+      "normalizedAddress": "충북괴산군괴산읍임꺽정로90",
+      "postalCode": "28026",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "음성군청",
+      "address": "충북 음성군 음성읍 중앙로 173",
+      "normalizedAddress": "충북음성군음성읍중앙로173",
+      "postalCode": "27690",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "단양군청",
+      "address": "충북 단양군 단양읍 중앙1로 10",
+      "normalizedAddress": "충북단양군단양읍중앙1로10",
+      "postalCode": "27010",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "천안시청",
+      "address": "충남 천안시 서북구 번영로 156(불당동)",
+      "normalizedAddress": "충남천안시서북구번영로156불당동",
+      "postalCode": "31162",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "동남구청",
+      "address": "충남 천안시 동남구 옛시청길 39(문화동)",
+      "normalizedAddress": "충남천안시동남구옛시청길39문화동",
+      "postalCode": "31131",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서북구청",
+      "address": "충남 천안시 서북구 성거읍 봉주로 75",
+      "normalizedAddress": "충남천안시서북구성거읍봉주로75",
+      "postalCode": "31049",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "공주시청",
+      "address": "충남 공주시 봉황로 1(봉황동)",
+      "normalizedAddress": "충남공주시봉황로1봉황동",
+      "postalCode": "32552",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "보령시청",
+      "address": "충남 보령시 성주산로 77(명천동)",
+      "normalizedAddress": "충남보령시성주산로77명천동",
+      "postalCode": "33483",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "아산시청",
+      "address": "충남 아산시 시민로 456(온천동)",
+      "normalizedAddress": "충남아산시시민로456온천동",
+      "postalCode": "31512",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서산시청",
+      "address": "충남 서산시 관아문길 1(읍내동)",
+      "normalizedAddress": "충남서산시관아문길1읍내동",
+      "postalCode": "31974",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "논산시청",
+      "address": "충남 논산시 시민로210번길 9(내동)",
+      "normalizedAddress": "충남논산시시민로210번길9내동",
+      "postalCode": "32987",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "당진시청",
+      "address": "충남 당진시 시청1로 1(수청동)",
+      "normalizedAddress": "충남당진시시청1로1수청동",
+      "postalCode": "31773",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "계룡시청",
+      "address": "충남 계룡시 장안로 46(금암동)",
+      "normalizedAddress": "충남계룡시장안로46금암동",
+      "postalCode": "32823",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "금산군청",
+      "address": "충남 금산군 금산읍 군청길 13",
+      "normalizedAddress": "충남금산군금산읍군청길13",
+      "postalCode": "32733",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부여군청",
+      "address": "충남 부여군 부여읍 사비로 33",
+      "normalizedAddress": "충남부여군부여읍사비로33",
+      "postalCode": "33168",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서천군청",
+      "address": "충남 서천군 서천읍 서림로 19",
+      "normalizedAddress": "충남서천군서천읍서림로19",
+      "postalCode": "33637",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "청양군청",
+      "address": "충남 청양군 청양읍 문화예술로 222",
+      "normalizedAddress": "충남청양군청양읍문화예술로222",
+      "postalCode": "33323",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "홍성군청",
+      "address": "충남 홍성군 홍성읍 아문길 27",
+      "normalizedAddress": "충남홍성군홍성읍아문길27",
+      "postalCode": "32228",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "예산군청",
+      "address": "충남 예산군 예산읍 군청로 22",
+      "normalizedAddress": "충남예산군예산읍군청로22",
+      "postalCode": "32435",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "태안군청",
+      "address": "충남 태안군 태안읍 군청로 1",
+      "normalizedAddress": "충남태안군태안읍군청로1",
+      "postalCode": "32144",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "전주시청",
+      "address": "전북 전주시 완산구 노송광장로 10(서노송동)",
+      "normalizedAddress": "전북전주시완산구노송광장로10서노송동",
+      "postalCode": "54994",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "완산구청",
+      "address": "전북 전주시 완산구 서원로 232(효자동1가)",
+      "normalizedAddress": "전북전주시완산구서원로232효자동1가",
+      "postalCode": "55051",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "덕진구청",
+      "address": "전북 전주시 덕진구 벚꽃로 55(진북동)",
+      "normalizedAddress": "전북전주시덕진구벚꽃로55진북동",
+      "postalCode": "54937",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "군산시청",
+      "address": "전북 군산시 시청로 17(조촌동)",
+      "normalizedAddress": "전북군산시시청로17조촌동",
+      "postalCode": "54078",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "익산시청",
+      "address": "전북 익산시 인북로32길 1(남중동)",
+      "normalizedAddress": "전북익산시인북로32길1남중동",
+      "postalCode": "54622",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "정읍시청",
+      "address": "전북 정읍시 충정로 234(수성동)",
+      "normalizedAddress": "전북정읍시충정로234수성동",
+      "postalCode": "56180",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "남원시청",
+      "address": "전북 남원시 시청로 60(도통동)",
+      "normalizedAddress": "전북남원시시청로60도통동",
+      "postalCode": "55738",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "김제시청",
+      "address": "전북 김제시 중앙로 40(서암동)",
+      "normalizedAddress": "전북김제시중앙로40서암동",
+      "postalCode": "54386",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "완주군청",
+      "address": "전북 완주군 용진읍 지암로 61",
+      "normalizedAddress": "전북완주군용진읍지암로61",
+      "postalCode": "55352",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "진안군청",
+      "address": "전북 진안군 진안읍 중앙로 67",
+      "normalizedAddress": "전북진안군진안읍중앙로67",
+      "postalCode": "55434",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "무주군청",
+      "address": "전북 무주군 무주읍 주계로 97",
+      "normalizedAddress": "전북무주군무주읍주계로97",
+      "postalCode": "55517",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "장수군청",
+      "address": "전북 장수군 장수읍 호비로 10",
+      "normalizedAddress": "전북장수군장수읍호비로10",
+      "postalCode": "55634",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "임실군청",
+      "address": "전북 임실군 임실읍 수정로 30",
+      "normalizedAddress": "전북임실군임실읍수정로30",
+      "postalCode": "55927",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "순창군청",
+      "address": "전북 순창군 순창읍 경천로 33",
+      "normalizedAddress": "전북순창군순창읍경천로33",
+      "postalCode": "56039",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "고창군청",
+      "address": "전북 고창군 고창읍 중앙로 245",
+      "normalizedAddress": "전북고창군고창읍중앙로245",
+      "postalCode": "56428",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "부안군청",
+      "address": "전북 부안군 부안읍 당산로 91",
+      "normalizedAddress": "전북부안군부안읍당산로91",
+      "postalCode": "56305",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "목포시청",
+      "address": "전남 목포시 양을로 203(용당동)",
+      "normalizedAddress": "전남목포시양을로203용당동",
+      "postalCode": "58613",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "여수시청",
+      "address": "전남 여수시 시청로 1(학동)",
+      "normalizedAddress": "전남여수시시청로1학동",
+      "postalCode": "59675",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "순천시청",
+      "address": "전남 순천시 장명로 30(장천동)",
+      "normalizedAddress": "전남순천시장명로30장천동",
+      "postalCode": "57956",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "나주시청",
+      "address": "전남 나주시 시청길 22(송월동)",
+      "normalizedAddress": "전남나주시시청길22송월동",
+      "postalCode": "58263",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "광양시청",
+      "address": "전남 광양시 시청로 33(중동)",
+      "normalizedAddress": "전남광양시시청로33중동",
+      "postalCode": "57785",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "담양군청",
+      "address": "전남 담양군 담양읍 추성로 1371",
+      "normalizedAddress": "전남담양군담양읍추성로1371",
+      "postalCode": "57339",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "곡성군청",
+      "address": "전남 곡성군 곡성읍 군청로 50",
+      "normalizedAddress": "전남곡성군곡성읍군청로50",
+      "postalCode": "57536",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "구례군청",
+      "address": "전남 구례군 구례읍 봉성로 1",
+      "normalizedAddress": "전남구례군구례읍봉성로1",
+      "postalCode": "57656",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "고흥군청",
+      "address": "전남 고흥군 고흥읍 고흥군청로 1",
+      "normalizedAddress": "전남고흥군고흥읍고흥군청로1",
+      "postalCode": "59542",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "보성군청",
+      "address": "전남 보성군 보성읍 송재로 165",
+      "normalizedAddress": "전남보성군보성읍송재로165",
+      "postalCode": "59455",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "화순군청",
+      "address": "전남 화순군 화순읍 동헌길 23",
+      "normalizedAddress": "전남화순군화순읍동헌길23",
+      "postalCode": "58112",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "장흥군청",
+      "address": "전남 장흥군 장흥읍 장흥로 21",
+      "normalizedAddress": "전남장흥군장흥읍장흥로21",
+      "postalCode": "59328",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "강진군청",
+      "address": "전남 강진군 강진읍 탐진로 111",
+      "normalizedAddress": "전남강진군강진읍탐진로111",
+      "postalCode": "59228",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "해남군청",
+      "address": "전남 해남군 해남읍 군청길 4",
+      "normalizedAddress": "전남해남군해남읍군청길4",
+      "postalCode": "59028",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영암군청",
+      "address": "전남 영암군 영암읍 군청로 1",
+      "normalizedAddress": "전남영암군영암읍군청로1",
+      "postalCode": "58415",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "무안군청",
+      "address": "전남 무안군 무안읍 무안로 530",
+      "normalizedAddress": "전남무안군무안읍무안로530",
+      "postalCode": "58532",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "함평군청",
+      "address": "전남 함평군 함평읍 중앙길 200",
+      "normalizedAddress": "전남함평군함평읍중앙길200",
+      "postalCode": "57149",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영광군청",
+      "address": "전남 영광군 영광읍 중앙로 203",
+      "normalizedAddress": "전남영광군영광읍중앙로203",
+      "postalCode": "57036",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "장성군청",
+      "address": "전남 장성군 장성읍 영천로 200",
+      "normalizedAddress": "전남장성군장성읍영천로200",
+      "postalCode": "57219",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "완도군청",
+      "address": "전남 완도군 완도읍 청해진남로 51",
+      "normalizedAddress": "전남완도군완도읍청해진남로51",
+      "postalCode": "59124",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "진도군청",
+      "address": "전남 진도군 진도읍 철마길 25",
+      "normalizedAddress": "전남진도군진도읍철마길25",
+      "postalCode": "58915",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "신안군청",
+      "address": "전남 신안군 압해읍 천사로 1004",
+      "normalizedAddress": "전남신안군압해읍천사로1004",
+      "postalCode": "58827",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "포항시청",
+      "address": "경북 포항시 남구 시청로 1(대잠동)",
+      "normalizedAddress": "경북포항시남구시청로1대잠동",
+      "postalCode": "37683",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "남구청",
+      "address": "경북 포항시 남구 희망대로 790(대도동)",
+      "normalizedAddress": "경북포항시남구희망대로790대도동",
+      "postalCode": "37832",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "북구청",
+      "address": "경북 포항시 북구 삼호로 36(동빈1가)",
+      "normalizedAddress": "경북포항시북구삼호로36동빈1가",
+      "postalCode": "37722",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "경주시청",
+      "address": "경북 경주시 양정로 260(동천동)",
+      "normalizedAddress": "경북경주시양정로260동천동",
+      "postalCode": "38102",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "김천시청",
+      "address": "경북 김천시 시청1길 1(신음동)",
+      "normalizedAddress": "경북김천시시청1길1신음동",
+      "postalCode": "39532",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "안동시청",
+      "address": "경북 안동시 퇴계로 115(명륜동)",
+      "normalizedAddress": "경북안동시퇴계로115명륜동",
+      "postalCode": "36691",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "구미시청",
+      "address": "경북 구미시 송정대로 55(송정동)",
+      "normalizedAddress": "경북구미시송정대로55송정동",
+      "postalCode": "39281",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영주시청",
+      "address": "경북 영주시 시청로 1(휴천동)",
+      "normalizedAddress": "경북영주시시청로1휴천동",
+      "postalCode": "36132",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영천시청",
+      "address": "경북 영천시 시청로 16(문외동)",
+      "normalizedAddress": "경북영천시시청로16문외동",
+      "postalCode": "38856",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "상주시청",
+      "address": "경북 상주시 상산로 223(남성동)",
+      "normalizedAddress": "경북상주시상산로223남성동",
+      "postalCode": "37211",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "문경시청",
+      "address": "경북 문경시 당교로 225(모전동)",
+      "normalizedAddress": "경북문경시당교로225모전동",
+      "postalCode": "36982",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "경산시청",
+      "address": "경북 경산시 남매로 159(중방동)",
+      "normalizedAddress": "경북경산시남매로159중방동",
+      "postalCode": "38617",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "의성군청",
+      "address": "경북 의성군 의성읍 군청길 31",
+      "normalizedAddress": "경북의성군의성읍군청길31",
+      "postalCode": "37337",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "청송군청",
+      "address": "경북 청송군 청송읍 군청로 51",
+      "normalizedAddress": "경북청송군청송읍군청로51",
+      "postalCode": "37427",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영양군청",
+      "address": "경북 영양군 영양읍 군청길 37",
+      "normalizedAddress": "경북영양군영양읍군청길37",
+      "postalCode": "36537",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "영덕군청",
+      "address": "경북 영덕군 영덕읍 군청길 116",
+      "normalizedAddress": "경북영덕군영덕읍군청길116",
+      "postalCode": "36429",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "청도군청",
+      "address": "경북 청도군 화양읍 청화로 70",
+      "normalizedAddress": "경북청도군화양읍청화로70",
+      "postalCode": "38330",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "고령군청",
+      "address": "경북 고령군 대가야읍 왕릉로 55",
+      "normalizedAddress": "경북고령군대가야읍왕릉로55",
+      "postalCode": "40138",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "성주군청",
+      "address": "경북 성주군 성주읍 성주로 3200",
+      "normalizedAddress": "경북성주군성주읍성주로3200",
+      "postalCode": "40022",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "칠곡군청",
+      "address": "경북 칠곡군 왜관읍 군청1길 80",
+      "normalizedAddress": "경북칠곡군왜관읍군청1길80",
+      "postalCode": "39888",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "예천군청",
+      "address": "경북 예천군 예천읍 충효로 111",
+      "normalizedAddress": "경북예천군예천읍충효로111",
+      "postalCode": "36826",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "봉화군청",
+      "address": "경북 봉화군 봉화읍 봉화로 1111",
+      "normalizedAddress": "경북봉화군봉화읍봉화로1111",
+      "postalCode": "36239",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울진군청",
+      "address": "경북 울진군 울진읍 울진중앙로 121",
+      "normalizedAddress": "경북울진군울진읍울진중앙로121",
+      "postalCode": "36323",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "울릉군청",
+      "address": "경북 울릉군 울릉읍 도동2길 66",
+      "normalizedAddress": "경북울릉군울릉읍도동2길66",
+      "postalCode": "40222",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "창원시청",
+      "address": "경남 창원시 성산구 중앙대로 151(용호동)",
+      "normalizedAddress": "경남창원시성산구중앙대로151용호동",
+      "postalCode": "51435",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "의창구청",
+      "address": "경남 창원시 의창구 원이대로 80(도계동)",
+      "normalizedAddress": "경남창원시의창구원이대로80도계동",
+      "postalCode": "51381",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "성산구청",
+      "address": "경남 창원시 성산구 창원대로 1086(성주동)",
+      "normalizedAddress": "경남창원시성산구창원대로1086성주동",
+      "postalCode": "51539",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "마산합포구청",
+      "address": "경남 창원시 마산합포구 3·15대로 210(중앙동3가)",
+      "normalizedAddress": "경남창원시마산합포구315대로210중앙동3가",
+      "postalCode": "51736",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "마산회원구청",
+      "address": "경남 창원시 마산회원구 삼호로 63(양덕동)",
+      "normalizedAddress": "경남창원시마산회원구삼호로63양덕동",
+      "postalCode": "51323",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "진해구청",
+      "address": "경남 창원시 진해구 진해대로 1101(풍호동)",
+      "normalizedAddress": "경남창원시진해구진해대로1101풍호동",
+      "postalCode": "51629",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "진주시청",
+      "address": "경남 진주시 동진로 155(상대동)",
+      "normalizedAddress": "경남진주시동진로155상대동",
+      "postalCode": "52789",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "통영시청",
+      "address": "경남 통영시 통영해안로 515(무전동)",
+      "normalizedAddress": "경남통영시통영해안로515무전동",
+      "postalCode": "53040",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "사천시청",
+      "address": "경남 사천시 용현면 시청로 77",
+      "normalizedAddress": "경남사천시용현면시청로77",
+      "postalCode": "52539",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "김해시청",
+      "address": "경남 김해시 김해대로 2401(부원동)",
+      "normalizedAddress": "경남김해시김해대로2401부원동",
+      "postalCode": "50924",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "밀양시청",
+      "address": "경남 밀양시 밀양대로 2047(교동)",
+      "normalizedAddress": "경남밀양시밀양대로2047교동",
+      "postalCode": "50420",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "거제시청",
+      "address": "경남 거제시 계룡로 125(고현동)",
+      "normalizedAddress": "경남거제시계룡로125고현동",
+      "postalCode": "53257",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "양산시청",
+      "address": "경남 양산시 중앙로 39(남부동)",
+      "normalizedAddress": "경남양산시중앙로39남부동",
+      "postalCode": "50624",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "의령군청",
+      "address": "경남 의령군 의령읍 충익로 63",
+      "normalizedAddress": "경남의령군의령읍충익로63",
+      "postalCode": "52140",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "함안군청",
+      "address": "경남 함안군 가야읍 말산로 1",
+      "normalizedAddress": "경남함안군가야읍말산로1",
+      "postalCode": "52043",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "창녕군청",
+      "address": "경남 창녕군 창녕읍 군청길 1",
+      "normalizedAddress": "경남창녕군창녕읍군청길1",
+      "postalCode": "50317",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "고성군청",
+      "address": "경남 고성군 고성읍 성내로 130",
+      "normalizedAddress": "경남고성군고성읍성내로130",
+      "postalCode": "52943",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "남해군청",
+      "address": "경남 남해군 남해읍 망운로9번길 12",
+      "normalizedAddress": "경남남해군남해읍망운로9번길12",
+      "postalCode": "52425",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "하동군청",
+      "address": "경남 하동군 하동읍 군청로 23",
+      "normalizedAddress": "경남하동군하동읍군청로23",
+      "postalCode": "52333",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "산청군청",
+      "address": "경남 산청군 산청읍 산엔청로 1",
+      "normalizedAddress": "경남산청군산청읍산엔청로1",
+      "postalCode": "52221",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "함양군청",
+      "address": "경남 함양군 함양읍 고운로 35",
+      "normalizedAddress": "경남함양군함양읍고운로35",
+      "postalCode": "50036",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "거창군청",
+      "address": "경남 거창군 거창읍 중앙로 103",
+      "normalizedAddress": "경남거창군거창읍중앙로103",
+      "postalCode": "50132",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "합천군청",
+      "address": "경남 합천군 합천읍 동서로 119",
+      "normalizedAddress": "경남합천군합천읍동서로119",
+      "postalCode": "50231",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "제주시청",
+      "address": "제주 제주시 광양9길 10(이도이동)",
+      "normalizedAddress": "제주제주시광양9길10이도이동",
+      "postalCode": "63208",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서귀포시청 제1청사",
+      "address": "제주 서귀포시 중앙로 105(서홍동)",
+      "normalizedAddress": "제주서귀포시중앙로105서홍동",
+      "postalCode": "63584",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "localGovernment",
+      "name": "서귀포시청 제2청사",
+      "address": "제주 서귀포시 신중로 55(법환동)",
+      "normalizedAddress": "제주서귀포시신중로55법환동",
+      "postalCode": "63565",
+      "sourceUrl": "https://blog.naver.com/lagnieu/223887562911",
+      "sourceDate": "250603"
+    },
+    {
+      "category": "manualAddressExclusion",
+      "name": "여의나루로 60 포함 주소",
+      "address": "여의나루로 60",
+      "normalizedAddress": "여의나루로60",
+      "source": "user-rule",
+      "sourceDate": "260617",
+      "description": "여의나루로 60이 포함된 주소는 마스킹 제외 대상으로 처리한다."
+    }
+  ],
+  "sourceUrls": [
+    "https://blog.naver.com/lagnieu/223887562911",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=1",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=10",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=11",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=12",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=13",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=14",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=15",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=2",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=3",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=4",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=5",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=6",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=7",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=8",
+    "https://xn--yk3bwq89e.kr/region/location/RegionLocationListAction.work?pageIndex=9"
+  ]
+}

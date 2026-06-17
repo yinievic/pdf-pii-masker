@@ -22,11 +22,22 @@ const sampleTsv = [
   '5\t1\t1\t1\t5\t4\t338\t720\t48\t32\t86.8\t334,',
   '5\t1\t1\t1\t6\t1\t240\t765\t36\t32\t86.8\t2층',
   '5\t1\t1\t1\t6\t2\t286\t765\t118\t32\t86.8\t브라운스톤',
-  '5\t1\t1\t1\t7\t1\t10\t10\t10\t10\t-1\tignored'
+  '5\t1\t1\t1\t7\t1\t100\t840\t72\t32\t88.2\t사용시',
+  '5\t1\t1\t1\t7\t2\t182\t840\t48\t32\t88.2\t적용',
+  '5\t1\t1\t1\t8\t1\t96\t920\t88\t32\t88.2\t서울특별시',
+  '5\t1\t1\t1\t8\t2\t194\t920\t72\t32\t89.1\t서초구',
+  '5\t1\t1\t1\t8\t3\t276\t920\t88\t32\t87.5\t서초대로',
+  '5\t1\t1\t1\t8\t4\t374\t920\t48\t32\t86.8\t219',
+  '5\t1\t1\t1\t9\t1\t96\t1020\t54\t32\t88.2\t서울',
+  '5\t1\t1\t1\t9\t2\t160\t1020\t88\t32\t88.2\t영등포구',
+  '5\t1\t1\t1\t9\t3\t258\t1020\t100\t32\t88.2\t여의나루로',
+  '5\t1\t1\t1\t9\t4\t368\t1020\t32\t32\t88.2\t60',
+  '5\t1\t1\t1\t9\t5\t410\t1020\t42\t32\t88.2\t일대',
+  '5\t1\t1\t1\t10\t1\t10\t10\t10\t10\t-1\tignored'
 ].join('\n');
 
 const words = parseTesseractTsv(sampleTsv, 3);
-assert.equal(words.length, 17);
+assert.equal(words.length, 28);
 assert.deepEqual(words[0], {
   pageNumber: 3,
   text: '900101-1234567',
@@ -71,6 +82,9 @@ assert.equal(rrnDetections.length, 3);
 assert.equal(rrnCandidates.length, 3);
 assert.equal(new Set(detections.map((detection) => detection.id)).size, detections.length);
 assert.equal(new Set(maskBoxCandidates.map((candidate) => candidate.id)).size, maskBoxCandidates.length);
+assert.equal(detections.some((detection) => detection.rawText === '사용시 적용'), false);
+assert.equal(detections.some((detection) => detection.rawText === '서울특별시 서초구 서초대로 219'), false);
+assert.equal(detections.some((detection) => detection.rawText === '서울 영등포구 여의나루로 60 일대'), false);
 assert.equal(rrnDetections[1].rawText, '900101 - 1234567');
 assert.equal(rrnCandidates[1].maskText, '1234567');
 assert.deepEqual(

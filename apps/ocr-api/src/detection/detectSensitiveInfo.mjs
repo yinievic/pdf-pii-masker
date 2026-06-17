@@ -4,13 +4,54 @@ import { fileURLToPath } from 'node:url';
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const rules = JSON.parse(readFileSync(join(currentDir, 'detectionRules.json'), 'utf-8'));
+const addressAdminDistricts = JSON.parse(readFileSync(join(currentDir, 'addressAdminDistricts.json'), 'utf-8'));
+const publicInstitutionAddressExclusions = JSON.parse(readFileSync(join(currentDir, 'publicInstitutionAddressExclusions.json'), 'utf-8'));
 
 const DEFAULT_LINE_Y_TOLERANCE = 12;
 const DEFAULT_STATUS = 'review';
 const DEFAULT_SOURCE = 'regex';
+const adminDistrictSet = new Set(addressAdminDistricts.adminDistricts ?? []);
+const publicInstitutionAddressSet = new Set((publicInstitutionAddressExclusions.exclusions ?? []).map((item) => item.normalizedAddress).filter(Boolean));
 
 function createId(prefix, parts) {
   return `${prefix}-${parts.join('-')}`.replace(/[^a-zA-Z0-9가-힣_-]+/g, '-');
+}
+
+function normalizeAddressForComparison(value) {
+  return (value || '')
+    .replace(/서울특별시/gu, '서울')
+    .replace(/부산광역시/gu, '부산')
+    .replace(/대구광역시/gu, '대구')
+    .replace(/인천광역시/gu, '인천')
+    .replace(/광주광역시/gu, '광주')
+    .replace(/대전광역시/gu, '대전')
+    .replace(/울산광역시/gu, '울산')
+    .replace(/세종특별자치시/gu, '세종')
+    .replace(/경기도/gu, '경기')
+    .replace(/강원특별자치도/gu, '강원')
+    .replace(/강원도/gu, '강원')
+    .replace(/충청북도/gu, '충북')
+    .replace(/충청남도/gu, '충남')
+    .replace(/전북특별자치도/gu, '전북')
+    .replace(/전라북도/gu, '전북')
+    .replace(/전라남도/gu, '전남')
+    .replace(/경상북도/gu, '경북')
+    .replace(/경상남도/gu, '경남')
+    .replace(/제주특별자치도/gu, '제주')
+    .replace(/[\s,()（）·.-]+/gu, '');
+}
+
+const publicInstitutionAddressVariants = [...publicInstitutionAddressSet].flatMap((address) => [address, normalizeAddressForComparison(address)]);
+
+function isPublicInstitutionAddress(rawText) {
+  const normalized = normalizeAddressForComparison(rawText);
+  if (!normalized) return false;
+  return publicInstitutionAddressVariants.some((address) => address && (normalized.includes(address) || address.includes(normalized)));
+}
+
+function hasKnownAdminDistrict(addressText, maskedText) {
+  const prefix = maskedText ? addressText.slice(0, Math.max(addressText.length - maskedText.length, 0)) : addressText;
+  return prefix.split(/\s+/u).some((part) => adminDistrictSet.has(part));
 }
 
 function getWordCenterY(word) {
@@ -294,6 +335,12 @@ function createAddressDetectionGroup({ rule, lines, startLineIndex }) {
   const match = regex.exec(firstLineText);
   if (!match) return undefined;
 
+  const firstMaskRange = resolveMaskRange(rule, match[0], match.index);
+
+  if (!hasKnownAdminDistrict(match[0], firstMaskRange.text) || isPublicInstitutionAddress(match[0])) {
+    return undefined;
+  }
+
   const groupLines = [firstLine];
   const continuationLimit = Math.min(lines.length, startLineIndex + 3);
 
@@ -308,9 +355,12 @@ function createAddressDetectionGroup({ rule, lines, startLineIndex }) {
   const rawText = groupLines.map((line) => buildLineText(line.words).text).join(' ');
   const allWords = groupLines.flatMap((line) => line.words);
   const rect = getBoundingRect(allWords);
+  if (isPublicInstitutionAddress(rawText)) {
+    return undefined;
+  }
+
   const confidenceValues = allWords.map((word) => word.confidence).filter((confidence) => Number.isFinite(confidence));
   const confidence = confidenceValues.length > 0 ? Math.min(...confidenceValues) : undefined;
-  const firstMaskRange = resolveMaskRange(rule, match[0], match.index);
   const firstMaskRect = getRectForCharacterRange(firstLineSpans, firstMaskRange.start, firstMaskRange.end);
   const lineId = getLineId(firstLine);
   const detectionId = createId('det', [rule.id, firstLine.pageNumber, lineId, 'address-group']);
