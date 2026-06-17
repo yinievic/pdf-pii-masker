@@ -114,7 +114,7 @@ type WindowWithSaveFilePicker = Window & {
 };
 
 const PDF_RENDER_SCALE = 2;
-const OCR_API_URL = import.meta.env.VITE_OCR_API_URL ?? '/ocr-api';
+const OCR_API_URL = import.meta.env.VITE_OCR_API_URL?.trim() || '/ocr-api';
 
 const initialMaskingWorkflow: MaskingWorkflowState = {
   mode: 'idle',
