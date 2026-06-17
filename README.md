@@ -1,4 +1,4 @@
-PDF 개인(신용)정보 마스킹 웹앱(ver 1.0)
+PDF 개인(신용)정보 마스킹 웹앱(ver 1.1)
 
 이 웹앱은 PDF 내 개인 식별 정보(현재 설정: 주소 및 주민등록번호)를 사용자가 직접 검토하면서 마스킹하고, 마스킹 결과가 실제 반영된 이미지 기반 PDF를 다운로드할 수 있도록 하는 웹앱입니다. 원본 PDF를 직접 수정하지 않고, 각 페이지를 이미지로 렌더링한 뒤 선택된 마스킹 영역을 반영하여 새 PDF 사본을 생성하는 방식을 사용합니다.
 
@@ -14,7 +14,7 @@ PDF 개인(신용)정보 마스킹 웹앱(ver 1.0)
 
 저장 정책은 문서 보안의 필요성을 충족합니다. 원본 PDF와 결과 PDF는 서버에 저장하지 않습니다. 다운로드는 브라우저 Object URL 기반의 세션성 링크로 제공되며, 새 다운로드 생성, 수동 마스킹 추가, 새 파일 업로드, 파일 제거, 화면 종료 등 작업 상태가 변경될 때 기존 링크를 해제합니다. OCR 처리가 필요한 경우에도 요청별 임시 디렉터리를 사용하고, 처리 종료 후 임시 파일을 삭제하는 구조를 전제로 합니다.
 
-PDF Personal Information Masking Web App (ver. 1.0)
+PDF Personal Information Masking Web App (ver. 1.1)
 
 This web app allows users to review and mask personal identifying information in PDF files. The current detection settings cover addresses and resident registration numbers. After masking, the app generates a downloadable image-based PDF in which the masking is actually applied. The original PDF is not directly modified. Instead, each page is rendered as an image, the selected masking areas are applied on top of that rendered page, and a new PDF copy is generated.
 
